@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI人生ステータス診断 ⚔️ 名前を入れるだけで人生がRPGになる</title>
 <meta name="description" content="名前を入れるだけでAIがあなたの人生をRPG化。ジョブ・必殺技・弱点を査定。有名人と対戦、友達との相性診断もできる無料診断。">
-<!-- OGP -->
 <meta property="og:title" content="AI人生ステータス診断 ⚔️">
 <meta property="og:description" content="名前を入れるだけで人生がRPGになる。ジョブ・必殺技・弱点をAIが査定。有名人と対戦もできる。">
 <meta property="og:type" content="website">
@@ -13,7 +12,6 @@
 <meta property="og:image" content="https://ai-life-status.vercel.app/ogp.png">
 <meta property="og:site_name" content="AI人生ステータス診断">
 <meta property="og:locale" content="ja_JP">
-<!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@AILifeStatus">
 <meta name="twitter:title" content="AI人生ステータス診断 ⚔️">
@@ -23,317 +21,98 @@
 <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#faf5ff;--card:#ffffff;--card2:#f5f0ff;--bd:#e8ddf5;--tx:#2a2040;--dm:#8a7aaa;--ac:#ff8c42;--sub:#7c5ce7;--pink:#e84393;--mint:#00b894;--sky:#0984e3;--rose:#fd79a8;--gold:#f9a825}
+:root{--bg:#faf5ff;--card:#fff;--card2:#f5f0ff;--bd:#e8ddf5;--tx:#2a2040;--dm:#8a7aaa;--ac:#ff8c42;--sub:#7c5ce7;--pink:#e84393;--mint:#00b894;--sky:#0984e3;--rose:#fd79a8;--gold:#f9a825}
 body{background:var(--bg);color:var(--tx);font-family:'Noto Sans JP',sans-serif}
 body.dark{--bg:#08080e;--card:#0c0c18;--card2:#10101e;--bd:#1e1e34;--tx:#d8d8e8;--dm:#5a5a78;--ac:#ffd93d;--sub:#a78bfa;--pink:#fd79a8;--mint:#4ecdc4;--sky:#74b9ff;--rose:#ff6b6b;--gold:#ffd93d}
 .w{max-width:420px;margin:0 auto;padding:12px}
-.theme-btn{position:fixed;top:8px;right:8px;z-index:50;padding:5px 10px;border-radius:16px;border:1px solid var(--bd);background:var(--card);color:var(--dm);font-size:.6em;cursor:pointer;font-family:inherit}
-
-/* Dot-art pixel aesthetic helpers */
 .dot{font-family:'DotGothic16',monospace}
-
-/* Input */
-.inp{text-align:center;padding:20px 0}
-.inp .logo{font-size:1.4em;color:var(--ac);margin-bottom:2px}
-.inp .sub{font-size:.68em;color:var(--dm);margin-bottom:16px}
+.theme-btn{position:fixed;top:8px;right:8px;z-index:50;padding:6px 12px;border-radius:16px;border:1px solid var(--bd);background:var(--card);color:var(--dm);font-size:.65em;cursor:pointer}
+.inp{text-align:center;padding:20px 0}.inp .logo{font-size:1.4em;color:var(--ac)}.inp .sub{font-size:.68em;color:var(--dm);margin-bottom:16px}
 .tabs{display:flex;gap:5px;justify-content:center;margin-bottom:12px}
-.tab{padding:6px 12px;border-radius:6px;border:1px solid var(--bd);background:var(--card);color:var(--dm);font-size:.7em;cursor:pointer;font-family:inherit;transition:all .12s}
-.tab.on{border-color:var(--ac);color:var(--ac);background:color-mix(in srgb,var(--ac) 8%,var(--card))}
-.ir{display:flex;gap:5px}
-.ir input{flex:1;padding:10px;border-radius:7px;border:1.5px solid var(--bd);background:var(--card);color:var(--tx);font-size:.88em;font-family:inherit;outline:none}
-.ir input:focus{border-color:var(--ac)}
-.ir input::placeholder{color:var(--bd)}
-.go{padding:10px 14px;border:none;border-radius:7px;background:var(--ac);color:#fff;font-weight:900;font-size:.85em;cursor:pointer;font-family:inherit}
-.go:active{transform:scale(.96)}
-.ci{display:flex;gap:5px;align-items:center;justify-content:center;margin-bottom:8px}
-.ci input{width:110px;padding:10px;border-radius:7px;border:1.5px solid var(--bd);background:var(--card);color:var(--tx);font-size:.82em;font-family:inherit;outline:none;text-align:center}
-.ci-x{color:var(--dm)}
-
-/* Loading */
-.ld{display:none;padding:40px 0;text-align:center}.ld.on{display:block}
-.ld-t{font-size:.82em;color:var(--ac);margin-bottom:10px}
-.ld-bar{width:140px;height:4px;background:var(--card2);border-radius:2px;margin:0 auto;overflow:hidden}
-.ld-fill{height:100%;background:var(--ac);border-radius:2px;animation:ldf 2.2s ease forwards}
-@keyframes ldf{0%{width:0}100%{width:100%}}
-
+.tab{padding:8px 14px;border-radius:6px;border:1px solid var(--bd);background:var(--card);color:var(--dm);font-size:.72em;cursor:pointer}.tab.on{border-color:var(--ac);color:var(--ac);background:color-mix(in srgb,var(--ac) 8%,var(--card))}
+.ir{display:flex;gap:5px}.ir input{flex:1;padding:12px;border-radius:8px;border:1.5px solid var(--bd);background:var(--card);color:var(--tx);font-size:.9em;font-family:inherit;outline:none}.ir input:focus{border-color:var(--ac)}
+.go{padding:12px 16px;border:none;border-radius:8px;background:var(--ac);color:#fff;font-weight:900;font-size:.88em;cursor:pointer;font-family:inherit;min-height:44px}
+.ci{display:flex;gap:5px;align-items:center;justify-content:center;margin-bottom:8px}.ci input{width:110px;padding:12px;border-radius:8px;border:1.5px solid var(--bd);background:var(--card);color:var(--tx);font-size:.82em;font-family:inherit;outline:none;text-align:center}.ci-x{color:var(--dm)}
+.ld{display:none;padding:40px 0;text-align:center}.ld.on{display:block}.ld-t{font-size:.82em;color:var(--ac);margin-bottom:10px}.ld-bar{width:140px;height:4px;background:var(--card2);border-radius:2px;margin:0 auto;overflow:hidden}.ld-fill{height:100%;background:var(--ac);border-radius:2px;animation:ldf 2.2s ease forwards}@keyframes ldf{0%{width:0}100%{width:100%}}
 .res{display:none}.res.on{display:block}
-
-/* ========== SHARE CARD (compact, 1 screenshot) ========== */
-.scard{background:var(--card);border:1.5px solid var(--bd);border-radius:14px;padding:16px;position:relative;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.04)}
-.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ac),var(--pink),var(--sub),var(--mint))}
-/* pixel decorations */
-.scard::after{content:'⚔️';position:absolute;top:10px;right:12px;font-size:1.2em;opacity:.15}
-.sc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
-.sc-lv{font-size:.68em;color:var(--ac)}
-.sc-rank{font-size:.55em;color:var(--sub);background:color-mix(in srgb,var(--sub) 8%,transparent);padding:2px 6px;border-radius:4px}
-.sc-name{font-size:1.25em;font-weight:900;text-align:center}
-.sc-job{text-align:center;font-size:.82em;font-weight:700;margin:1px 0}
-.sc-jd{text-align:center;font-size:.56em;color:var(--dm)}
-.sc-traits{text-align:center;margin:4px 0;font-size:.56em}
-.sc-traits span{display:inline-block;padding:1px 5px;border-radius:3px;margin:1px}
+.scard{background:var(--card);border:1.5px solid var(--bd);border-radius:14px;padding:16px;position:relative;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.04)}.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ac),var(--pink),var(--sub),var(--mint))}
+.sc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}.sc-lv{font-size:.68em;color:var(--ac)}.sc-rank{font-size:.55em;color:var(--sub);background:color-mix(in srgb,var(--sub) 8%,transparent);padding:2px 6px;border-radius:4px}
+.sc-name{font-size:1.25em;font-weight:900;text-align:center}.sc-job{text-align:center;font-size:.82em;font-weight:700;margin:1px 0}.sc-jd{text-align:center;font-size:.56em;color:var(--dm)}
+.sc-traits{text-align:center;margin:4px 0;font-size:.56em}.sc-traits span{display:inline-block;padding:1px 5px;border-radius:3px;margin:1px}
 .sc-radar{display:block;margin:4px auto;width:170px;height:170px}
-.sc-move{text-align:center;margin:4px 0;padding:5px 8px;background:color-mix(in srgb,var(--rose) 6%,transparent);border-radius:6px}
-.sc-move-l{font-size:.52em;color:var(--rose)}
-.sc-move-n{font-size:.8em;font-weight:900;color:var(--rose)}
-.sc-wk{text-align:center;font-size:.56em;color:var(--dm);margin:2px 0}
-.sc-wk b{color:var(--rose)}
-.sc-q{text-align:center;font-size:.58em;font-style:italic;color:var(--dm)}
-.sc-foot{text-align:center;font-size:.42em;color:var(--bd);margin-top:4px}
-
-/* ========== DETAIL SECTION (below, scrollable) ========== */
-.detail-toggle{text-align:center;margin:10px 0}
-.dt-btn{padding:7px 16px;border-radius:7px;border:1px solid var(--bd);background:var(--card);color:var(--dm);font-size:.7em;cursor:pointer;font-family:inherit}
-.dt-btn:hover{border-color:var(--sub);color:var(--sub)}
-.detail{margin-top:8px}
-.d-box{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:8px;box-shadow:0 1px 8px rgba(0,0,0,.02)}
-.d-box h3{font-size:.72em;color:var(--ac);margin-bottom:6px}
-/* Detailed bars */
-.db{margin-bottom:4px}
-.db-l{display:flex;justify-content:space-between;font-size:.6em;margin-bottom:1px}
-.db-n{color:var(--dm)}
-.db-v{font-weight:700}
-.db-t{height:7px;background:color-mix(in srgb,var(--tx) 5%,transparent);border-radius:4px;overflow:hidden}
-.db-f{height:100%;border-radius:4px;transition:width 1s ease}
-/* Skills */
-.d-sks{display:flex;flex-wrap:wrap;gap:3px}
-.d-sk{font-size:.58em;padding:2px 6px;border-radius:4px;font-weight:700}
-/* Equip (affiliate) - PROMINENT */
-.eq-section{background:linear-gradient(135deg,color-mix(in srgb,var(--mint) 6%,var(--card)),color-mix(in srgb,var(--gold) 4%,var(--card)));border:1.5px solid color-mix(in srgb,var(--mint) 25%,transparent);border-radius:10px;padding:14px}
-.eq-section h3{font-size:.78em;color:var(--mint);margin-bottom:2px}
-.eq-section .eq-sub{font-size:.6em;color:var(--dm);margin-bottom:8px}
-.eq{display:flex;align-items:center;gap:10px;padding:10px;background:var(--card);border-radius:9px;margin-bottom:6px;border:1.5px solid var(--bd);transition:all .15s;cursor:pointer}
-.eq:hover{border-color:var(--mint);transform:translateY(-1px);box-shadow:0 2px 12px rgba(0,184,148,.1)}
-.eq-icon{font-size:1.8em;width:38px;text-align:center;flex-shrink:0}
-.eq-info{flex:1}
-.eq-name{font-size:.76em;font-weight:900}
-.eq-eff{font-size:.62em;color:var(--mint);font-weight:700;margin-top:2px}
-.eq-lore{font-size:.54em;color:var(--dm);font-style:italic;margin-top:1px}
-.eq-link{padding:6px 14px;border-radius:7px;background:var(--mint);color:#fff;font-size:.65em;font-weight:900;text-decoration:none;flex-shrink:0;transition:transform .1s}
-.eq-link:hover{transform:scale(1.05)}
-/* Choice */
-.choices{display:flex;gap:4px;margin-top:6px}
-.ch{flex:1;padding:7px;border:1px solid var(--bd);border-radius:6px;background:var(--card);color:var(--dm);font-size:.68em;cursor:pointer;font-family:inherit;text-align:center;transition:all .12s}
-.ch:hover{border-color:var(--ac);color:var(--ac)}
-.ch.picked{border-color:var(--ac);color:var(--ac);background:color-mix(in srgb,var(--ac) 6%,transparent)}
-
-/* ========== COMPAT CARD ========== */
-.ccard{background:var(--card);border:1.5px solid var(--bd);border-radius:14px;padding:16px;position:relative;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.04)}
-.ccard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--pink),var(--sub),var(--mint))}
-.cc-t{text-align:center;font-size:.75em;color:var(--sub);margin-bottom:8px}
-.cc-pair{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px}
-.cc-p{text-align:center;flex:1}
-.cc-nm{font-weight:900;font-size:.85em}
-.cc-j{font-size:.55em;color:var(--dm)}
-.cc-mid{font-size:1em;color:var(--pink)}
-.cc-syn{text-align:center;margin:6px 0}
-.cc-syn-l{font-size:.58em;color:var(--dm)}
-.cc-syn-r{font-size:1.05em;font-weight:900;color:var(--sub)}
-.cc-combo{text-align:center;margin:6px 0;padding:6px 8px;background:color-mix(in srgb,var(--sub) 5%,transparent);border-radius:7px;border:1px solid color-mix(in srgb,var(--sub) 10%,transparent)}
-.cc-combo-l{font-size:.52em;color:var(--sub)}
-.cc-combo-n{font-size:.82em;font-weight:900}
-.cc-combo-d{font-size:.55em;color:var(--dm)}
-.cc-stats{margin:6px 0}
-.cc-st{display:flex;align-items:center;padding:2px 0;font-size:.6em}
-.cc-st-n{color:var(--dm);width:100px}
-.cc-st-bar{flex:1;height:5px;background:color-mix(in srgb,var(--tx) 4%,transparent);border-radius:3px;margin:0 6px;overflow:hidden}
-.cc-st-fill{height:100%;border-radius:3px}
-.cc-st-v{font-weight:700;width:22px;text-align:right}
-.cc-advice{font-size:.58em;color:var(--dm);text-align:center;font-style:italic;margin-top:4px}
-.cc-foot{text-align:center;font-size:.42em;color:var(--bd);margin-top:6px}
-
-/* Common UI */
-.shr{display:flex;gap:5px;margin-top:8px}
-.sb{flex:1;padding:9px;border:none;border-radius:7px;font-size:.74em;font-weight:700;cursor:pointer;font-family:inherit}
-.sx{background:#1d9bf0;color:#fff}.sl{background:#06c755;color:#fff}
-.nextp{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-top:8px;text-align:center}
-.nextp p{font-size:.68em;color:var(--dm);margin-bottom:5px}
-.retry{display:block;width:100%;padding:8px;border:1px solid var(--bd);border-radius:7px;background:transparent;color:var(--dm);font-size:.7em;cursor:pointer;margin-top:6px;font-family:inherit}
+.sc-move{text-align:center;margin:4px 0;padding:5px 8px;background:color-mix(in srgb,var(--rose) 6%,transparent);border-radius:6px}.sc-move-l{font-size:.52em;color:var(--rose)}.sc-move-n{font-size:.8em;font-weight:900;color:var(--rose)}
+.sc-wk{text-align:center;font-size:.56em;color:var(--dm);margin:2px 0}.sc-wk b{color:var(--rose)}
+.sc-q{text-align:center;font-size:.58em;font-style:italic;color:var(--dm)}.sc-foot{text-align:center;font-size:.42em;color:var(--bd);margin-top:4px}
+.d-box{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-top:8px}.d-box h3{font-size:.72em;color:var(--ac);margin-bottom:6px}
+.db{margin-bottom:4px}.db-l{display:flex;justify-content:space-between;font-size:.6em;margin-bottom:1px}.db-n{color:var(--dm)}.db-v{font-weight:700}.db-t{height:7px;background:color-mix(in srgb,var(--tx) 5%,transparent);border-radius:4px;overflow:hidden}.db-f{height:100%;border-radius:4px;transition:width 1s ease}
+.d-sks{display:flex;flex-wrap:wrap;gap:3px}.d-sk{font-size:.58em;padding:2px 6px;border-radius:4px;font-weight:700}
+.cel-chips{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}.cel-chip{padding:7px 11px;border-radius:6px;background:color-mix(in srgb,var(--rose) 6%,transparent);border:1px solid color-mix(in srgb,var(--rose) 15%,transparent);font-size:.7em;cursor:pointer;color:var(--dm)}.cel-chip:active{background:color-mix(in srgb,var(--rose) 18%,transparent);color:var(--tx)}
+.vso{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:100;padding:12px;overflow-y:auto}.vso.on{display:flex}
+.vsc{background:var(--card);border:2px solid var(--bd);border-radius:12px;padding:16px;max-width:380px;width:100%}.vsc-h{font-size:.85em;color:var(--ac);text-align:center;margin-bottom:8px}
+.vsc-vs{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:8px}.vsc-p{text-align:center;flex:1}.vsc-nm{font-weight:900;font-size:.82em}.vsc-cls{font-size:.55em;color:var(--dm)}.vsc-mid{font-size:1.2em;color:var(--rose)}
+.vb{margin-bottom:3px}.vb-l{font-size:.55em;color:var(--dm);text-align:center;margin-bottom:1px}.vb-r{display:flex;align-items:center;gap:2px}.vb-v{font-size:.5em;width:36px;text-align:center}.vb-left{flex:1;height:5px;border-radius:3px;background:color-mix(in srgb,var(--tx) 4%,transparent);overflow:hidden;display:flex;justify-content:flex-end}.vb-right{flex:1;height:5px;border-radius:3px;background:color-mix(in srgb,var(--tx) 4%,transparent);overflow:hidden}.vb-fl,.vb-fr{height:100%;border-radius:3px}.vb-w{font-size:.55em;width:14px;text-align:center;color:var(--ac)}
+.vsc-narr{font-size:.68em;color:var(--dm);padding:6px 8px;background:color-mix(in srgb,var(--tx) 3%,transparent);border-radius:6px;margin:6px 0;line-height:1.5}
+.vsc-res{text-align:center;font-size:.82em;font-weight:900;padding:6px;border-radius:6px;margin:6px 0}
+.vsc-btns{display:flex;gap:5px;justify-content:center;margin-top:8px}.vsc-cl,.vsc-sh{padding:10px 18px;border-radius:6px;font-size:.74em;cursor:pointer;font-family:inherit;min-height:44px}.vsc-cl{border:1px solid var(--bd);background:transparent;color:var(--dm)}.vsc-sh{border:none;background:#1d9bf0;color:#fff;font-weight:700}
+.eq-section{background:linear-gradient(135deg,color-mix(in srgb,var(--mint) 6%,var(--card)),color-mix(in srgb,var(--gold) 4%,var(--card)));border:1.5px solid color-mix(in srgb,var(--mint) 25%,transparent);border-radius:10px;padding:14px;margin-top:8px}.eq-section h3{font-size:.78em;color:var(--mint);margin-bottom:2px}.eq-sub{font-size:.6em;color:var(--dm);margin-bottom:8px}
+.eq{display:flex;align-items:center;gap:10px;padding:10px;background:var(--card);border-radius:9px;margin-bottom:6px;border:1.5px solid var(--bd);text-decoration:none;color:inherit;min-height:60px}.eq:active{border-color:var(--mint)}.eq-icon{font-size:1.8em;width:38px;text-align:center;flex-shrink:0}.eq-info{flex:1}.eq-name{font-size:.76em;font-weight:900}.eq-eff{font-size:.62em;color:var(--mint);font-weight:700;margin-top:2px}.eq-lore{font-size:.54em;color:var(--dm);font-style:italic;margin-top:1px}.eq-badge{padding:6px 14px;border-radius:7px;background:var(--mint);color:#fff;font-size:.65em;font-weight:900;flex-shrink:0}
+.ccard{background:var(--card);border:1.5px solid var(--bd);border-radius:14px;padding:16px;position:relative;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.04)}.ccard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--pink),var(--sub),var(--mint))}
+.cc-t{text-align:center;font-size:.75em;color:var(--sub);margin-bottom:8px}.cc-pair{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:6px}.cc-p{text-align:center;flex:1}.cc-nm{font-weight:900;font-size:.85em}.cc-j{font-size:.55em;color:var(--dm)}.cc-mid{font-size:1em;color:var(--pink)}
+.cc-syn{text-align:center;margin:6px 0}.cc-syn-l{font-size:.58em;color:var(--dm)}.cc-syn-r{font-size:1.05em;font-weight:900;color:var(--sub)}
+.cc-combo{text-align:center;margin:6px 0;padding:6px 8px;background:color-mix(in srgb,var(--sub) 5%,transparent);border-radius:7px;border:1px solid color-mix(in srgb,var(--sub) 10%,transparent)}.cc-combo-l{font-size:.52em;color:var(--sub)}.cc-combo-n{font-size:.82em;font-weight:900}.cc-combo-d{font-size:.55em;color:var(--dm)}
+.cc-stats{margin:6px 0}.cc-st{display:flex;align-items:center;padding:2px 0;font-size:.6em}.cc-st-n{color:var(--dm);width:100px}.cc-st-bar{flex:1;height:5px;background:color-mix(in srgb,var(--tx) 4%,transparent);border-radius:3px;margin:0 6px;overflow:hidden}.cc-st-fill{height:100%;border-radius:3px}.cc-st-v{font-weight:700;width:22px;text-align:right}
+.cc-advice{font-size:.58em;color:var(--dm);text-align:center;font-style:italic;margin-top:4px}.cc-foot{text-align:center;font-size:.42em;color:var(--bd);margin-top:6px}
+.shr{display:flex;gap:5px;margin-top:8px}.sb{flex:1;padding:12px;border:none;border-radius:8px;font-size:.76em;font-weight:700;cursor:pointer;font-family:inherit;min-height:44px}.sx{background:#1d9bf0;color:#fff}.sl{background:#06c755;color:#fff}
+.nextp{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-top:8px;text-align:center}.nextp p{font-size:.68em;color:var(--dm);margin-bottom:5px}
+.retry{display:block;width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:transparent;color:var(--dm);font-size:.72em;cursor:pointer;margin-top:6px;font-family:inherit;min-height:44px}
 .credit{text-align:center;font-size:.42em;color:var(--bd);margin-top:8px}
 </style>
 </head>
 <body>
-<button class="theme-btn dot" onclick="document.body.classList.toggle('dark')">🌙 / ☀️</button>
+<button class="theme-btn dot" onclick="document.body.classList.toggle('dark')">🌙/☀️</button>
 <div class="w">
-
-<!-- INPUT -->
-<div id="inputScreen" class="inp">
-  <div class="logo dot">⚔️ AI人生ステータス診断</div>
-  <p class="sub">冒険者ギルドがあなたの実力を査定します</p>
-  <div class="tabs">
-    <div class="tab on dot" onclick="setMode('solo',this)">👤 ソロ査定</div>
-    <div class="tab dot" onclick="setMode('compat',this)">👥 相性査定</div>
-  </div>
-  <div id="soloIn"><div class="ir"><input type="text" id="ni" placeholder="冒険者名を入力" maxlength="20"><button class="go dot" onclick="goSolo()">査定⚔️</button></div></div>
-  <div id="compatIn" style="display:none"><div class="ci"><input type="text" id="c1" placeholder="名前1" maxlength="20"><span class="ci-x dot">×</span><input type="text" id="c2" placeholder="名前2" maxlength="20"></div><button class="go dot" onclick="goCompat()" style="width:100%">相性査定⚔️</button></div>
-</div>
-
+<div id="inputScreen" class="inp"><div class="logo dot">⚔️ AI人生ステータス診断</div><p class="sub">冒険者ギルドがあなたの実力を査定します</p><div class="tabs"><div class="tab on dot" onclick="setMode('solo',this)">👤 ソロ査定</div><div class="tab dot" onclick="setMode('compat',this)">👥 相性査定</div></div><div id="soloIn"><div class="ir"><input type="text" id="ni" placeholder="冒険者名を入力" maxlength="20"><button class="go dot" onclick="goSolo()">査定⚔️</button></div></div><div id="compatIn" style="display:none"><div class="ci"><input type="text" id="c1" placeholder="名前1" maxlength="20"><span class="ci-x dot">×</span><input type="text" id="c2" placeholder="名前2" maxlength="20"></div><button class="go dot" onclick="goCompat()" style="width:100%">相性査定⚔️</button></div></div>
 <div class="ld" id="ld"><div class="ld-t dot" id="ldT">冒険者ギルドが査定中...</div><div class="ld-bar"><div class="ld-fill"></div></div></div>
-
-<!-- SOLO RESULT -->
-<div class="res" id="resSolo">
-  <div class="scard" id="sc"></div>
-  <div id="detailSection"></div>
-  <div class="shr"><button class="sb sx" onclick="shX()">𝕏 シェア</button><button class="sb sl" onclick="shL()">LINE</button></div>
-  <div class="nextp"><p class="dot">👀 他の冒険者も査定する？</p><div class="ir"><input type="text" id="nxi" placeholder="友達・推し・有名人" maxlength="20"><button class="go dot" onclick="nextSolo()">査定⚔️</button></div></div>
-  <div class="nextp"><p class="dot">👥 2人の相性を調べる？</p><div class="ci"><input type="text" id="c1b" placeholder="名前1" maxlength="20"><span class="ci-x dot">×</span><input type="text" id="c2b" placeholder="名前2" maxlength="20"></div><button class="go dot" onclick="goCompatB()" style="width:100%">相性査定⚔️</button></div>
-  <button class="retry dot" onclick="retry()">🔄 ギルドに再登録する</button>
-  <div class="credit dot">#AI人生ステータス — ai-life-status.app</div>
+<div class="res" id="resSolo"><div class="scard" id="sc"></div><div id="detailSection"></div><div class="shr"><button class="sb sx" onclick="shX()">𝕏 シェア</button><button class="sb sl" onclick="shL()">LINE</button></div><div class="nextp"><p class="dot">👀 他の冒険者も査定する？</p><div class="ir"><input type="text" id="nxi" placeholder="友達・推し・有名人" maxlength="20"><button class="go dot" onclick="nextSolo()">査定⚔️</button></div></div><div class="nextp"><p class="dot">👥 2人の相性を調べる？</p><div class="ci"><input type="text" id="c1b" placeholder="名前1" maxlength="20"><span class="ci-x dot">×</span><input type="text" id="c2b" placeholder="名前2" maxlength="20"></div><button class="go dot" onclick="goCompatB()" style="width:100%">相性査定⚔️</button></div><button class="retry dot" onclick="retry()">🔄 ギルドに再登録する</button><div class="credit dot">#AI人生ステータス — ai-life-status.vercel.app</div></div>
+<div class="res" id="resCompat"><div class="ccard" id="cc"></div><div class="shr"><button class="sb sx" onclick="shCX()">𝕏 シェア</button><button class="sb sl" onclick="shCL()">LINE</button></div><div class="nextp"><p class="dot">👤 個別に査定する？</p><div class="ir"><input type="text" id="nxi2" placeholder="名前" maxlength="20"><button class="go dot" onclick="nextFromC()">査定⚔️</button></div></div><button class="retry dot" onclick="retry()">🔄 ギルドに再登録する</button><div class="credit dot">#AI人生ステータス — ai-life-status.vercel.app</div></div>
+<div class="vso" id="vso"><div class="vsc" id="vsc"></div></div>
 </div>
-
-<!-- COMPAT RESULT -->
-<div class="res" id="resCompat">
-  <div class="ccard" id="cc"></div>
-  <div class="shr"><button class="sb sx" onclick="shCX()">𝕏 シェア</button><button class="sb sl" onclick="shCL()">LINE</button></div>
-  <div class="nextp"><p class="dot">👤 個別に査定する？</p><div class="ir"><input type="text" id="nxi2" placeholder="名前" maxlength="20"><button class="go dot" onclick="nextFromC()">査定⚔️</button></div></div>
-  <button class="retry dot" onclick="retry()">🔄 ギルドに再登録する</button>
-  <div class="credit dot">#AI人生ステータス — ai-life-status.app</div>
-</div>
-</div>
-
 <script>
+const SITE='https://ai-life-status.vercel.app';
 const JOBS=["伝説の社畜","深夜のコンビニ賢者","布団の守護神","カフェイン魔術師","散財の錬金術師","孤高のソロキャンパー","妄想の建築家","通知の奴隷","AI魔法剣士","深夜ラーメン背徳者","ドライブの哲学者","推し活の聖女","副業沼の冒険者","永遠の計画マン","カフェ巡りの魔女","ストーリーズの女神","コスメ錬金術師","積ん読の大賢者","昼寝の大魔王","サブスク放置の貴族","推しの騎士","深夜アニメの求道者","Google検索の勇者","タピオカの巫女"];
 const JOBD=["定時の概念を破壊した者","午前3時に真理を悟る","二度寝で世界を救う","コーヒーなしでは無力","お金を経験に変える天才","焚き火と語り合う者","脳内47個の未完成計画","スマホ振動でHP-5","Claude二刀流の使い手","23時以降の判断力-80%","運転中だけ深い思考","推しのためなら全てを捧げる","始めるのは得意","計画だけなら世界一","隠れた名店を見つける天性","映える構図を0.1秒で見抜く","顔面に魔法をかける者","本棚に200冊の未読","15分の仮眠が3時間に","月額2万が空気になった","推しの盾であり剣","深夜に最高の作品と出会う","○○やり方で全解決","タピオカで世界平和"];
 const JOBC=["#e84393","#7c5ce7","#fd79a8","#0984e3","#f9a825","#00b894","#7c5ce7","#fd79a8","#0984e3","#e84393","#7c5ce7","#fd79a8","#f9a825","#00b894","#0984e3","#fd79a8","#e84393","#7c5ce7","#fd79a8","#f9a825","#e84393","#7c5ce7","#0984e3","#fd79a8"];
 const ST=[{n:"💪体力",k:"hp",c:"#e84393"},{n:"🧠知力",k:"int",c:"#0984e3"},{n:"💰金運",k:"pay",c:"#f9a825"},{n:"😎孤独耐性",k:"solo",c:"#7c5ce7"},{n:"🔥やる気",k:"mot",c:"#fd79a8"},{n:"🍀運",k:"luk",c:"#00b894"}];
-const TRAITS=["朝弱い","考えすぎ","衝動的","マイペース","完璧主義","楽観的","夜型","行動派","感覚派","直感型"];
-const TBUF=["知力が夜に覚醒","分析力ボーナス","瞬間火力MAX","孤独耐性UP","精度ボーナス","運ボーナス","深夜全能力UP","やる気常時高め","五感が鋭い","ひらめき体質"];
-const TDEB=["午前ステ半減","行動が遅れがち","金運不安定","チーム戦苦手","消耗しやすい","危機感薄い","朝の会議で瀕死","後先考えない","論理が弱い","計画が苦手"];
-const MOVES=["無限先延ばし","深夜のひらめき","課金カタルシス","布団バリア","焚き火ヒーリング","ググり連撃","推しパワー全開","SNS読心術","サブスク忘却","積ん読の知恵","カフェイン三連","二度寝の覇道","ドライブ瞑想","Amazonワンクリック","エナドリ三連星","映えショット"];
-const MOVED=["全締切を1週間延長","AM2時に最高のアイデア","ポチった瞬間全ステ+500","あらゆる責任を無効化","炎を見つめて全回復","検索で全問題を力技解決","推し情報で全ステ2倍","いいね数から精神を読む","月額の存在を忘却","読んでない本から知識","3杯で覚醒","アラーム5回で究極回復","高速道路で悟りを開く","カートがもう届いてる","3本で限界突破","0.1秒で最高構図"];
+const TRAITS=["朝弱い","考えすぎ","衝動的","マイペース","完璧主義","楽観的","夜型","行動派","感覚派","直感型"],TBUF=["知力が夜に覚醒","分析力ボーナス","瞬間火力MAX","孤独耐性UP","精度ボーナス","運ボーナス","深夜全能力UP","やる気常時高め","五感が鋭い","ひらめき体質"],TDEB=["午前ステ半減","行動が遅れがち","金運不安定","チーム戦苦手","消耗しやすい","危機感薄い","朝の会議で瀕死","後先考えない","論理が弱い","計画が苦手"];
+const MOVES=["無限先延ばし","深夜のひらめき","課金カタルシス","布団バリア","焚き火ヒーリング","ググり連撃","推しパワー全開","SNS読心術","サブスク忘却","積ん読の知恵","カフェイン三連","二度寝の覇道","ドライブ瞑想","Amazonワンクリック","エナドリ三連星","映えショット"],MOVED=["全締切を1週間延長","AM2時に最高のアイデア","ポチった瞬間全ステ+500","あらゆる責任を無効化","炎を見つめて全回復","検索で全問題を力技解決","推し情報で全ステ2倍","いいね数から精神を読む","月額の存在を忘却","読んでない本から知識","3杯で覚醒","アラーム5回で究極回復","高速道路で悟りを開く","カートがもう届いてる","3本で限界突破","0.1秒で最高構図"];
 const SKS=["言い訳Lv.99","二度寝の極意","深夜テンション","検索の達人","先延ばしの術","衝動買いの呼吸","焚き火マスター","ドライブ瞑想","積ん読の覇者","推しプレゼン力","ぼっち飯の覚悟","寝落ちの才能","謎の自信","カフェ巡りの眼","Amazonカート芸","映え構図","課金の波動","エンドレススクロール"];
 const WKS=["月曜朝: 全ステ-50%（解呪不可）","「あと5分」→30分バグ","セールで課金暴走","深夜SNSでやる気リーク","布団引力への耐性ゼロ","他人の成功でHP微減","「明日やろう」自動発動","推し供給途切れでやる気消滅"];
 const QTS=["散財力、もはや才能。","孤独耐性の高さは最強の証。","やる気の使い所を選んでるだけ。","布団が強すぎる。お前は悪くない。","お前はお前のRPGを生きろ。","運は行動の蓄積。"];
+const CELEBS=[{n:"大谷翔平",pow:2.8},{n:"藤井聡太",pow:2.5},{n:"イチロー",pow:2.3},{n:"ヒカキン",pow:1.6},{n:"橋本環奈",pow:1.8},{n:"米津玄師",pow:1.7},{n:"渡辺直美",pow:1.5},{n:"あいみょん",pow:1.4},{n:"新垣結衣",pow:1.6}];
 const COMBOS=[{n:"ダブル課金カタルシス",d:"2人同時ポチ→合計金額で現実直視",c:"#f9a825"},{n:"シンクロ二度寝",d:"誰も起こす人がいない最強の布団結界",c:"#fd79a8"},{n:"推し語りチェイン",d:"推しの話が止まらない無限ループ",c:"#e84393"},{n:"焚き火デュエット",d:"言葉なしで通じ合う沈黙の時間",c:"#00b894"},{n:"計画だけ完璧コンボ",d:"最高の計画を立てる。実行は明日",c:"#7c5ce7"},{n:"相互SNS監視",d:"既読速度が光の速さ",c:"#fd79a8"},{n:"ドライブ哲学対話",d:"車内で人生を語る。到着後に忘れる",c:"#0984e3"},{n:"深夜カフェイン共鳴",d:"2人で飲むコーヒーは1.5倍うまい",c:"#0984e3"}];
-const SYN_R=["F","E","D","C","B","A","S","SS","SSS"];
-const SYN_L=["水と油","微妙な距離感","まあまあ","悪くない","いいコンビ","最高の相棒","運命の出会い","伝説のペア","宇宙最強パーティ"];
-const EQUIPS=[
-  {e:"⚔️",n:"伝説のエナジードリンク",ef:"やる気+500 / 体力+300",d:"古の錬金術師が調合した覚醒の秘薬",s:"mot"},
-  {e:"🛡️",n:"不屈のノイキャンヘッドホン",ef:"知力+400 / 孤独耐性+350",d:"全雑音を遮断する伝説級防具",s:"solo"},
-  {e:"📖",n:"禁断のAI魔導書",ef:"知力+600",d:"読む者に無限の知識を与える…らしい",s:"int"},
-  {e:"🏕️",n:"聖なる焚き火台",ef:"やる気+450 / 孤独耐性+400",d:"炎を見つめるだけで全回復する神器",s:"mot"},
-  {e:"☕",n:"魔王のコーヒーメーカー",ef:"知力+350 / やる気+500",d:"1杯で8時間集中の呪いの道具",s:"int"},
-  {e:"💪",n:"覚醒のプロテイン",ef:"体力+600 / やる気+200",d:"飲んだ瞬間に筋肉が目覚める粉",s:"hp"},
-  {e:"😴",n:"至高の快眠マットレス",ef:"体力+500 / 全回復速度2倍",d:"眠りの神が祝福した究極寝具",s:"hp"},
-  {e:"📚",n:"封印されし積ん読の山",ef:"知力+800（読めば）",d:"読破で伝説級。未読ならただの重り",s:"int"},
-];
-
+const SYN_R=["F","E","D","C","B","A","S","SS","SSS"],SYN_L=["水と油","微妙な距離感","まあまあ","悪くない","いいコンビ","最高の相棒","運命の出会い","伝説のペア","宇宙最強パーティ"];
+const EQUIPS=[{e:"⚔️",n:"伝説のエナジードリンク",ef:"やる気+500 / 体力+300",d:"覚醒の秘薬",s:"mot",q:"エナジードリンク おすすめ"},{e:"🛡️",n:"不屈のノイキャンヘッドホン",ef:"知力+400 / 孤独耐性+350",d:"伝説級防具",s:"solo",q:"ノイズキャンセリング ヘッドホン"},{e:"📖",n:"禁断のAI魔導書",ef:"知力+600",d:"無限の知識を与える",s:"int",q:"AI 入門書 おすすめ"},{e:"🏕️",n:"聖なる焚き火台",ef:"やる気+450 / 孤独耐性+400",d:"全回復する神器",s:"mot",q:"焚き火台 コンパクト"},{e:"☕",n:"魔王のコーヒーメーカー",ef:"知力+350 / やる気+500",d:"8時間集中の呪い",s:"int",q:"コーヒーメーカー おすすめ"},{e:"💪",n:"覚醒のプロテイン",ef:"体力+600 / やる気+200",d:"筋肉が目覚める粉",s:"hp",q:"プロテイン おすすめ"},{e:"😴",n:"至高の快眠マットレス",ef:"体力+500 / 回復2倍",d:"究極寝具",s:"hp",q:"マットレス 快眠"},{e:"📚",n:"封印されし積ん読の山",ef:"知力+800（読めば）",d:"読破で伝説級",s:"int",q:"ベストセラー 本"}];
 function hash(s){let h=0;for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
 function sr(seed){let s=seed;return()=>{s=(s*16807)%2147483647;return(s-1)/2147483646;};}
-
-function gen(name){
-  const h=hash(name+new Date().toDateString()),r=sr(h);
-  const ji=Math.floor(r()*JOBS.length),ti=Math.floor(r()*TRAITS.length),mi=Math.floor(r()*MOVES.length),wi=Math.floor(r()*WKS.length),qi=Math.floor(r()*QTS.length);
-  const lv=Math.floor(r()*60)+3;
-  const sv={};let total=0;
-  ST.forEach(s=>{let v=Math.floor(r()*800)+100;if(r()>.55)v=Math.floor(r()*400)+800;if(r()>.82)v=Math.floor(r()*30)+1;if(r()>.97)v=-1;if(r()>.993)v=Math.floor(r()*9000)+1000;sv[s.k]=v;total+=(v>0?v:500);});
-  const sk=[...Array(SKS.length).keys()].sort(()=>r()-.5).slice(0,Math.floor(r()*2)+3).map(i=>SKS[i]);
-  const title=['見習い','一般','熟練','精鋭','達人','伝説','神話'][Math.min(6,Math.floor(lv/10))];
-  let low={k:'',v:99999};ST.forEach(s=>{if(sv[s.k]>0&&sv[s.k]<low.v)low={k:s.k,v:sv[s.k]};});
-  return{name,job:JOBS[ji],jobD:JOBD[ji],jobC:JOBC[ji],trait:TRAITS[ti],trB:TBUF[ti],trD:TDEB[ti],lv,title,sv,total,sk,move:MOVES[mi],moveD:MOVED[mi],wk:WKS[wi],qt:QTS[qi],low};
-}
-
-function drawRadar(id,vals,cols){
-  const c=document.getElementById(id);if(!c)return;
-  const ctx=c.getContext('2d'),w=c.width,h=c.height,cx=w/2,cy=h/2,R=w/2-28,n=vals.length;
-  ctx.clearRect(0,0,w,h);
-  const labels=ST.map(s=>s.n.replace(/[^\u3000-\u9fff\w]/g,''));
-  for(let ring=1;ring<=4;ring++){ctx.beginPath();for(let i=0;i<=n;i++){const a=Math.PI*2*i/n-Math.PI/2,rr=R*ring/4;ctx.lineTo(cx+rr*Math.cos(a),cy+rr*Math.sin(a));}ctx.closePath();ctx.strokeStyle=getComputedStyle(document.body).getPropertyValue('--bd');ctx.lineWidth=1;ctx.stroke();}
-  ctx.beginPath();
-  vals.forEach((v,i)=>{const a=Math.PI*2*i/n-Math.PI/2,vr=Math.min(v<0?.7:v/1500,1)*R;ctx.lineTo(cx+vr*Math.cos(a),cy+vr*Math.sin(a));});
-  ctx.closePath();
-  const isDark=document.body.classList.contains('dark');
-  ctx.fillStyle=isDark?'rgba(78,205,196,.12)':'rgba(124,92,231,.1)';ctx.fill();
-  ctx.strokeStyle=isDark?'rgba(78,205,196,.6)':'rgba(124,92,231,.5)';ctx.lineWidth=2;ctx.stroke();
-  vals.forEach((v,i)=>{
-    const a=Math.PI*2*i/n-Math.PI/2,vr=Math.min(v<0?.7:v/1500,1)*R;
-    ctx.beginPath();ctx.arc(cx+vr*Math.cos(a),cy+vr*Math.sin(a),3,0,Math.PI*2);ctx.fillStyle=cols[i];ctx.fill();
-    const lr=R+18;ctx.font='bold 14px "Noto Sans JP"';ctx.textAlign='center';ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--dm');
-    ctx.fillText(labels[i],cx+lr*Math.cos(a),cy+lr*Math.sin(a)+4);
-    const vl=v<0?'???':v>999?v.toLocaleString()+'⚡':v.toString();
-    ctx.font='bold 11px "DotGothic16"';ctx.fillStyle=cols[i];
-    ctx.fillText(vl,cx+vr*Math.cos(a),cy+vr*Math.sin(a)-8);
-  });
-}
-
-function renderSolo(d){
-  const vals=ST.map(s=>d.sv[s.k]),cols=ST.map(s=>s.c);
-  // Share card (compact)
-  document.getElementById('sc').innerHTML=`
-    <div class="sc-head"><div class="sc-lv dot">Lv.${d.lv} ${d.job}</div><div class="sc-rank dot">${d.title}級</div></div>
-    <div class="sc-name">${d.name}</div>
-    <div class="sc-job" style="color:${d.jobC}">⚔️ ${d.job}</div>
-    <div class="sc-jd">${d.jobD}</div>
-    <div class="sc-traits"><span style="color:${d.jobC};background:color-mix(in srgb,${d.jobC} 10%,transparent);border-radius:3px">${d.trait}</span> <span style="color:var(--mint)">▲${d.trB}</span> <span style="color:var(--rose)">▼${d.trD}</span></div>
-    <canvas id="r1" class="sc-radar" width="340" height="340"></canvas>
-    <div class="sc-move"><div class="sc-move-l dot">⚡必殺技</div><div class="sc-move-n">${d.move}</div></div>
-    <div class="sc-wk"><b>弱点:</b> ${d.wk}</div>
-    <div class="sc-q">「${d.qt}」</div>
-    <div class="sc-foot dot">#AI人生ステータス ｜ ai-life-status.app</div>`;
-  setTimeout(()=>drawRadar('r1',vals,cols),80);
-
-  // Detail section
-  let bars='';ST.forEach(s=>{const v=d.sv[s.k],disp=v<0?'???':v.toLocaleString()+(v>999?' ⚡':''),w=v<0?100:Math.min(v/1500*100,100);
-    bars+=`<div class="db"><div class="db-l"><span class="db-n">${s.n}</span><span class="db-v" style="color:${s.c}">${disp}</span></div><div class="db-t"><div class="db-f" style="width:0%;background:${s.c}" data-w="${w}"></div></div></div>`;});
-  const skC=['#0984e3','#7c5ce7','#fd79a8','#f9a825','#e84393','#00b894'];
-  let sks='';d.sk.forEach((s,i)=>{const c=skC[i%6];sks+=`<span class="d-sk" style="color:${c};background:color-mix(in srgb,${c} 8%,transparent);border-radius:4px">🔹${s}</span>`;});
-  const sn=ST.find(s=>s.k===d.low.k)?.n||'???';
-  const rel=EQUIPS.filter(e=>e.s===d.low.k||Math.random()>.55).slice(0,3);
-  let eqs='';rel.forEach(e=>{eqs+=`<div class="eq"><div class="eq-icon">${e.e}</div><div class="eq-info"><div class="eq-name">${e.n}</div><div class="eq-eff">${e.ef}</div><div class="eq-lore">${e.d}</div></div><a href="#" class="eq-link">装備する →</a></div>`;});
-  const gq=[{q:"この査定結果、どう思う？",o:["まさにその通り","心当たりありすぎ","…ノーコメント"]},{q:"次の行動は？",o:["仲間を集める","有名人に挑む","まず布団から出る"]},{q:"冒険の目的は？",o:["副業で月10万","仲間との旅","布団から出ること"]}];
-  const gqi=gq[Math.floor(Math.random()*gq.length)];
-
-  document.getElementById('detailSection').innerHTML=`
-    <div class="d-box"><h3 class="dot">📊 詳細ステータス</h3>${bars}</div>
-    <div class="d-box"><h3 class="dot">🔹 スキル</h3><div class="d-sks">${sks}</div></div>
-    <div class="d-box"><h3 class="dot">⚡ 必殺技「${d.move}」</h3><p style="font-size:.68em;color:var(--dm)">${d.moveD}</p></div>
-    <div class="eq-section"><h3 class="dot">🧪 装備品ショップ</h3><div class="eq-sub">「${sn}」が低い…この装備で補強せよ</div>${eqs}</div>
-    <div class="d-box"><h3 class="dot">💬 ギルドマスターからの問い</h3><p style="font-size:.68em;color:var(--dm);margin-bottom:4px">${gqi.q}</p><div class="choices">${gqi.o.map(o=>`<button class="ch dot" onclick="this.classList.toggle('picked')">▶ ${o}</button>`).join('')}</div></div>`;
-  setTimeout(()=>{document.querySelectorAll('.db-f').forEach(el=>{el.style.width=el.dataset.w+'%';});},200);
-  window._s=d;
-}
-
+function gen(name,powMul=1){const h=hash(name+new Date().toDateString()),r=sr(h);const ji=Math.floor(r()*JOBS.length),ti=Math.floor(r()*TRAITS.length),mi=Math.floor(r()*MOVES.length),wi=Math.floor(r()*WKS.length),qi=Math.floor(r()*QTS.length);const lv=Math.floor(r()*60)+3;const sv={};let total=0;ST.forEach(s=>{let v=Math.floor(r()*800)+100;if(r()>.55)v=Math.floor(r()*400)+800;if(r()>.82)v=Math.floor(r()*30)+1;if(r()>.97)v=-1;if(r()>.993)v=Math.floor(r()*9000)+1000;v=Math.round(v*powMul);sv[s.k]=v;total+=(v>0?v:500);});const sk=[...Array(SKS.length).keys()].sort(()=>r()-.5).slice(0,Math.floor(r()*2)+3).map(i=>SKS[i]);const title=['見習い','一般','熟練','精鋭','達人','伝説','神話'][Math.min(6,Math.floor(lv/10))];let low={k:'',v:99999};ST.forEach(s=>{if(sv[s.k]>0&&sv[s.k]<low.v)low={k:s.k,v:sv[s.k]};});return{name,job:JOBS[ji],jobD:JOBD[ji],jobC:JOBC[ji],trait:TRAITS[ti],trB:TBUF[ti],trD:TDEB[ti],lv,title,sv,total,sk,move:MOVES[mi],moveD:MOVED[mi],wk:WKS[wi],qt:QTS[qi],low};}
+function drawRadar(id,vals,cols){const c=document.getElementById(id);if(!c)return;const ctx=c.getContext('2d'),w=c.width,h=c.height,cx=w/2,cy=h/2,R=w/2-28,n=vals.length;ctx.clearRect(0,0,w,h);const labels=ST.map(s=>s.n.replace(/[^\u3000-\u9fff\w]/g,''));for(let ring=1;ring<=4;ring++){ctx.beginPath();for(let i=0;i<=n;i++){const a=Math.PI*2*i/n-Math.PI/2,rr=R*ring/4;ctx.lineTo(cx+rr*Math.cos(a),cy+rr*Math.sin(a));}ctx.closePath();ctx.strokeStyle=getComputedStyle(document.body).getPropertyValue('--bd');ctx.lineWidth=1;ctx.stroke();}ctx.beginPath();vals.forEach((v,i)=>{const a=Math.PI*2*i/n-Math.PI/2,vr=Math.min(v<0?.7:v/1500,1)*R;ctx.lineTo(cx+vr*Math.cos(a),cy+vr*Math.sin(a));});ctx.closePath();const dk=document.body.classList.contains('dark');ctx.fillStyle=dk?'rgba(78,205,196,.12)':'rgba(124,92,231,.1)';ctx.fill();ctx.strokeStyle=dk?'rgba(78,205,196,.6)':'rgba(124,92,231,.5)';ctx.lineWidth=2;ctx.stroke();vals.forEach((v,i)=>{const a=Math.PI*2*i/n-Math.PI/2,vr=Math.min(v<0?.7:v/1500,1)*R;ctx.beginPath();ctx.arc(cx+vr*Math.cos(a),cy+vr*Math.sin(a),3,0,Math.PI*2);ctx.fillStyle=cols[i];ctx.fill();const lr=R+18;ctx.font='bold 14px "Noto Sans JP"';ctx.textAlign='center';ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--dm');ctx.fillText(labels[i],cx+lr*Math.cos(a),cy+lr*Math.sin(a)+4);const vl=v<0?'???':v>999?v.toLocaleString()+'⚡':v.toString();ctx.font='bold 11px "DotGothic16"';ctx.fillStyle=cols[i];ctx.fillText(vl,cx+vr*Math.cos(a),cy+vr*Math.sin(a)-8);});}
+function renderSolo(d){const vals=ST.map(s=>d.sv[s.k]),cols=ST.map(s=>s.c);document.getElementById('sc').innerHTML=`<div class="sc-head"><div class="sc-lv dot">Lv.${d.lv}</div><div class="sc-rank dot">${d.title}級冒険者</div></div><div class="sc-name">${d.name}</div><div class="sc-job" style="color:${d.jobC}">⚔️ ${d.job}</div><div class="sc-jd">${d.jobD}</div><div class="sc-traits"><span style="color:${d.jobC};background:color-mix(in srgb,${d.jobC} 10%,transparent);border-radius:3px">${d.trait}</span> <span style="color:var(--mint)">▲${d.trB}</span> <span style="color:var(--rose)">▼${d.trD}</span></div><canvas id="r1" class="sc-radar" width="340" height="340"></canvas><div class="sc-move"><div class="sc-move-l dot">⚡必殺技</div><div class="sc-move-n">${d.move}</div></div><div class="sc-wk"><b>弱点:</b> ${d.wk}</div><div class="sc-q">「${d.qt}」</div><div class="sc-foot dot">#AI人生ステータス ｜ ai-life-status.vercel.app</div>`;setTimeout(()=>drawRadar('r1',vals,cols),80);let bars='';ST.forEach(s=>{const v=d.sv[s.k],disp=v<0?'???':v.toLocaleString()+(v>999?' ⚡':''),w=v<0?100:Math.min(v/1500*100,100);bars+=`<div class="db"><div class="db-l"><span class="db-n">${s.n}</span><span class="db-v" style="color:${s.c}">${disp}</span></div><div class="db-t"><div class="db-f" style="width:0%;background:${s.c}" data-w="${w}"></div></div></div>`;});const skC=['#0984e3','#7c5ce7','#fd79a8','#f9a825','#e84393','#00b894'];let sks='';d.sk.forEach((s,i)=>{const c=skC[i%6];sks+=`<span class="d-sk" style="color:${c};background:color-mix(in srgb,${c} 8%,transparent);border-radius:4px">🔹${s}</span>`;});const sn=ST.find(s=>s.k===d.low.k)?.n||'???';const rel=EQUIPS.filter(e=>e.s===d.low.k||Math.random()>.55).slice(0,3);let eqs='';rel.forEach(e=>{const url='https://www.amazon.co.jp/s?k='+encodeURIComponent(e.q);eqs+=`<a class="eq" href="${url}" target="_blank" rel="noopener"><div class="eq-icon">${e.e}</div><div class="eq-info"><div class="eq-name">${e.n}</div><div class="eq-eff">${e.ef}</div><div class="eq-lore">${e.d}</div></div><div class="eq-badge">装備する→</div></a>`;});const celChips=CELEBS.map(c=>`<div class="cel-chip" onclick="showVS('${c.n}',${c.pow})">${c.n}</div>`).join('');document.getElementById('detailSection').innerHTML=`<div class="d-box"><h3 class="dot">📊 詳細ステータス</h3>${bars}</div><div class="d-box"><h3 class="dot">🔹 スキル</h3><div class="d-sks">${sks}</div></div><div class="d-box"><h3 class="dot">⚡ 必殺技「${d.move}」</h3><p style="font-size:.68em;color:var(--dm)">${d.moveD}</p></div><div class="d-box"><h3 class="dot">⚔️ 有名人と対戦してみる</h3><div class="cel-chips">${celChips}</div></div><div class="eq-section"><h3 class="dot">🧪 装備品ショップ</h3><div class="eq-sub">「${sn}」が低い…この装備で補強せよ</div>${eqs}</div>`;setTimeout(()=>{document.querySelectorAll('.db-f').forEach(el=>{el.style.width=el.dataset.w+'%';});},200);window._s=d;}
+function showVS(cn,pow){const me=window._s,cel=gen(cn,pow);let bars='',mW=0,cW=0,keyBattle='';ST.forEach(s=>{const mv=me.sv[s.k]<0?500:me.sv[s.k],cv=cel.sv[s.k]<0?500:cel.sv[s.k];const mD=me.sv[s.k]<0?'???':me.sv[s.k].toLocaleString(),cD=cel.sv[s.k]<0?'???':cel.sv[s.k].toLocaleString();let w='';if(mv>cv){mW++;w='◀';}else if(cv>mv){cW++;w='▶';}const mx=Math.max(mv,cv,1);bars+=`<div class="vb"><div class="vb-l">${s.n}</div><div class="vb-r"><div class="vb-v dot" style="color:${mv>=cv?s.c:s.c+'55'}">${mD}</div><div class="vb-left"><div class="vb-fl" style="width:${mv/mx*100}%;background:${s.c}"></div></div><div class="vb-w">${w}</div><div class="vb-right"><div class="vb-fr" style="width:${cv/mx*100}%;background:${s.c}55"></div></div><div class="vb-v dot" style="color:${cv>=mv?s.c:s.c+'55'}">${cD}</div></div></div>`;if(!keyBattle&&mv!==cv)keyBattle=mv>cv?s.n+'で'+me.name+'が意地を見せた！':s.n+'で'+cn+'が格の違いを示した';});const wn=mW>cW?me.name:mW<cW?cn:'引き分け',wc=mW>cW?'var(--mint)':mW<cW?'var(--rose)':'var(--gold)';const narr=mW>cW?keyBattle+' 必殺技「'+me.move+'」が決まり、'+me.name+'の勝利！':mW<cW?keyBattle+' '+cn+'の壁は高かった…再戦を誓う'+me.name+'。':'互角の戦い。'+keyBattle+' 決着つかず。';document.getElementById('vsc').innerHTML='<div class="vsc-h dot">⚔️ BATTLE ⚔️</div><div class="vsc-vs"><div class="vsc-p"><div class="vsc-nm">'+me.name+'</div><div class="vsc-cls dot" style="color:'+me.jobC+'">Lv.'+me.lv+' '+me.job+'</div></div><div class="vsc-mid dot">VS</div><div class="vsc-p"><div class="vsc-nm">'+cn+'</div><div class="vsc-cls dot" style="color:'+cel.jobC+'">Lv.'+cel.lv+' '+cel.job+'</div></div></div>'+bars+'<div class="vsc-narr dot">'+narr+'</div><div class="vsc-res" style="color:'+wc+';background:color-mix(in srgb,'+wc+' 6%,transparent);border:1px solid color-mix(in srgb,'+wc+' 20%,transparent)">'+(wn==='引き分け'?'🤝引き分け':(wn===me.name?'🏆'+me.name+'の勝ち！':'😱'+cn+'の勝ち…'))+' '+mW+'-'+cW+'</div><div class="vsc-btns"><button class="vsc-cl dot" onclick="document.getElementById(\'vso\').classList.remove(\'on\')">閉じる</button><button class="vsc-sh dot" onclick="vsShare(\''+me.name+'\',\''+cn+'\','+mW+','+cW+',\''+me.job+'\',\''+cel.job+'\',\''+me.move+'\')">𝕏シェア</button></div>';document.getElementById('vso').classList.add('on');}
+function vsShare(me,cel,mw,cw,mJ,cJ,mM){const r=mw>cw?'勝った🏆':mw<cw?'負けた😱':'引き分け🤝';window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(me+'('+mJ+') vs '+cel+'('+cJ+')\n必殺技「'+mM+'」→ '+mw+'-'+cw+' '+r+'\n\n→'+SITE+'\n#AI人生ステータス'),'_blank');document.getElementById('vso').classList.remove('on');}
 function nextSolo(){const n=document.getElementById('nxi').value.trim();if(!n)return;document.getElementById('nxi').value='';renderSolo(gen(n));window.scrollTo({top:0,behavior:'smooth'});}
-
-function genCompat(n1,n2){
-  const d1=gen(n1),d2=gen(n2),h=hash(n1+n2+new Date().toDateString()),r=sr(h);
-  const combo=COMBOS[Math.floor(r()*COMBOS.length)];
-  const ss=[{n:"🗺️冒険相性",v:Math.floor(r()*100)},{n:"💬会話の噛み合い",v:Math.floor(r()*100)},{n:"⚔️連携攻撃力",v:Math.floor(r()*100)},{n:"🛡️弱点補完",v:Math.floor(r()*100)},{n:"😊一緒にいて楽な度",v:Math.floor(r()*100)}];
-  const avg=Math.floor(ss.reduce((a,s)=>a+s.v,0)/ss.length);
-  const ri=Math.min(8,Math.floor(avg/12));
-  return{d1,d2,combo,ss,avg,rank:SYN_R[ri],rl:SYN_L[ri]};
-}
-
-function renderCompat(data){
-  const{d1,d2,combo,ss,avg,rank,rl}=data;
-  let sts='';ss.forEach(s=>{const c=s.v>70?'var(--mint)':s.v>40?'var(--gold)':'var(--rose)';sts+=`<div class="cc-st"><span class="cc-st-n">${s.n}</span><div class="cc-st-bar"><div class="cc-st-fill" style="width:${s.v}%;background:${c}"></div></div><span class="cc-st-v" style="color:${c}">${s.v}</span></div>`;});
-  document.getElementById('cc').innerHTML=`
-    <div class="cc-t dot">⚔️ パーティ相性査定</div>
-    <div class="cc-pair"><div class="cc-p"><div class="cc-nm">${d1.name}</div><div class="cc-j" style="color:${d1.jobC}">${d1.job}</div></div><div class="cc-mid">×</div><div class="cc-p"><div class="cc-nm">${d2.name}</div><div class="cc-j" style="color:${d2.jobC}">${d2.job}</div></div></div>
-    <div class="cc-syn"><div class="cc-syn-l dot">シナジー</div><div class="cc-syn-r">${rank}ランク「${rl}」</div></div>
-    <div class="cc-combo"><div class="cc-combo-l dot">💥合体必殺技</div><div class="cc-combo-n" style="color:${combo.c}">${combo.n}</div><div class="cc-combo-d">${combo.d}</div></div>
-    <div class="cc-stats">${sts}</div>
-    <div class="cc-advice">${avg>60?'この2人、パーティ組んだら最強かも。':avg>35?'悪くない。実戦で連携を磨こう。':'噛み合わないのも個性。レアなパーティ。'}</div>
-    <div class="cc-foot dot">#AI人生ステータス ｜ ai-life-status.app</div>`;
-  window._c=data;
-}
-
-// Navigation
+function genCompat(n1,n2){const d1=gen(n1),d2=gen(n2),h=hash(n1+n2+new Date().toDateString()),r=sr(h);const combo=COMBOS[Math.floor(r()*COMBOS.length)];const ss=[{n:"🗺️冒険相性",v:Math.floor(r()*100)},{n:"💬会話の噛み合い",v:Math.floor(r()*100)},{n:"⚔️連携攻撃力",v:Math.floor(r()*100)},{n:"🛡️弱点補完",v:Math.floor(r()*100)},{n:"😊一緒にいて楽な度",v:Math.floor(r()*100)}];const avg=Math.floor(ss.reduce((a,s)=>a+s.v,0)/ss.length);const ri=Math.min(8,Math.floor(avg/12));return{d1,d2,combo,ss,avg,rank:SYN_R[ri],rl:SYN_L[ri]};}
+function renderCompat(data){const{d1,d2,combo,ss,avg,rank,rl}=data;let sts='';ss.forEach(s=>{const c=s.v>70?'var(--mint)':s.v>40?'var(--gold)':'var(--rose)';sts+=`<div class="cc-st"><span class="cc-st-n">${s.n}</span><div class="cc-st-bar"><div class="cc-st-fill" style="width:${s.v}%;background:${c}"></div></div><span class="cc-st-v" style="color:${c}">${s.v}</span></div>`;});document.getElementById('cc').innerHTML=`<div class="cc-t dot">⚔️ パーティ相性査定</div><div class="cc-pair"><div class="cc-p"><div class="cc-nm">${d1.name}</div><div class="cc-j" style="color:${d1.jobC}">${d1.job}</div></div><div class="cc-mid">×</div><div class="cc-p"><div class="cc-nm">${d2.name}</div><div class="cc-j" style="color:${d2.jobC}">${d2.job}</div></div></div><div class="cc-syn"><div class="cc-syn-l dot">シナジー</div><div class="cc-syn-r">${rank}ランク「${rl}」</div></div><div class="cc-combo"><div class="cc-combo-l dot">💥合体必殺技</div><div class="cc-combo-n" style="color:${combo.c}">${combo.n}</div><div class="cc-combo-d">${combo.d}</div></div><div class="cc-stats">${sts}</div><div class="cc-advice">${avg>60?'この2人、パーティ組んだら最強かも。':avg>35?'悪くない。実戦で連携を磨こう。':'噛み合わないのも個性。レアなパーティ。'}</div><div class="cc-foot dot">#AI人生ステータス ｜ ai-life-status.vercel.app</div>`;window._c=data;}
 function setMode(m,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');document.getElementById('soloIn').style.display=m==='solo'?'block':'none';document.getElementById('compatIn').style.display=m==='compat'?'block':'none';}
 function showLd(txt,cb){document.getElementById('inputScreen').style.display='none';document.querySelectorAll('.res').forEach(r=>r.classList.remove('on'));document.getElementById('ldT').textContent=txt;document.getElementById('ld').classList.add('on');setTimeout(()=>{document.getElementById('ld').classList.remove('on');cb();},2200);}
 function goSolo(){const n=document.getElementById('ni').value.trim();if(!n)return;showLd('冒険者ギルドが査定中...',()=>{renderSolo(gen(n));document.getElementById('resSolo').classList.add('on');window.scrollTo({top:0,behavior:'smooth'});});}
 function goCompat(){const n1=document.getElementById('c1').value.trim(),n2=document.getElementById('c2').value.trim();if(!n1||!n2)return;showLd('パーティ相性を解析中...',()=>{renderCompat(genCompat(n1,n2));document.getElementById('resCompat').classList.add('on');window.scrollTo({top:0,behavior:'smooth'});});}
 function goCompatB(){const n1=document.getElementById('c1b').value.trim(),n2=document.getElementById('c2b').value.trim();if(!n1||!n2)return;document.getElementById('resSolo').classList.remove('on');showLd('パーティ相性を解析中...',()=>{renderCompat(genCompat(n1,n2));document.getElementById('resCompat').classList.add('on');window.scrollTo({top:0,behavior:'smooth'});});}
-function nextSoloNav(){const n=document.getElementById('nxi').value.trim();if(!n)return;document.getElementById('nxi').value='';renderSolo(gen(n));window.scrollTo({top:0,behavior:'smooth'});}
 function nextFromC(){const n=document.getElementById('nxi2').value.trim();if(!n)return;document.getElementById('nxi2').value='';document.getElementById('resCompat').classList.remove('on');renderSolo(gen(n));document.getElementById('resSolo').classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
 function retry(){document.querySelectorAll('.res').forEach(r=>r.classList.remove('on'));document.getElementById('inputScreen').style.display='block';['ni','c1','c2'].forEach(id=>document.getElementById(id).value='');}
-
-// Share
-function shX(){if(!window._s)return;const d=window._s;window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${d.name}のAI人生ステータス\n⚔️${d.job}(${d.title}級)\n必殺技:${d.move}\n弱点:${d.wk.substring(0,15)}…\n\n→ai-life-status.app\n#AI人生ステータス`)}`,'_blank');}
-function shL(){if(!window._s)return;const d=window._s;window.open(`https://line.me/R/share?text=${encodeURIComponent(`${d.name}→⚔️${d.job} 必殺技:${d.move}\n→ai-life-status.app`)}`,'_blank');}
-function shCX(){if(!window._c)return;const c=window._c;window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${c.d1.name}×${c.d2.name}のパーティ相性\n${c.rank}ランク「${c.rl}」\n合体技:${c.combo.n}\n\n→ai-life-status.app\n#AI人生ステータス`)}`,'_blank');}
-function shCL(){if(!window._c)return;const c=window._c;window.open(`https://line.me/R/share?text=${encodeURIComponent(`${c.d1.name}×${c.d2.name}→${c.rank}ランク 合体技:${c.combo.n}\n→ai-life-status.app`)}`,'_blank');}
-
-// Enter keys
+function shX(){if(!window._s)return;const d=window._s;window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(d.name+'のAI人生ステータス\n⚔️'+d.job+'('+d.title+'級)\n必殺技:'+d.move+'\n弱点:'+d.wk.substring(0,15)+'…\n\n→'+SITE+'\n#AI人生ステータス'),'_blank');}
+function shL(){if(!window._s)return;const d=window._s;window.open('https://line.me/R/share?text='+encodeURIComponent(d.name+'→⚔️'+d.job+' 必殺技:'+d.move+'\n→'+SITE),'_blank');}
+function shCX(){if(!window._c)return;const c=window._c;window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(c.d1.name+'×'+c.d2.name+'のパーティ相性\n'+c.rank+'ランク「'+c.rl+'」\n合体技:'+c.combo.n+'\n\n→'+SITE+'\n#AI人生ステータス'),'_blank');}
+function shCL(){if(!window._c)return;const c=window._c;window.open('https://line.me/R/share?text='+encodeURIComponent(c.d1.name+'×'+c.d2.name+'→'+c.rank+'ランク 合体技:'+c.combo.n+'\n→'+SITE),'_blank');}
 ['ni','c2','nxi','nxi2','c2b'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('keydown',e=>{if(e.key==='Enter'){({ni:goSolo,c2:goCompat,nxi:nextSolo,nxi2:nextFromC,c2b:goCompatB})[id]();}});});
 </script>
 </body>
