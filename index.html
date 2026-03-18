@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>AI人生ステータス診断 ⚔️ 名前を入れるだけで人生がRPGになる</title>
 <meta name="description" content="名前を入れるだけでAIがあなたの人生をRPG化。ジョブ・必殺技・弱点を査定。有名人と対戦、友達との相性診断もできる無料診断。">
 <meta property="og:title" content="AI人生ステータス診断 ⚔️">
@@ -20,19 +20,20 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚔️</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
 :root{--bg:#faf5ff;--card:#fff;--card2:#f5f0ff;--bd:#e8ddf5;--tx:#2a2040;--dm:#8a7aaa;--ac:#ff8c42;--sub:#7c5ce7;--pink:#e84393;--mint:#00b894;--sky:#0984e3;--rose:#fd79a8;--gold:#f9a825}
 body{background:var(--bg);color:var(--tx);font-family:'Noto Sans JP',sans-serif}
 body.dark{--bg:#08080e;--card:#0c0c18;--card2:#10101e;--bd:#1e1e34;--tx:#d8d8e8;--dm:#5a5a78;--ac:#ffd93d;--sub:#a78bfa;--pink:#fd79a8;--mint:#4ecdc4;--sky:#74b9ff;--rose:#ff6b6b;--gold:#ffd93d}
-.w{max-width:420px;margin:0 auto;padding:12px}
+.w{max-width:420px;margin:0 auto;padding:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
 .dot{font-family:'DotGothic16',monospace}
 .theme-btn{position:fixed;top:8px;right:8px;z-index:50;padding:6px 12px;border-radius:16px;border:1px solid var(--bd);background:var(--card);color:var(--dm);font-size:.65em;cursor:pointer}
 .inp{text-align:center;padding:20px 0}.inp .logo{font-size:1.4em;color:var(--ac)}.inp .sub{font-size:.68em;color:var(--dm);margin-bottom:16px}
 .tabs{display:flex;gap:5px;justify-content:center;margin-bottom:12px}
 .tab{padding:8px 14px;border-radius:6px;border:1px solid var(--bd);background:var(--card);color:var(--dm);font-size:.72em;cursor:pointer}.tab.on{border-color:var(--ac);color:var(--ac);background:color-mix(in srgb,var(--ac) 8%,var(--card))}
-.ir{display:flex;gap:5px}.ir input{flex:1;padding:12px;border-radius:8px;border:1.5px solid var(--bd);background:var(--card);color:var(--tx);font-size:.9em;font-family:inherit;outline:none}.ir input:focus{border-color:var(--ac)}
+.ir{display:flex;gap:5px}.ir input{flex:1;padding:12px;border-radius:8px;border:1.5px solid var(--bd);background:var(--card);color:var(--tx);font-size:16px;font-family:inherit;outline:none}.ir input:focus{border-color:var(--ac)}
 .go{padding:12px 16px;border:none;border-radius:8px;background:var(--ac);color:#fff;font-weight:900;font-size:.88em;cursor:pointer;font-family:inherit;min-height:44px}
-.ci{display:flex;gap:5px;align-items:center;justify-content:center;margin-bottom:8px}.ci input{width:110px;padding:12px;border-radius:8px;border:1.5px solid var(--bd);background:var(--card);color:var(--tx);font-size:.82em;font-family:inherit;outline:none;text-align:center}.ci-x{color:var(--dm)}
+.ci{display:flex;gap:5px;align-items:center;justify-content:center;margin-bottom:8px}.ci input{width:110px;padding:12px;border-radius:8px;border:1.5px solid var(--bd);background:var(--card);color:var(--tx);font-size:16px;font-family:inherit;outline:none;text-align:center}.ci-x{color:var(--dm)}
 .ld{display:none;padding:40px 0;text-align:center}.ld.on{display:block}.ld-t{font-size:.82em;color:var(--ac);margin-bottom:10px}.ld-bar{width:140px;height:4px;background:var(--card2);border-radius:2px;margin:0 auto;overflow:hidden}.ld-fill{height:100%;background:var(--ac);border-radius:2px;animation:ldf 2.2s ease forwards}@keyframes ldf{0%{width:0}100%{width:100%}}
 .res{display:none}.res.on{display:block}
 .scard{background:var(--card);border:1.5px solid var(--bd);border-radius:14px;padding:16px;position:relative;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.04)}.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ac),var(--pink),var(--sub),var(--mint))}
@@ -65,7 +66,31 @@ body.dark{--bg:#08080e;--card:#0c0c18;--card2:#10101e;--bd:#1e1e34;--tx:#d8d8e8;
 .shr{display:flex;gap:5px;margin-top:8px}.sb{flex:1;padding:12px;border:none;border-radius:8px;font-size:.76em;font-weight:700;cursor:pointer;font-family:inherit;min-height:44px}.sx{background:#000;color:#fff}.sl{background:#06c755;color:#fff}
 .nextp{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-top:8px;text-align:center}.nextp p{font-size:.68em;color:var(--dm);margin-bottom:5px}
 .retry{display:block;width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:transparent;color:var(--dm);font-size:.72em;cursor:pointer;margin-top:6px;font-family:inherit;min-height:44px}
-.credit{text-align:center;font-size:.42em;color:var(--bd);margin-top:8px}</style>
+.credit{text-align:center;font-size:.42em;color:var(--bd);margin-top:8px}
+/* スマホ可読性UP */
+.sc-jd{font-size:.67em!important}
+.sc-traits{font-size:.67em!important}
+.sc-wk{font-size:.67em!important}
+.sc-q{font-size:.68em!important}
+.sc-move-l{font-size:.62em!important}
+.sc-lv{font-size:.75em!important}
+.sc-rank{font-size:.65em!important}
+.d-box h3{font-size:.82em!important}
+.db-l{font-size:.72em!important}
+.d-sk{font-size:.72em!important}
+.cel-chip{font-size:.76em!important}
+.vsc-narr{font-size:.76em!important}
+.vsc-cls{font-size:.65em!important}
+.eq-name{font-size:.82em!important}
+.eq-eff{font-size:.7em!important}
+.eq-lore{font-size:.63em!important}
+.eq-badge{font-size:.72em!important}
+.cc-j{font-size:.65em!important}
+.cc-combo-d{font-size:.64em!important}
+.cc-advice{font-size:.67em!important}
+.sb{font-size:.84em!important}
+.nextp p{font-size:.76em!important}
+.retry{font-size:.8em!important}</style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
