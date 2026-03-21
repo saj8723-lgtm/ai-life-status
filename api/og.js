@@ -93,13 +93,13 @@ export default async function handler(req){
       const ly=Math.round(cy+labelR*Math.sin(angle));
       return h('div',{style:{
         position:'absolute',
-        left:String(lx-28)+'px',
-        top: String(ly-24)+'px',
-        width:'56px',
+        left:String(lx-34)+'px',
+        top: String(ly-30)+'px',
+        width:'68px',
         display:'flex',flexDirection:'column',alignItems:'center',
       }},
-        h('div',{style:{fontSize:'24px',lineHeight:'1.1',display:'flex'}},s.n),
-        h('div',{style:{fontSize:'13px',fontWeight:'700',color:s.c,lineHeight:'1.2',display:'flex'}},s.lb)
+        h('div',{style:{fontSize:'30px',lineHeight:'1.1',display:'flex'}},s.n),
+        h('div',{style:{fontSize:'16px',fontWeight:'700',color:s.c,lineHeight:'1.2',display:'flex'}},s.lb)
       );
     });
 
@@ -124,8 +124,8 @@ export default async function handler(req){
         // メインコンテンツ
         h('div',{style:{
           display:'flex',flex:1,
-          paddingTop:'14px',paddingRight:'20px',paddingBottom:'32px',paddingLeft:'24px',
-          gap:'16px',marginTop:'8px',
+          paddingTop:'14px',paddingRight:'20px',paddingBottom:'32px',paddingLeft:'20px',
+          gap:'16px',marginTop:'8px',justifyContent:'center',
         }},
 
           // ===== 左カラム（固定幅 460px）=====
