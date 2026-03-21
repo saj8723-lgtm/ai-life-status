@@ -56,7 +56,6 @@ function gridPts(frac,cx,cy,R){
     return `${(cx+r*Math.cos(angle)).toFixed(1)},${(cy+r*Math.sin(angle)).toFixed(1)}`;
   }).join(' ');
 }
-
 function h(type,props,...children){
   return{type,props:{...props,children:children.length===0?undefined:children.length===1?children[0]:children}};
 }
@@ -68,41 +67,44 @@ export default async function handler(req){
     const d=genOG(name);
     const jc=d.jobC;
 
-    // レーダーチャート設定
-    // SVGサイズ 380×360, 中心 cx=190 cy=180, R=115
-    // ラベル位置 labelR=151 → 全ラベルに余白あり（確認済み）
-    const cx=190,cy=180,R=115;
+    // レーダーチャート: SVG 520x500, R=170, cx=260, cy=250
+    // labelR=210 で全6ラベルが SVG 内に収まる（計算確認済み）
+    const cx=260,cy=250,R=170;
+    const labelR=R+40;
     const dataPts=radarPts(d.sv,cx,cy,R);
+
     const axes=ST.map((_,i)=>{
       const angle=(i*60-90)*Math.PI/180;
       return h('line',{
         x1:String(cx),y1:String(cy),
         x2:String((cx+R*Math.cos(angle)).toFixed(1)),
         y2:String((cy+R*Math.sin(angle)).toFixed(1)),
-        stroke:'rgba(124,92,231,0.3)',strokeWidth:'1.5',
+        stroke:'rgba(124,92,231,0.3)',strokeWidth:'2',
       });
     });
     const grids=[0.25,0.5,0.75,1].map(f=>
       h('polygon',{points:gridPts(f,cx,cy,R),fill:'none',stroke:'rgba(124,92,231,0.18)',strokeWidth:'1'})
     );
 
-    // HTML ラベル（絵文字 + 日本語）— SVG 座標系と同じ原点で絶対配置
-    const labelR=R+36;
+    // HTML ラベル（絵文字＋日本語テキスト）
     const htmlLabels=ST.map((s,i)=>{
       const angle=(i*60-90)*Math.PI/180;
       const lx=Math.round(cx+labelR*Math.cos(angle));
       const ly=Math.round(cy+labelR*Math.sin(angle));
       return h('div',{style:{
         position:'absolute',
-        left:String(lx-26)+'px',
-        top: String(ly-22)+'px',
-        width:'52px',
+        left:String(lx-28)+'px',
+        top: String(ly-24)+'px',
+        width:'56px',
         display:'flex',flexDirection:'column',alignItems:'center',
       }},
-        h('div',{style:{fontSize:'22px',lineHeight:'1.1',display:'flex'}},s.n),
-        h('div',{style:{fontSize:'11px',color:s.c,fontWeight:'700',lineHeight:'1.2',display:'flex'}},s.lb)
+        h('div',{style:{fontSize:'24px',lineHeight:'1.1',display:'flex'}},s.n),
+        h('div',{style:{fontSize:'13px',fontWeight:'700',color:s.c,lineHeight:'1.2',display:'flex'}},s.lb)
       );
     });
+
+    // 名前のフォントサイズ
+    const nameFontSize = name.length>8?'50px':name.length>5?'62px':'76px';
 
     return new ImageResponse(
       h('div',{style:{
@@ -111,71 +113,73 @@ export default async function handler(req){
         background:'linear-gradient(135deg,#faf5ff 0%,#e8ddf5 100%)',
       }},
         // 上部カラーバー
-        h('div',{style:{position:'absolute',top:0,left:0,right:0,height:'7px',display:'flex',
+        h('div',{style:{position:'absolute',top:0,left:0,right:0,height:'8px',display:'flex',
           background:'linear-gradient(90deg,#ff8c42,#fd79a8,#7c5ce7,#00b894)'}}),
-        // 装飾円（背景）
-        h('div',{style:{position:'absolute',top:'-60px',right:'-60px',width:'240px',height:'240px',
+        // 装飾円
+        h('div',{style:{position:'absolute',top:'-50px',right:'-50px',width:'220px',height:'220px',
           borderRadius:'50%',background:'rgba(124,92,231,0.07)',display:'flex'}}),
-        h('div',{style:{position:'absolute',bottom:'-40px',left:'-40px',width:'180px',height:'180px',
+        h('div',{style:{position:'absolute',bottom:'-30px',left:'-30px',width:'160px',height:'160px',
           borderRadius:'50%',background:'rgba(255,140,66,0.07)',display:'flex'}}),
 
-        // メインコンテンツ（左カラム 530px ＋ 右カラム flex:1）
+        // メインコンテンツ
         h('div',{style:{
           display:'flex',flex:1,
-          paddingTop:'18px',paddingRight:'28px',paddingBottom:'40px',paddingLeft:'28px',
-          gap:'24px',marginTop:'7px',
+          paddingTop:'14px',paddingRight:'20px',paddingBottom:'32px',paddingLeft:'24px',
+          gap:'16px',marginTop:'8px',
         }},
 
-          // ===== 左カラム =====
-          h('div',{style:{display:'flex',flexDirection:'column',width:'510px',flexShrink:0,justifyContent:'center'}},
-
+          // ===== 左カラム（固定幅 460px）=====
+          h('div',{style:{
+            display:'flex',flexDirection:'column',width:'460px',flexShrink:0,justifyContent:'center',
+          }},
             // ギルドラベル
-            h('div',{style:{fontSize:'13px',color:'#8a7aaa',letterSpacing:'0.1em',marginBottom:'8px',display:'flex'}},
+            h('div',{style:{fontSize:'14px',color:'#8a7aaa',letterSpacing:'0.1em',marginBottom:'8px',display:'flex'}},
               '✦ 冒険者ギルド登録結果 ✦'
             ),
             // 名前
             h('div',{style:{
-              fontSize:name.length>8?'46px':name.length>5?'56px':'68px',
-              fontWeight:700,color:'#2a2040',letterSpacing:'0.03em',
-              lineHeight:'1.1',marginBottom:'6px',display:'flex',
+              fontSize:nameFontSize,fontWeight:700,color:'#2a2040',
+              letterSpacing:'0.03em',lineHeight:'1.1',marginBottom:'6px',display:'flex',
             }},name),
             // ジョブ
-            h('div',{style:{fontSize:'24px',fontWeight:700,color:jc,
-              letterSpacing:'0.05em',marginBottom:'12px',display:'flex'}},
+            h('div',{style:{fontSize:'26px',fontWeight:700,color:jc,
+              letterSpacing:'0.04em',marginBottom:'12px',display:'flex'}},
               '【'+d.job+'】'
             ),
-            // Lv + 称号
-            h('div',{style:{display:'flex',gap:'8px',alignItems:'center',marginBottom:'14px'}},
+            // Lv + 称号バッジ
+            h('div',{style:{display:'flex',gap:'8px',alignItems:'center',marginBottom:'16px'}},
               h('div',{style:{
-                background:'rgba(124,92,231,0.1)',border:'1.5px solid rgba(124,92,231,0.3)',
-                borderRadius:'8px',paddingTop:'4px',paddingBottom:'4px',paddingLeft:'14px',paddingRight:'14px',
-                fontSize:'20px',fontWeight:700,color:'#7c5ce7',display:'flex',
+                background:'rgba(124,92,231,0.1)',border:'2px solid rgba(124,92,231,0.3)',
+                borderRadius:'8px',paddingTop:'5px',paddingBottom:'5px',
+                paddingLeft:'16px',paddingRight:'16px',
+                fontSize:'22px',fontWeight:700,color:'#7c5ce7',display:'flex',
               }},'Lv.'+d.lv),
               h('div',{style:{
-                background:'rgba(124,92,231,0.06)',border:'1.5px solid rgba(124,92,231,0.2)',
-                borderRadius:'8px',paddingTop:'4px',paddingBottom:'4px',paddingLeft:'14px',paddingRight:'14px',
-                fontSize:'16px',fontWeight:700,color:'#7c5ce7',display:'flex',
+                background:'rgba(124,92,231,0.06)',border:'2px solid rgba(124,92,231,0.2)',
+                borderRadius:'8px',paddingTop:'5px',paddingBottom:'5px',
+                paddingLeft:'16px',paddingRight:'16px',
+                fontSize:'18px',fontWeight:700,color:'#7c5ce7',display:'flex',
               }},d.title+'級冒険者')
             ),
             // 必殺技
             h('div',{style:{
-              background:'rgba(253,121,168,0.08)',border:'1.5px solid rgba(253,121,168,0.25)',
-              borderRadius:'10px',
-              paddingTop:'9px',paddingBottom:'9px',paddingLeft:'14px',paddingRight:'14px',
+              background:'rgba(253,121,168,0.1)',border:'2px solid rgba(253,121,168,0.3)',
+              borderRadius:'12px',
+              paddingTop:'10px',paddingBottom:'10px',paddingLeft:'16px',paddingRight:'16px',
               marginBottom:'10px',display:'flex',flexDirection:'column',
             }},
-              h('div',{style:{fontSize:'11px',color:'#fd79a8',letterSpacing:'0.1em',marginBottom:'3px',display:'flex'}},'⚡ 必殺技'),
-              h('div',{style:{fontSize:'19px',fontWeight:700,color:'#fd79a8',display:'flex'}},'「'+d.move+'」')
+              h('div',{style:{fontSize:'13px',color:'#fd79a8',letterSpacing:'0.1em',marginBottom:'4px',display:'flex'}},'⚡ 必殺技'),
+              h('div',{style:{fontSize:'26px',fontWeight:700,color:'#fd79a8',display:'flex'}},'「'+d.move+'」')
             ),
-            // 弱点（全文表示）
+            // 弱点
             h('div',{style:{
-              background:'rgba(42,32,64,0.04)',border:'1.5px solid rgba(42,32,64,0.1)',
-              borderRadius:'8px',
-              paddingTop:'8px',paddingBottom:'8px',paddingLeft:'12px',paddingRight:'12px',
+              background:'rgba(42,32,64,0.05)',border:'2px solid rgba(42,32,64,0.12)',
+              borderRadius:'12px',
+              paddingTop:'10px',paddingBottom:'10px',paddingLeft:'16px',paddingRight:'16px',
               display:'flex',flexDirection:'column',
             }},
-              h('div',{style:{fontSize:'11px',color:'#8a7aaa',letterSpacing:'0.08em',marginBottom:'3px',display:'flex'}},'🛡 弱点'),
-              h('div',{style:{fontSize:'14px',color:'#5a4a7a',lineHeight:'1.5',display:'flex',flexWrap:'wrap'}},d.wk)
+              h('div',{style:{fontSize:'13px',color:'#8a7aaa',letterSpacing:'0.08em',marginBottom:'4px',display:'flex'}},'🛡 弱点'),
+              h('div',{style:{fontSize:'17px',color:'#5a4a7a',lineHeight:'1.5',display:'flex',flexWrap:'wrap'}},d.wk)
             )
           ),
 
@@ -184,19 +188,19 @@ export default async function handler(req){
             display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',
             flex:1,
           }},
-            h('div',{style:{fontSize:'12px',color:'#8a7aaa',letterSpacing:'0.1em',marginBottom:'4px',display:'flex'}},
+            h('div',{style:{fontSize:'13px',color:'#8a7aaa',letterSpacing:'0.1em',marginBottom:'4px',display:'flex'}},
               'ステータス'
             ),
-            // SVG + HTMLラベル を重ねるコンテナ（380×360）
-            h('div',{style:{position:'relative',width:'380px',height:'360px',display:'flex'}},
-              h('svg',{width:'380',height:'360',viewBox:'0 0 380 360'},
+            // SVG+ラベル コンテナ (520×500)
+            h('div',{style:{position:'relative',width:'520px',height:'500px',display:'flex'}},
+              h('svg',{width:'520',height:'500',viewBox:'0 0 520 500'},
                 ...grids,
                 ...axes,
                 h('polygon',{
                   points:dataPts,
                   fill:'rgba(124,92,231,0.22)',
                   stroke:'#7c5ce7',
-                  strokeWidth:'2.5',
+                  strokeWidth:'3',
                 })
               ),
               ...htmlLabels
@@ -206,7 +210,7 @@ export default async function handler(req){
 
         // フッター
         h('div',{style:{
-          position:'absolute',bottom:'12px',right:'28px',
+          position:'absolute',bottom:'10px',right:'20px',
           fontSize:'13px',color:'#9a8aba',letterSpacing:'0.04em',display:'flex',
         }},'ai-life-status.vercel.app')
       ),
