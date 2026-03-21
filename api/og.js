@@ -1,5 +1,5 @@
-// Vercel Edge Function — パーソナライズOGP画像生成 (1200x630)
-export const config = { runtime: 'edge' };
+// Vercel Serverless Function (Node.js) — パーソナライズOGP画像生成 (1200x630)
+// Edge runtimeはWASMバンドルの問題があるためNode.jsランタイムを使用
 import { ImageResponse } from '@vercel/og';
 
 // ===== gen() ロジック（index.htmlと同一） =====
