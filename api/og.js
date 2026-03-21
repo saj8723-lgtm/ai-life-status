@@ -163,23 +163,23 @@ export default async function handler(req){
             ),
             // 必殺技
             h('div',{style:{
-              background:'rgba(253,121,168,0.1)',border:'2px solid rgba(253,121,168,0.3)',
+              background:'rgba(232,67,147,0.12)',border:'2px solid #e84393',
               borderRadius:'12px',
-              paddingTop:'10px',paddingBottom:'10px',paddingLeft:'16px',paddingRight:'16px',
-              marginBottom:'10px',display:'flex',flexDirection:'column',
+              paddingTop:'12px',paddingBottom:'12px',paddingLeft:'16px',paddingRight:'16px',
+              marginBottom:'12px',display:'flex',flexDirection:'column',
             }},
-              h('div',{style:{fontSize:'13px',color:'#fd79a8',letterSpacing:'0.1em',marginBottom:'4px',display:'flex'}},'⚡ 必殺技'),
-              h('div',{style:{fontSize:'26px',fontWeight:700,color:'#fd79a8',display:'flex',whiteSpace:'nowrap'}},'「'+d.move+'」')
+              h('div',{style:{fontSize:'14px',color:'#e84393',fontWeight:700,letterSpacing:'0.1em',marginBottom:'6px',display:'flex'}},'⚡ 必殺技'),
+              h('div',{style:{fontSize:'28px',fontWeight:700,color:'#c0185a',display:'flex',whiteSpace:'nowrap'}},'「'+d.move+'」')
             ),
             // 弱点
             h('div',{style:{
-              background:'rgba(42,32,64,0.05)',border:'2px solid rgba(42,32,64,0.12)',
+              background:'rgba(124,92,231,0.1)',border:'2px solid rgba(124,92,231,0.5)',
               borderRadius:'12px',
-              paddingTop:'10px',paddingBottom:'10px',paddingLeft:'16px',paddingRight:'16px',
+              paddingTop:'12px',paddingBottom:'12px',paddingLeft:'16px',paddingRight:'16px',
               display:'flex',flexDirection:'column',
             }},
-              h('div',{style:{fontSize:'13px',color:'#8a7aaa',letterSpacing:'0.08em',marginBottom:'4px',display:'flex'}},'🛡 弱点'),
-              h('div',{style:{fontSize:'17px',color:'#5a4a7a',display:'flex'}},d.wk)
+              h('div',{style:{fontSize:'14px',color:'#7c5ce7',fontWeight:700,letterSpacing:'0.08em',marginBottom:'6px',display:'flex'}},'🛡 弱点'),
+              h('div',{style:{fontSize:'18px',fontWeight:700,color:'#2a2040',display:'flex'}},d.wk)
             )
           ),
 
