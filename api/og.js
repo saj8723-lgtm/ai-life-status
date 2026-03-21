@@ -124,7 +124,7 @@ export default async function handler(req){
         // メインコンテンツ
         h('div',{style:{
           display:'flex',flex:1,
-          paddingTop:'14px',paddingRight:'20px',paddingBottom:'32px',paddingLeft:'20px',
+          paddingTop:'14px',paddingRight:'16px',paddingBottom:'32px',paddingLeft:'60px',
           gap:'16px',marginTop:'8px',justifyContent:'center',
         }},
 
@@ -134,7 +134,7 @@ export default async function handler(req){
           }},
             // ギルドラベル
             h('div',{style:{fontSize:'14px',color:'#8a7aaa',letterSpacing:'0.1em',marginBottom:'8px',display:'flex'}},
-              '✦ 冒険者ギルド登録結果 ✦'
+              '◆ 冒険者ギルド登録結果 ◆'
             ),
             // 名前
             h('div',{style:{
