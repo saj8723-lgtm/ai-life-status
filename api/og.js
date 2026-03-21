@@ -12,11 +12,10 @@ const ST_KEYS=['hp','int','pay','solo','mot','luk'];
 function hash(s){let h=0;for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
 function sr(seed){let s=seed;return()=>{s=(s*16807)%2147483647;return(s-1)/2147483646;};}
 function genOG(name){
-  // index.htmlと同じ日付ベースのシード
-  const dateStr = new Date().toDateString();
+  const dateStr=new Date().toDateString();
   const h=hash(name+dateStr),r=sr(h);
   const ji=Math.floor(r()*JOBS.length);
-  r(); // traits
+  r(); // traits skip
   const mi=Math.floor(r()*MOVES.length);
   let total=0;
   ST_KEYS.forEach(()=>{
@@ -32,6 +31,19 @@ function genOG(name){
   return {job:JOBS[ji],jobC:JOBC[ji],lv,title:TITLES[ti],move:MOVES[mi]};
 }
 // =============================================
+
+// JSXなしでReact要素を生成するヘルパー
+function h(type, props, ...children) {
+  return {
+    type,
+    props: {
+      ...props,
+      children: children.length === 0 ? undefined
+               : children.length === 1 ? children[0]
+               : children,
+    },
+  };
+}
 
 async function loadFont(text) {
   const unique=[...new Set(text+'ジョブLv称号必殺技AI人生ステータス冒険者ギルドai-life-status.vercel.app級')].join('');
@@ -53,65 +65,67 @@ export default async function handler(req) {
   const fontBuffers=await loadFont(allText);
   const fonts=fontBuffers.map(data=>({name:'NotoSansJP',data,weight:700,style:'normal'}));
   const jc=d.jobC;
-  const jcAlpha=jc+'26'; // ~15% opacity hex
+  const ff=fonts.length?'NotoSansJP':'sans-serif';
 
   return new ImageResponse(
-    <div style={{
-      width:'1200px',height:'630px',display:'flex',flexDirection:'column',
-      alignItems:'center',justifyContent:'center',position:'relative',overflow:'hidden',
-      background:'linear-gradient(135deg, #faf5ff 0%, #e8ddf5 100%)',
-      fontFamily:fonts.length?'NotoSansJP':'sans-serif',
-    }}>
-      {/* 上部カラーバー */}
-      <div style={{position:'absolute',top:0,left:0,right:0,height:'6px',display:'flex',
-        background:'linear-gradient(90deg,#ff8c42,#fd79a8,#7c5ce7,#00b894)'}}/>
-      {/* 装飾円 */}
-      <div style={{position:'absolute',top:'-80px',right:'-80px',width:'300px',height:'300px',
-        borderRadius:'50%',background:'rgba(124,92,231,0.08)',display:'flex'}}/>
-      <div style={{position:'absolute',bottom:'-60px',left:'-60px',width:'240px',height:'240px',
-        borderRadius:'50%',background:'rgba(255,140,66,0.08)',display:'flex'}}/>
-      {/* ギルドラベル */}
-      <div style={{fontSize:'18px',color:'#8a7aaa',letterSpacing:'0.15em',marginBottom:'14px',display:'flex'}}>
-        ✦ 冒険者ギルド登録結果 ✦
-      </div>
-      {/* 名前 */}
-      <div style={{fontSize:name.length>8?'60px':'78px',fontWeight:700,color:'#2a2040',
-        letterSpacing:'0.04em',lineHeight:1.1,marginBottom:'10px',display:'flex'}}>
-        {name}
-      </div>
-      {/* ジョブ */}
-      <div style={{fontSize:'38px',fontWeight:700,color:jc,
-        letterSpacing:'0.06em',marginBottom:'20px',display:'flex'}}>
-        【{d.job}】
-      </div>
-      {/* レベル・称号 */}
-      <div style={{display:'flex',gap:'16px',alignItems:'center',marginBottom:'28px'}}>
-        <div style={{background:'rgba(124,92,231,0.1)',border:'1.5px solid rgba(124,92,231,0.3)',
-          borderRadius:'12px',padding:'8px 22px',fontSize:'28px',fontWeight:700,color:'#7c5ce7',display:'flex'}}>
-          Lv.{d.lv}
-        </div>
-        <div style={{background:'rgba(124,92,231,0.06)',border:'1.5px solid rgba(124,92,231,0.2)',
-          borderRadius:'12px',padding:'8px 22px',fontSize:'24px',fontWeight:700,color:'#7c5ce7',display:'flex'}}>
-          {d.title}級冒険者
-        </div>
-      </div>
-      {/* 必殺技 */}
-      <div style={{background:'rgba(253,121,168,0.08)',border:'1.5px solid rgba(253,121,168,0.25)',
+    h('div', {
+      style: {
+        width:'1200px',height:'630px',display:'flex',flexDirection:'column',
+        alignItems:'center',justifyContent:'center',position:'relative',overflow:'hidden',
+        background:'linear-gradient(135deg, #faf5ff 0%, #e8ddf5 100%)',
+        fontFamily:ff,
+      }
+    },
+      // 上部カラーバー
+      h('div', {style:{position:'absolute',top:0,left:0,right:0,height:'6px',display:'flex',
+        background:'linear-gradient(90deg,#ff8c42,#fd79a8,#7c5ce7,#00b894)'}}),
+      // 装飾円
+      h('div', {style:{position:'absolute',top:'-80px',right:'-80px',width:'300px',height:'300px',
+        borderRadius:'50%',background:'rgba(124,92,231,0.08)',display:'flex'}}),
+      h('div', {style:{position:'absolute',bottom:'-60px',left:'-60px',width:'240px',height:'240px',
+        borderRadius:'50%',background:'rgba(255,140,66,0.08)',display:'flex'}}),
+      // ギルドラベル
+      h('div', {style:{fontSize:'18px',color:'#8a7aaa',letterSpacing:'0.15em',marginBottom:'14px',display:'flex'}},
+        '✦ 冒険者ギルド登録結果 ✦'
+      ),
+      // 名前
+      h('div', {style:{fontSize:name.length>8?'60px':'78px',fontWeight:700,color:'#2a2040',
+        letterSpacing:'0.04em',lineHeight:1.1,marginBottom:'10px',display:'flex'}},
+        name
+      ),
+      // ジョブ
+      h('div', {style:{fontSize:'38px',fontWeight:700,color:jc,
+        letterSpacing:'0.06em',marginBottom:'20px',display:'flex'}},
+        '【'+d.job+'】'
+      ),
+      // レベル・称号
+      h('div', {style:{display:'flex',gap:'16px',alignItems:'center',marginBottom:'28px'}},
+        h('div', {style:{background:'rgba(124,92,231,0.1)',border:'1.5px solid rgba(124,92,231,0.3)',
+          borderRadius:'12px',padding:'8px 22px',fontSize:'28px',fontWeight:700,color:'#7c5ce7',display:'flex'}},
+          'Lv.'+d.lv
+        ),
+        h('div', {style:{background:'rgba(124,92,231,0.06)',border:'1.5px solid rgba(124,92,231,0.2)',
+          borderRadius:'12px',padding:'8px 22px',fontSize:'24px',fontWeight:700,color:'#7c5ce7',display:'flex'}},
+          d.title+'級冒険者'
+        )
+      ),
+      // 必殺技
+      h('div', {style:{background:'rgba(253,121,168,0.08)',border:'1.5px solid rgba(253,121,168,0.25)',
         borderRadius:'14px',padding:'14px 36px',
-        display:'flex',flexDirection:'column',alignItems:'center',marginBottom:'32px'}}>
-        <div style={{fontSize:'16px',color:'#fd79a8',letterSpacing:'0.15em',marginBottom:'6px',display:'flex'}}>
-          ⚡ 必殺技
-        </div>
-        <div style={{fontSize:'30px',fontWeight:700,color:'#fd79a8',display:'flex'}}>
-          「{d.move}」
-        </div>
-      </div>
-      {/* フッター */}
-      <div style={{position:'absolute',bottom:'24px',
-        fontSize:'18px',color:'#8a7aaa',letterSpacing:'0.06em',display:'flex'}}>
-        ai-life-status.vercel.app
-      </div>
-    </div>,
+        display:'flex',flexDirection:'column',alignItems:'center',marginBottom:'32px'}},
+        h('div', {style:{fontSize:'16px',color:'#fd79a8',letterSpacing:'0.15em',marginBottom:'6px',display:'flex'}},
+          '⚡ 必殺技'
+        ),
+        h('div', {style:{fontSize:'30px',fontWeight:700,color:'#fd79a8',display:'flex'}},
+          '「'+d.move+'」'
+        )
+      ),
+      // フッター
+      h('div', {style:{position:'absolute',bottom:'24px',
+        fontSize:'18px',color:'#8a7aaa',letterSpacing:'0.06em',display:'flex'}},
+        'ai-life-status.vercel.app'
+      )
+    ),
     {width:1200,height:630,fonts}
   );
 }
