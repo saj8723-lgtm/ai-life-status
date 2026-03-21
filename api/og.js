@@ -124,13 +124,13 @@ export default async function handler(req){
         // メインコンテンツ
         h('div',{style:{
           display:'flex',flex:1,
-          paddingTop:'14px',paddingRight:'16px',paddingBottom:'32px',paddingLeft:'100px',
-          gap:'16px',marginTop:'8px',justifyContent:'center',
+          paddingTop:'10px',paddingRight:'20px',paddingBottom:'20px',paddingLeft:'44px',
+          gap:'20px',marginTop:'8px',justifyContent:'center',
         }},
 
           // ===== 左カラム（固定幅 460px）=====
           h('div',{style:{
-            display:'flex',flexDirection:'column',width:'560px',flexShrink:0,justifyContent:'center',
+            display:'flex',flexDirection:'column',width:'560px',flexShrink:0,justifyContent:'flex-start',paddingTop:'8px',
           }},
             // ギルドラベル
             h('div',{style:{fontSize:'14px',color:'#8a7aaa',letterSpacing:'0.1em',marginBottom:'8px',display:'flex'}},
@@ -168,8 +168,8 @@ export default async function handler(req){
               paddingTop:'12px',paddingBottom:'12px',paddingLeft:'16px',paddingRight:'16px',
               marginBottom:'12px',display:'flex',flexDirection:'column',
             }},
-              h('div',{style:{fontSize:'14px',color:'#e84393',fontWeight:700,letterSpacing:'0.1em',marginBottom:'6px',display:'flex'}},'⚡ 必殺技'),
-              h('div',{style:{fontSize:'28px',fontWeight:700,color:'#c0185a',display:'flex',whiteSpace:'nowrap'}},'「'+d.move+'」')
+              h('div',{style:{fontSize:'16px',color:'#e84393',fontWeight:700,letterSpacing:'0.1em',marginBottom:'6px',display:'flex'}},'⚡ 必殺技'),
+              h('div',{style:{fontSize:'40px',fontWeight:700,color:'#c0185a',display:'flex',whiteSpace:'nowrap'}},'「'+d.move+'」')
             ),
             // 弱点
             h('div',{style:{
@@ -178,8 +178,8 @@ export default async function handler(req){
               paddingTop:'12px',paddingBottom:'12px',paddingLeft:'16px',paddingRight:'16px',
               display:'flex',flexDirection:'column',
             }},
-              h('div',{style:{fontSize:'14px',color:'#7c5ce7',fontWeight:700,letterSpacing:'0.08em',marginBottom:'6px',display:'flex'}},'🛡 弱点'),
-              h('div',{style:{fontSize:'18px',fontWeight:700,color:'#2a2040',display:'flex'}},d.wk)
+              h('div',{style:{fontSize:'16px',color:'#7c5ce7',fontWeight:700,letterSpacing:'0.08em',marginBottom:'6px',display:'flex'}},'🛡 弱点'),
+              h('div',{style:{fontSize:'24px',fontWeight:700,color:'#2a2040',display:'flex',whiteSpace:'nowrap'}},d.wk)
             )
           ),
 
