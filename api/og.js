@@ -14,8 +14,10 @@ function genOG(name){
   const dateStr=new Date(Date.now()+9*60*60*1000).toDateString();
   const h=hash(name+dateStr),r=sr(h);
   const ji=Math.floor(r()*JOBS.length);
-  r();
+  r();                                   // traits skip
   const mi=Math.floor(r()*MOVES.length);
+  r();                                   // wk skip
+  r();                                   // qt skip
   let total=0;
   ST_KEYS.forEach(()=>{
     let v=Math.floor(r()*800)+100;
