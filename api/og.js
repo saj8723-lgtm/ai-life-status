@@ -105,8 +105,6 @@ export default async function handler(req){
 
     // 名前のフォントサイズ
     const nameFontSize = name.length>8?'50px':name.length>5?'62px':'76px';
-    // 弱点は1行に収まる長さに切り詰め（改行させない）
-    const wkText = d.wk.length>26 ? d.wk.slice(0,26)+'…' : d.wk;
 
     return new ImageResponse(
       h('div',{style:{
@@ -132,7 +130,7 @@ export default async function handler(req){
 
           // ===== 左カラム（固定幅 460px）=====
           h('div',{style:{
-            display:'flex',flexDirection:'column',width:'460px',flexShrink:0,justifyContent:'center',
+            display:'flex',flexDirection:'column',width:'560px',flexShrink:0,justifyContent:'center',
           }},
             // ギルドラベル
             h('div',{style:{fontSize:'14px',color:'#8a7aaa',letterSpacing:'0.1em',marginBottom:'8px',display:'flex'}},
@@ -181,7 +179,7 @@ export default async function handler(req){
               display:'flex',flexDirection:'column',
             }},
               h('div',{style:{fontSize:'13px',color:'#8a7aaa',letterSpacing:'0.08em',marginBottom:'4px',display:'flex'}},'🛡 弱点'),
-              h('div',{style:{fontSize:'17px',color:'#5a4a7a',display:'flex'}},wkText)
+              h('div',{style:{fontSize:'17px',color:'#5a4a7a',display:'flex'}},d.wk)
             )
           ),
 
