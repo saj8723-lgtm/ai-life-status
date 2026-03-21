@@ -6,7 +6,7 @@ export default function handler(req) {
   const n = searchParams.get('n') || '';
 
   const BASE = 'https://ai-life-status.vercel.app';
-  const ogImageUrl = `${BASE}/api/og?v=13&n=${encodeURIComponent(n)}`;
+  const ogImageUrl = `${BASE}/api/og?v=14&n=${encodeURIComponent(n)}`;
   const destUrl = `${BASE}/?n=${encodeURIComponent(n)}`;
   const shareUrl = `${BASE}/api/share?n=${encodeURIComponent(n)}`;
 

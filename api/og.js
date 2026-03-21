@@ -69,7 +69,7 @@ export default async function handler(req){
 
     // レーダーチャート: SVG 520x500, R=170, cx=260, cy=250
     // labelR=210 で全6ラベルが SVG 内に収まる（計算確認済み）
-    const cx=260,cy=250,R=170;
+    const cx=245,cy=230,R=155;
     const labelR=R+40;
     const dataPts=radarPts(d.sv,cx,cy,R);
 
@@ -130,7 +130,7 @@ export default async function handler(req){
 
           // ===== 左カラム（固定幅 460px）=====
           h('div',{style:{
-            display:'flex',flexDirection:'column',width:'560px',flexShrink:0,justifyContent:'flex-start',paddingTop:'8px',
+            display:'flex',flexDirection:'column',width:'620px',flexShrink:0,justifyContent:'flex-start',paddingTop:'8px',
           }},
             // ギルドラベル
             h('div',{style:{fontSize:'14px',color:'#8a7aaa',letterSpacing:'0.1em',marginBottom:'8px',display:'flex'}},
@@ -179,7 +179,7 @@ export default async function handler(req){
               display:'flex',flexDirection:'column',
             }},
               h('div',{style:{fontSize:'16px',color:'#7c5ce7',fontWeight:700,letterSpacing:'0.08em',marginBottom:'6px',display:'flex'}},'🛡 弱点'),
-              h('div',{style:{fontSize:'24px',fontWeight:700,color:'#2a2040',display:'flex',whiteSpace:'nowrap'}},d.wk)
+              h('div',{style:{fontSize:'20px',fontWeight:700,color:'#2a2040',display:'flex',whiteSpace:'nowrap'}},d.wk)
             )
           ),
 
@@ -192,8 +192,8 @@ export default async function handler(req){
               'ステータス'
             ),
             // SVG+ラベル コンテナ (520×500)
-            h('div',{style:{position:'relative',width:'520px',height:'500px',display:'flex'}},
-              h('svg',{width:'520',height:'500',viewBox:'0 0 520 500'},
+            h('div',{style:{position:'relative',width:'490px',height:'460px',display:'flex'}},
+              h('svg',{width:'490',height:'460',viewBox:'0 0 490 460'},
                 ...grids,
                 ...axes,
                 h('polygon',{
