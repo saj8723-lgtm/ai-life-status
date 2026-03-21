@@ -75,13 +75,21 @@ export default async function handler(req){
     const grids=[0.25,0.5,0.75,1].map(f=>
       h('polygon',{points:gridPts(f,cx,cy,R),fill:'none',stroke:'rgba(124,92,231,0.15)',strokeWidth:'1'})
     );
-    // 各ステータスラベル（軸の外側）
-    const labelR=R+18;
-    const labels=ST.map((s,i)=>{
+    // 各ステータスラベル（HTML div で SVG の外側に絶対配置）
+    const labelR=R+22;
+    const svgW=260,svgH=240;
+    const htmlLabels=ST.map((s,i)=>{
       const angle=(i*60-90)*Math.PI/180;
-      const lx=(cx+labelR*Math.cos(angle)).toFixed(1);
-      const ly=(cy+labelR*Math.sin(angle)).toFixed(1);
-      return h('text',{x:lx,y:ly,textAnchor:'middle',dominantBaseline:'middle',fontSize:'18',fill:s.c},s.n);
+      const lx=cx+labelR*Math.cos(angle); // SVG座標
+      const ly=cy+labelR*Math.sin(angle);
+      return h('div',{style:{
+        position:'absolute',
+        left:String(Math.round(lx)-12)+'px',
+        top:String(Math.round(ly)-12)+'px',
+        width:'24px',height:'24px',
+        display:'flex',alignItems:'center',justifyContent:'center',
+        fontSize:'18px',
+      }},s.n);
     });
 
     const wkShort=d.wk.length>22?d.wk.slice(0,22)+'…':d.wk;
@@ -156,23 +164,24 @@ export default async function handler(req){
             display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',
             width:'340px',flexShrink:0,
           }},
-            h('svg',{
-              width:'260',height:'240',viewBox:'0 0 260 240',
-              style:{overflow:'visible'}
-            },
-              // グリッド
-              ...grids,
-              // 軸線
-              ...axes,
-              // データ多角形
-              h('polygon',{
-                points:dataPts,
-                fill:'rgba(124,92,231,0.25)',
-                stroke:'#7c5ce7',
-                strokeWidth:'2',
-              }),
-              // ラベル
-              ...labels
+            h('div',{style:{position:'relative',width:'260px',height:'240px',display:'flex'}},
+              h('svg',{
+                width:'260',height:'240',viewBox:'0 0 260 240',
+              },
+                // グリッド
+                ...grids,
+                // 軸線
+                ...axes,
+                // データ多角形
+                h('polygon',{
+                  points:dataPts,
+                  fill:'rgba(124,92,231,0.25)',
+                  stroke:'#7c5ce7',
+                  strokeWidth:'2',
+                })
+              ),
+              // HTMLラベル（SVGの上に絶対配置）
+              ...htmlLabels
             )
           )
         ),
