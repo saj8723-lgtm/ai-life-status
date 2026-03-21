@@ -12,7 +12,7 @@ const ST_KEYS=['hp','int','pay','solo','mot','luk'];
 function hash(s){let h=0;for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
 function sr(seed){let s=seed;return()=>{s=(s*16807)%2147483647;return(s-1)/2147483646;};}
 function genOG(name){
-  const dateStr=new Date().toDateString();
+  const dateStr=new Date(Date.now()+9*60*60*1000).toDateString(); // JST(UTC+9)
   const h=hash(name+dateStr),r=sr(h);
   const ji=Math.floor(r()*JOBS.length);
   r(); // traits skip
