@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI人生ステータス診断 — 変更ログ</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Segoe UI', sans-serif; background:#f4f0fb; color:#2a2040; padding:32px 16px; }
+.wrap { max-width:860px; margin:0 auto; }
+h1 { font-size:1.6em; font-weight:700; margin-bottom:6px; }
+.sub { color:#8a7aaa; font-size:.9em; margin-bottom:36px; }
+.section { background:#fff; border-radius:14px; border:1px solid #e8ddf5; padding:24px 28px; margin-bottom:24px; }
+.section h2 { font-size:1.15em; font-weight:700; margin-bottom:16px; padding-bottom:10px; border-bottom:2px solid #e8ddf5; display:flex; align-items:center; gap:10px; }
+.badge { display:inline-block; font-size:.72em; padding:3px 10px; border-radius:20px; font-weight:700; }
+.badge.new { background:#e8f5e9; color:#2e7d32; }
+.badge.fix { background:#fff3e0; color:#e65100; }
+.badge.ui  { background:#ede7f6; color:#512da8; }
+table { width:100%; border-collapse:collapse; font-size:.88em; }
+th { text-align:left; padding:8px 10px; background:#f5f0ff; color:#7c5ce7; font-weight:700; border-radius:4px; }
+td { padding:8px 10px; border-bottom:1px solid #f0eafa; vertical-align:top; }
+td:first-child { white-space:nowrap; font-weight:700; color:#5a4a7a; width:120px; }
+.tag { display:inline-block; font-size:.75em; padding:2px 8px; border-radius:10px; margin-right:4px; }
+.tag.edge { background:#e3f2fd; color:#1565c0; }
+.tag.html { background:#fce4ec; color:#c62828; }
+.tag.js   { background:#f9fbe7; color:#558b2f; }
+.note { font-size:.82em; color:#8a7aaa; margin-top:4px; }
+.code { font-family:monospace; background:#f5f0ff; padding:2px 6px; border-radius:4px; font-size:.85em; color:#7c5ce7; }
+.timeline { list-style:none; }
+.timeline li { display:flex; gap:14px; margin-bottom:14px; }
+.timeline .v { min-width:42px; text-align:center; font-size:.8em; font-weight:700; color:#fff; background:#7c5ce7; border-radius:20px; padding:2px 0; height:24px; line-height:24px; }
+.timeline .desc { font-size:.88em; line-height:1.6; padding-top:2px; }
+.timeline .desc strong { color:#2a2040; }
+img.preview { width:100%; border-radius:10px; border:1px solid #e8ddf5; margin-top:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>AI人生ステータス診断 — 変更ログ</h1>
+  <p class="sub">作業日: 2026-03-21 〜 2026-03-22 &nbsp;|&nbsp; 担当: Claude Code</p>
+
+  <!-- ===== 概要 ===== -->
+  <div class="section">
+    <h2>概要</h2>
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr>
+        <td>目的</td>
+        <td>X（Twitter）・Threads でシェアしたとき、投稿者ごとに<strong>パーソナライズされたOGP画像</strong>が表示されるようにする</td>
+      </tr>
+      <tr>
+        <td>変更ファイル</td>
+        <td>
+          <span class="tag html">index.html</span>
+          <span class="tag edge">api/og.js</span>
+          <span class="tag edge">api/share.js</span>
+          <span class="tag js">vercel.json</span>
+        </td>
+      </tr>
+      <tr>
+        <td>本番URL</td>
+        <td><span class="code">https://ai-life-status.vercel.app</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ===== index.html ===== -->
+  <div class="section">
+    <h2><span class="tag html">index.html</span> 変更内容 <span class="badge ui">UI改修</span></h2>
+    <table>
+      <tr><th>変更点</th><th>詳細</th></tr>
+      <tr>
+        <td>X シェアURL</td>
+        <td>
+          <strong>変更前:</strong> サイトトップURLのみ共有<br>
+          <strong>変更後:</strong> <span class="code">/api/share?n=名前</span> に変更し、名前付きOGP画像が表示されるように
+        </td>
+      </tr>
+      <tr>
+        <td>Threads ボタン追加</td>
+        <td>
+          <span class="code">shT()</span> 関数を新設。<span class="code">https://www.threads.net/intent/post?text=...</span> でThreadsに直接投稿できるボタンを追加
+          <div class="note">CSS: <span class="code">.st{background:#101010;color:#fff}</span> / ボタン行: <span class="code">.shr-row{display:flex;gap:6px}</span></div>
+        </td>
+      </tr>
+      <tr>
+        <td>シェアテキスト</td>
+        <td>ジョブ・必殺技・弱点・最強ステータスを含むRPG世界観のテキストを自動生成</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ===== api/share.js ===== -->
+  <div class="section">
+    <h2><span class="tag edge">api/share.js</span> 新規作成 <span class="badge new">NEW</span></h2>
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr>
+        <td>ランタイム</td>
+        <td>Vercel Edge Function（<span class="code">export const config = { runtime: 'edge' }</span>）</td>
+      </tr>
+      <tr>
+        <td>役割</td>
+        <td>
+          名前パラメータ <span class="code">?n=NAME</span> を受け取り、X/Threads のクローラー向けに OGP メタタグ付き HTML を返す。
+          ユーザーはサイト本体 <span class="code">/?n=NAME</span> へ自動リダイレクト。
+        </td>
+      </tr>
+      <tr>
+        <td>OGP設定</td>
+        <td>
+          <span class="code">og:image</span> → <span class="code">/api/og?v=14&amp;n=NAME</span><br>
+          <span class="code">twitter:card</span> → <span class="code">summary_large_image</span><br>
+          <span class="code">og:title</span> → 「{名前} のギルド登録結果 ⚔️」
+        </td>
+      </tr>
+      <tr>
+        <td>キャッシュ</td>
+        <td><span class="code">?v=N</span> パラメータで X のカードキャッシュをバスト（v1→v14 まで更新）</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ===== api/og.js ===== -->
+  <div class="section">
+    <h2><span class="tag edge">api/og.js</span> 新規作成 <span class="badge new">NEW</span></h2>
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr>
+        <td>ランタイム</td>
+        <td>Vercel Edge Function + <span class="code">@vercel/og</span>（ImageResponse）で 1200×630 PNG を生成</td>
+      </tr>
+      <tr>
+        <td>画像内容</td>
+        <td>
+          <strong>左カラム (620px)</strong>: ギルドラベル・名前・ジョブ・Lv/称号バッジ・必殺技・弱点<br>
+          <strong>右カラム</strong>: レーダーチャート（6軸、絵文字+日本語ラベル付き）
+        </td>
+      </tr>
+      <tr>
+        <td>決定論的生成</td>
+        <td>
+          <span class="code">hash(名前+日付)</span> + 線形合同法 PRNG <span class="code">sr()</span> で、
+          同じ名前・同じ日は必ず同じ結果。サイトの <span class="code">gen()</span> と乱数シーケンスを完全一致させLv不一致を解消。
+        </td>
+      </tr>
+      <tr>
+        <td>レーダーチャート</td>
+        <td>
+          SVG <span class="code">polygon</span> + <span class="code">line</span> で描画。
+          ラベルは <span class="code">&lt;text&gt;</span> 非対応のため HTML <span class="code">div</span> を絶対配置で重ねる方式。
+          R=155, 6頂点すべて SVG 内に収まることを計算で確認。
+        </td>
+      </tr>
+      <tr>
+        <td>フォント</td>
+        <td><span class="code">@vercel/og</span> 標準CJKフォント（自動ロード）を使用。woff2非対応のため DotGothic16 の読み込みは省略。</td>
+      </tr>
+      <tr>
+        <td>デザイン</td>
+        <td>
+          背景グラデーション <span class="code">linear-gradient(135deg,#faf5ff,#e8ddf5)</span>、
+          上部レインボーバー、装飾円。サイト本体のカラーパレットと統一。
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ===== 試行錯誤ログ ===== -->
+  <div class="section">
+    <h2>技術的つまずきと解決ログ</h2>
+    <ul class="timeline">
+      <li>
+        <span class="v">①</span>
+        <span class="desc"><strong>woff2エラー（無音の空レスポンス）</strong><br>
+        Google Fonts から woff2 を取得 → satori が「Unsupported OpenType signature wOF2」でクラッシュ。
+        レスポンスは HTTP 200 だがボディが空。<br>
+        <em>→ カスタムフォント読み込みを全廃し、@vercel/og の自動CJKフォントに切り替え</em></span>
+      </li>
+      <li>
+        <span class="v">②</span>
+        <span class="desc"><strong>ERR_REQUIRE_ESM（Node.js runtime）</strong><br>
+        package.json が CJS / @vercel/og が ESM のため、Node.js 18/20 で import 失敗。<br>
+        <em>→ Edge runtime に戻すことで解決</em></span>
+      </li>
+      <li>
+        <span class="v">③</span>
+        <span class="desc"><strong>X が「Hello」画像をキャッシュ</strong><br>
+        診断用に書いた「Hello」だけの版を X が24時間キャッシュ。<br>
+        <em>→ og:image URL に ?v=N パラメータを付けてキャッシュバスト</em></span>
+      </li>
+      <li>
+        <span class="v">④</span>
+        <span class="desc"><strong>LvがツイートとOGP画像でずれる</strong><br>
+        genOG() の乱数消費回数がクライアントの gen() と不一致。<br>
+        <em>→ r() の呼び出し順をサイト本体と完全に揃える（wk・qt skip を追加）</em></span>
+      </li>
+      <li>
+        <span class="v">⑤</span>
+        <span class="desc"><strong>&lt;text&gt; ノード非対応</strong><br>
+        satori は SVG の &lt;text&gt; を非サポート。レーダーチャートのラベルが全てエラーに。<br>
+        <em>→ HTML &lt;div&gt; を position:absolute で SVG の上に重ねる方式に変更</em></span>
+      </li>
+      <li>
+        <span class="v">⑥</span>
+        <span class="desc"><strong>✦ ◆ などの記号が文字化け</strong><br>
+        @vercel/og 標準フォントにはグリフが含まれない記号は □ になる。<br>
+        <em>→ 装飾文字を全削除し、日本語テキストのみに</em></span>
+      </li>
+      <li>
+        <span class="v">⑦</span>
+        <span class="desc"><strong>弱点テキストが欄をはみ出す</strong><br>
+        whiteSpace:nowrap + 24px フォントでは最長テキストが 600px 超に。<br>
+        <em>→ カラム幅を 620px に拡張、フォントを 20px に調整（計算で全文字列1行収まりを確認）</em></span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ===== 現在の仕様 ===== -->
+  <div class="section">
+    <h2>現在の仕様（v14）</h2>
+    <table>
+      <tr><th>要素</th><th>値</th></tr>
+      <tr><td>画像サイズ</td><td>1200 × 630 px（OGP標準）</td></tr>
+      <tr><td>名前フォント</td><td>76px / 62px / 50px（文字数で切り替え）</td></tr>
+      <tr><td>必殺技フォント</td><td>40px、濃いピンク (#c0185a)</td></tr>
+      <tr><td>弱点フォント</td><td>20px、ダーク (#2a2040)、1行固定</td></tr>
+      <tr><td>レーダーチャート</td><td>R=155、SVG 490×460、絵文字30px+テキスト16px</td></tr>
+      <tr><td>キャッシュ制御</td><td>?v=14 でキャッシュバスト / max-age=86400</td></tr>
+      <tr><td>シェア先</td><td>X（Twitter）/ Threads / LINE</td></tr>
+    </table>
+  </div>
+
+  <!-- ===== 残課題 ===== -->
+  <div class="section">
+    <h2>残課題 / 今後の改善候補</h2>
+    <table>
+      <tr><th>項目</th><th>メモ</th></tr>
+      <tr>
+        <td>DotGothic16 フォント</td>
+        <td>OGP 画像にサイト本体と同じドット絵フォントを適用したい。TTF の動的取得が必要（CJK フォントは数MB）</td>
+      </tr>
+      <tr>
+        <td>レーダーチャートの孤独ラベル位置</td>
+        <td>SVG 下端ギリギリ。コンテナ高さに余裕を持たせると安全</td>
+      </tr>
+      <tr>
+        <td>Vercel Analytics</td>
+        <td>シェア経由の流入をトラッキングしたい</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

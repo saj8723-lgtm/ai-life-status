@@ -486,7 +486,73 @@ def _make_note(d: dict, source: str) -> str:
         points.append(f"ジョブ「{d['job']}」・弱点のギャップをネタに")
     return "💡 " + " / ".join(points)
 
-def make_fallback_variants(name, headline=""):
+def _heuristic_buzz(d: dict, headline: str = "", demo_grade: str = "B", variant_label: str = "") -> dict:
+    """
+    APIなしのフォールバック時に診断値・ソース・バリアントからbuzzスコアを推定する。
+    不一致(ic)/覚醒(ar)/自己参照(sr)/情報G(ig)/拡散(sc) それぞれ 1〜10。
+    """
+    sv = d["sv"]
+    ic = ar = sr = ig = sc = 5
+
+    has_rare  = any(s["value"] == -1 for s in sv.values())
+    highs     = [s["value"] for s in sv.values() if isinstance(s["value"], int) and s["value"] >= 1000]
+    lows      = [s["value"] for s in sv.values() if isinstance(s["value"], int) and 0 < s["value"] <= 30]
+
+    # ??? 超レア → 不一致・拡散 UP
+    if has_rare:
+        ic = min(10, ic + 4)
+        sc = min(10, sc + 3)
+
+    # 異常高値 → 覚醒・不一致 UP
+    if highs:
+        ic = min(10, ic + 2)
+        ar = min(10, ar + 2)
+
+    # 超低値 → 自己参照・不一致 UP（あるある共感）
+    if lows:
+        ic = min(10, ic + 2)
+        sr = min(10, sr + 3)
+
+    # 高値と低値が両方ある → ギャップ最大 → 不一致・拡散 さらに UP
+    if highs and lows:
+        ic = min(10, ic + 2)
+        sc = min(10, sc + 2)
+
+    # Xトレンド順位が高い → 拡散力 UP
+    if "Xトレンド" in headline:
+        m = re.search(r"Xトレンド (\d+)位", headline)
+        if m:
+            rank = int(m.group(1))
+            bonus = 3 if rank <= 3 else 2 if rank <= 10 else 1
+            sc = min(10, sc + bonus)
+
+    # Googleトレンド → 情報価値 UP
+    if "Google" in headline:
+        ig = min(10, ig + 2)
+
+    # Z世代A評価 → 拡散・自己参照 UP
+    if demo_grade == "A":
+        sc = min(10, sc + 2)
+        sr = min(10, sr + 1)
+    elif demo_grade == "C":
+        sc = max(1, sc - 1)
+
+    # バリアント別の傾向補正
+    if "案A" in variant_label:   # 結論先出し → 拡散・不一致
+        sc = min(10, sc + 1); ic = min(10, ic + 1)
+    elif "案B" in variant_label:  # 発見型 → 不一致
+        ic = min(10, ic + 2)
+    elif "案C" in variant_label:  # リスト型 → 情報G
+        ig = min(10, ig + 2)
+    elif "案D" in variant_label:  # 一言ボケ → 自己参照
+        sr = min(10, sr + 2)
+    elif "案E" in variant_label:  # ニュースフック → 拡散・情報G
+        sc = min(10, sc + 2); ig = min(10, ig + 1)
+
+    return {"ic": ic, "ar": ar, "sr": sr, "ig": ig, "sc": sc}
+
+
+def make_fallback_variants(name, headline="", demo_grade="B"):
     """診断値から複数フォーマットの投稿案を生成して返す"""
     d   = diagnose(name)
     sv  = d["sv"]
@@ -939,12 +1005,13 @@ def main():
                     })
                 continue
         # フォールバック: 複数フォーマット生成
-        d, variants = make_fallback_variants(name, headline)
+        d, variants = make_fallback_variants(name, headline, demo_grade)
         note_base = _make_note(d, headline)
         if demo_grade == "C":
             note_base += f" ⚠️ ターゲット層やや外（{demo_reason}）"
         for v_label, post in variants:
             _, disp, ok = check_post(post)
+            buzz = _heuristic_buzz(d, headline, demo_grade, v_label)
             print(f"    {v_label}: {disp}/140 {'✅' if ok else '❌'}")
             posts_data.append({
                 "label"  : f"{name} {v_label}",
@@ -953,6 +1020,7 @@ def main():
                 "note"   : note_base,
                 "hot"    : False,
                 "person" : name,
+                "buzz"   : buzz,
             })
 
     # HTML出力
