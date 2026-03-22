@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>カラーテーマ比較</title>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;padding:16px}
+.dot{font-family:'DotGothic16',monospace}
+.label{text-align:center;font-size:.75em;font-weight:700;margin-bottom:10px;color:#666}
+.row{display:flex;flex-direction:column;gap:24px;max-width:360px;margin:0 auto}
+
+/* ===== A: 現在（ポップ） ===== */
+.card-a{
+  background:#faf5ff;
+  border-radius:14px;padding:16px;
+  border:1.5px solid #e8ddf5;
+  position:relative;overflow:hidden;
+}
+.card-a::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#ff8c42,#e84393,#7c5ce7,#00b894)}
+.a-lv{font-size:.75em;color:#ff8c42}
+.a-rank{font-size:.65em;color:#7c5ce7;background:rgba(124,92,231,.08);padding:2px 6px;border-radius:4px}
+.a-name{font-size:1.25em;font-weight:900;text-align:center;color:#2a2040;margin:4px 0}
+.a-job-label{font-size:.58em;color:#e84393;letter-spacing:.1em;opacity:.7;text-align:center}
+.a-job{font-size:1.2em;font-weight:900;color:#e84393;text-align:center}
+.a-jd{text-align:center;font-size:.62em;color:#8a7aaa;margin:3px 0 8px}
+.a-move{background:rgba(253,121,168,.08);border-radius:6px;padding:6px;text-align:center}
+.a-move-l{font-size:.62em;color:#fd79a8}
+.a-move-n{font-size:.85em;font-weight:900;color:#fd79a8}
+.a-wk{text-align:center;font-size:.67em;color:#8a7aaa;margin-top:6px}
+
+/* ===== B: ダークRPG（FF/DQ風） ===== */
+.card-b{
+  background:#0e0a1a;
+  border-radius:14px;padding:16px;
+  border:1.5px solid #2a1f4a;
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 24px rgba(0,0,0,.5);
+}
+.card-b::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#c9a227,#f0d060,#c9a227)}
+.b-lv{font-size:.75em;color:#c9a227}
+.b-rank{font-size:.65em;color:#c9a227;background:rgba(201,162,39,.12);padding:2px 6px;border-radius:4px;border:1px solid rgba(201,162,39,.25)}
+.b-name{font-size:1.25em;font-weight:900;text-align:center;color:#f0e8ff;margin:4px 0}
+.b-job-label{font-size:.58em;color:#c9a227;letter-spacing:.1em;opacity:.85;text-align:center}
+.b-job{font-size:1.2em;font-weight:900;color:#f0d060;text-align:center;text-shadow:0 0 12px rgba(240,208,96,.4)}
+.b-jd{text-align:center;font-size:.62em;color:#7a6a99;margin:3px 0 8px}
+.b-move{background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.18);border-radius:6px;padding:6px;text-align:center}
+.b-move-l{font-size:.62em;color:#c9a227}
+.b-move-n{font-size:.85em;font-weight:900;color:#f0d060}
+.b-wk{text-align:center;font-size:.67em;color:#7a6a99;margin-top:6px}
+.b-wk b{color:#e84393}
+
+/* ===== C: ミッドナイト（中間・スタイリッシュ） ===== */
+.card-c{
+  background:#12101e;
+  border-radius:14px;padding:16px;
+  border:1.5px solid #2d2550;
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+.card-c::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#7c5ce7,#e84393,#fd79a8)}
+.c-lv{font-size:.75em;color:#a78bfa}
+.c-rank{font-size:.65em;color:#a78bfa;background:rgba(167,139,250,.1);padding:2px 6px;border-radius:4px}
+.c-name{font-size:1.25em;font-weight:900;text-align:center;color:#ede9fe;margin:4px 0}
+.c-job-label{font-size:.58em;color:#a78bfa;letter-spacing:.1em;opacity:.75;text-align:center}
+.c-job{font-size:1.2em;font-weight:900;color:#e84393;text-align:center;text-shadow:0 0 12px rgba(232,67,147,.35)}
+.c-jd{text-align:center;font-size:.62em;color:#6b5e99;margin:3px 0 8px}
+.c-move{background:rgba(232,67,147,.07);border:1px solid rgba(232,67,147,.2);border-radius:6px;padding:6px;text-align:center}
+.c-move-l{font-size:.62em;color:#e84393}
+.c-move-n{font-size:.85em;font-weight:900;color:#fd79a8}
+.c-wk{text-align:center;font-size:.67em;color:#6b5e99;margin-top:6px}
+.c-wk b{color:#e84393}
+
+.head-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+</style>
+</head>
+<body style="background:#111">
+
+<div class="row">
+
+  <!-- A: 現在 -->
+  <div>
+    <div class="label" style="color:#aaa">現在（ポップ・パステル）</div>
+    <div class="card-a">
+      <div class="head-row">
+        <span class="a-lv dot">Lv.42</span>
+        <span class="a-rank dot">達人級冒険者</span>
+      </div>
+      <div class="a-name">さじ</div>
+      <div class="dot" style="font-size:.58em;color:#e84393;letter-spacing:.1em;opacity:.7;text-align:center">✦ ───── 職業 ───── ✦</div>
+      <div class="a-job dot">【ストーリーズの女神】</div>
+      <div class="a-jd">映える構図を0.1秒で見抜く</div>
+      <div class="a-move">
+        <div class="a-move-l dot">⚡必殺技</div>
+        <div class="a-move-n">映えショット</div>
+      </div>
+      <div class="a-wk"><b>弱点:</b> 布団引力への耐性ゼロ</div>
+    </div>
+  </div>
+
+  <!-- B: ダークRPG -->
+  <div>
+    <div class="label" style="color:#aaa">B — ダークRPG（FF/DQ風）</div>
+    <div class="card-b">
+      <div class="head-row">
+        <span class="b-lv dot">Lv.42</span>
+        <span class="b-rank dot">達人級冒険者</span>
+      </div>
+      <div class="b-name">さじ</div>
+      <div class="dot" style="font-size:.58em;color:#c9a227;letter-spacing:.1em;opacity:.85;text-align:center">✦ ───── 職業 ───── ✦</div>
+      <div class="b-job dot">【ストーリーズの女神】</div>
+      <div class="b-jd">映える構図を0.1秒で見抜く</div>
+      <div class="b-move">
+        <div class="b-move-l dot">⚡必殺技</div>
+        <div class="b-move-n">映えショット</div>
+      </div>
+      <div class="b-wk"><b>弱点:</b> 布団引力への耐性ゼロ</div>
+    </div>
+  </div>
+
+  <!-- C: ミッドナイト -->
+  <div>
+    <div class="label" style="color:#aaa">C — ミッドナイト（中間）</div>
+    <div class="card-c">
+      <div class="head-row">
+        <span class="c-lv dot">Lv.42</span>
+        <span class="c-rank dot">達人級冒険者</span>
+      </div>
+      <div class="c-name">さじ</div>
+      <div class="dot" style="font-size:.58em;color:#a78bfa;letter-spacing:.1em;opacity:.75;text-align:center">✦ ───── 職業 ───── ✦</div>
+      <div class="c-job dot">【ストーリーズの女神】</div>
+      <div class="c-jd">映える構図を0.1秒で見抜く</div>
+      <div class="c-move">
+        <div class="c-move-l dot">⚡必殺技</div>
+        <div class="c-move-n">映えショット</div>
+      </div>
+      <div class="c-wk"><b>弱点:</b> 布団引力への耐性ゼロ</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

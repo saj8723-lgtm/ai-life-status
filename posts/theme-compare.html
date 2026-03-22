@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>テーマ比較：全体 vs カードのみ</title>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;padding:0}
+.dot{font-family:'DotGothic16',monospace}
+.screens{display:flex;flex-direction:column}
+.screen{width:100%;padding:20px 16px;max-width:400px;margin:0 auto}
+.label{text-align:center;font-size:.78em;font-weight:700;padding:10px;margin-bottom:0}
+
+/* ===== パターン1: 全体ダーク ===== */
+.full-dark{background:#0a0814}
+.full-dark .logo{font-size:1.4em;color:#c9a227;text-align:center;margin-bottom:4px}
+.full-dark .sub{font-size:.76em;color:#a090c8;text-align:center;margin-bottom:20px}
+.full-dark .tabs{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
+.full-dark .tab{padding:10px 20px;border-radius:8px;border:1.5px solid #2a1f4a;background:#130f20;color:#8a7aaa;font-size:.8em;cursor:pointer}
+.full-dark .tab.on{border-color:#c9a227;color:#c9a227;background:rgba(201,162,39,.08)}
+.full-dark input{width:100%;padding:14px;border-radius:10px;border:1.5px solid #2a1f4a;background:#130f20;color:#f0e8ff;font-size:16px;font-family:inherit;margin-bottom:8px;display:block}
+.full-dark .go{width:100%;padding:15px;border:none;border-radius:10px;background:#c9a227;color:#0a0814;font-weight:900;font-size:1em;font-family:'DotGothic16',monospace}
+.full-dark .card{background:#130f20;border-radius:14px;padding:16px;border:1.5px solid #2a1f4a;position:relative;overflow:hidden;margin-top:16px;box-shadow:0 4px 24px rgba(0,0,0,.5)}
+.full-dark .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9a227,#f0d060,#c9a227)}
+.full-dark .lv{font-size:.75em;color:#c9a227}
+.full-dark .rank{font-size:.65em;color:#c9a227;background:rgba(201,162,39,.1);padding:2px 6px;border-radius:4px;border:1px solid rgba(201,162,39,.2)}
+.full-dark .name{font-size:1.25em;font-weight:900;text-align:center;color:#f0e8ff;margin:4px 0}
+.full-dark .job-deco{font-size:.58em;color:#c9a227;letter-spacing:.1em;opacity:.85;text-align:center}
+.full-dark .job{font-size:1.2em;font-weight:900;color:#f0d060;text-align:center;text-shadow:0 0 12px rgba(240,208,96,.35)}
+.full-dark .jd{text-align:center;font-size:.62em;color:#e8e0ff;margin:3px 0 8px}
+.full-dark .move{background:rgba(201,162,39,.06);border:1px solid rgba(201,162,39,.15);border-radius:6px;padding:6px;text-align:center}
+.full-dark .move-l{font-size:.62em;color:#c9a227}
+.full-dark .move-n{font-size:.85em;font-weight:900;color:#f0d060}
+.full-dark .wk{text-align:center;font-size:.67em;color:#e8e0ff;margin-top:6px}
+.full-dark .wk b{color:#e84393}
+
+/* ===== パターン2: 入力ライト＋カードダーク ===== */
+.split .inp-area{background:#faf5ff;padding:20px 16px}
+.split .logo{font-size:1.4em;color:#ff8c42;text-align:center;margin-bottom:4px}
+.split .sub{font-size:.76em;color:#8a7aaa;text-align:center;margin-bottom:20px}
+.split .tabs{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
+.split .tab{padding:10px 20px;border-radius:8px;border:1.5px solid #e8ddf5;background:#fff;color:#8a7aaa;font-size:.8em}
+.split .tab.on{border-color:#ff8c42;color:#ff8c42;background:rgba(255,140,66,.06)}
+.split input{width:100%;padding:14px;border-radius:10px;border:1.5px solid #e8ddf5;background:#fff;color:#2a2040;font-size:16px;font-family:inherit;margin-bottom:8px;display:block}
+.split .go{width:100%;padding:15px;border:none;border-radius:10px;background:#ff8c42;color:#fff;font-weight:900;font-size:1em;font-family:'DotGothic16',monospace}
+.split .card-area{background:#0a0814;padding:20px 16px}
+.split .card{background:#130f20;border-radius:14px;padding:16px;border:1.5px solid #2a1f4a;position:relative;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.5)}
+.split .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9a227,#f0d060,#c9a227)}
+.split .lv{font-size:.75em;color:#c9a227}
+.split .rank{font-size:.65em;color:#c9a227;background:rgba(201,162,39,.1);padding:2px 6px;border-radius:4px;border:1px solid rgba(201,162,39,.2)}
+.split .name{font-size:1.25em;font-weight:900;text-align:center;color:#f0e8ff;margin:4px 0}
+.split .job-deco{font-size:.58em;color:#c9a227;letter-spacing:.1em;opacity:.85;text-align:center}
+.split .job{font-size:1.2em;font-weight:900;color:#f0d060;text-align:center;text-shadow:0 0 12px rgba(240,208,96,.35)}
+.split .jd{text-align:center;font-size:.62em;color:#e8e0ff;margin:3px 0 8px}
+.split .move{background:rgba(201,162,39,.06);border:1px solid rgba(201,162,39,.15);border-radius:6px;padding:6px;text-align:center}
+.split .move-l{font-size:.62em;color:#c9a227}
+.split .move-n{font-size:.85em;font-weight:900;color:#f0d060}
+.split .wk{text-align:center;font-size:.67em;color:#e8e0ff;margin-top:6px}
+.split .wk b{color:#e84393}
+
+.divider{text-align:center;font-size:.78em;font-weight:700;padding:16px;background:#222;color:#888}
+.head-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+</style>
+</head>
+<body>
+
+<div class="divider">① 全体ダークRPG</div>
+<div class="screen full-dark">
+  <div class="logo dot">⚔️ AI人生ステータス診断</div>
+  <div class="sub">冒険者ギルドに登録して、あなたのステータスを解放しよう</div>
+  <div class="tabs">
+    <div class="tab on dot">👤 ソロ登録</div>
+    <div class="tab dot">👥 パーティ編成</div>
+  </div>
+  <input type="text" placeholder="冒険者名を入力">
+  <button class="go">登録⚔️</button>
+  <div class="card">
+    <div class="head-row">
+      <span class="lv dot">Lv.42</span>
+      <span class="rank dot">達人級冒険者</span>
+    </div>
+    <div class="name">さじ</div>
+    <div class="job-deco dot">✦ ───── 職業 ───── ✦</div>
+    <div class="job dot">【ストーリーズの女神】</div>
+    <div class="jd">映える構図を0.1秒で見抜く</div>
+    <div class="move">
+      <div class="move-l dot">⚡必殺技</div>
+      <div class="move-n">映えショット</div>
+    </div>
+    <div class="wk"><b>弱点:</b> 布団引力への耐性ゼロ</div>
+  </div>
+</div>
+
+<div class="divider">② 入力ライト ＋ 結果カードのみダーク</div>
+<div class="split">
+  <div class="inp-area">
+    <div class="logo dot">⚔️ AI人生ステータス診断</div>
+    <div class="sub">冒険者ギルドに登録して、あなたのステータスを解放しよう</div>
+    <div class="tabs">
+      <div class="tab on dot">👤 ソロ登録</div>
+      <div class="tab dot">👥 パーティ編成</div>
+    </div>
+    <input type="text" placeholder="冒険者名を入力">
+    <button class="go">登録⚔️</button>
+  </div>
+  <div class="card-area">
+    <div class="card">
+      <div class="head-row">
+        <span class="lv dot">Lv.42</span>
+        <span class="rank dot">達人級冒険者</span>
+      </div>
+      <div class="name">さじ</div>
+      <div class="job-deco dot">✦ ───── 職業 ───── ✦</div>
+      <div class="job dot">【ストーリーズの女神】</div>
+      <div class="jd">映える構図を0.1秒で見抜く</div>
+      <div class="move">
+        <div class="move-l dot">⚡必殺技</div>
+        <div class="move-n">映えショット</div>
+      </div>
+      <div class="wk"><b>弱点:</b> 布団引力への耐性ゼロ</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>画像生成プロンプト集</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#faf5ff;color:#2a2040;font-family:'Noto Sans JP',-apple-system,sans-serif;line-height:1.7;font-size:15px}
+.w{max-width:700px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.4em;border-bottom:3px solid #7c5ce7;padding-bottom:8px;margin-bottom:20px}
+h2{font-size:1.05em;color:#7c5ce7;margin:24px 0 8px;padding:5px 12px;background:rgba(124,92,231,.06);border-left:4px solid #7c5ce7;border-radius:0 6px 6px 0}
+h3{font-size:.92em;color:#e84393;margin:12px 0 6px}
+p{margin-bottom:8px}
+.card{background:#fff;border-radius:10px;padding:14px;margin-bottom:12px;border:1px solid #e8ddf5}
+.prompt{background:#1a1030;color:#e0d8f0;border-radius:8px;padding:14px;margin:8px 0;font-size:.84em;line-height:1.6;white-space:pre-wrap;position:relative}
+.prompt::before{content:'📋 コピーしてChatGPTに貼り付け';position:absolute;top:-10px;left:10px;background:#7c5ce7;color:#fff;font-size:.65em;padding:1px 8px;border-radius:3px}
+.note{font-size:.8em;color:#8a7aaa;margin-top:6px}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.7em;font-weight:700;margin-right:4px}
+.t-size{background:#7c5ce711;color:#7c5ce7}
+.t-use{background:#00b89411;color:#00b894}
+</style>
+</head>
+<body>
+<div class="w">
+
+<h1>🎨 ChatGPT画像生成プロンプト集</h1>
+
+<div class="card">
+<p>以下のプロンプトをそのままChatGPTに貼り付けてください。DALL-Eで生成されます。</p>
+<p>生成後、気に入らなければ「もう少し○○にして」で微調整できます。</p>
+</div>
+
+<!-- ==================== ICON ==================== -->
+<h2>1. Xアイコン（プロフィール画像）</h2>
+
+<div class="card">
+<span class="tag t-size">400×400px</span><span class="tag t-use">X / TikTok / Instagram 共通</span>
+
+<h3>案A：パステル＋かわいいドット絵風（推奨）</h3>
+<div class="prompt">
+以下の仕様でSNSアイコン画像を1枚生成してください。
+
+【サイズ】正方形（1:1）
+【用途】X(Twitter)、TikTok、Instagramのプロフィールアイコン
+
+【デザイン指示】
+- 中央にピクセルアート（ドット絵）スタイルの剣（⚔️のイメージ）を大きく配置
+- 剣はシンプルで可愛らしいデフォルメされたデザイン。リアルではなくゲーム風
+- 背景は淡いラベンダー〜パステルパープルのグラデーション（#f5f0ff → #e8ddf5）
+- 剣の周りにキラキラ（✨）のような小さな光の粒子を数個散りばめる
+- 全体のテイストは「かわいいRPG」「ドット絵ゲーム」のような雰囲気
+- テキストは一切入れない
+- 丸くトリミングされることを想定して、重要な要素は中央に寄せる
+
+【NG】
+- リアルな写真風にしない
+- 暗い色を使わない
+- 文字を入れない
+</div>
+
+<h3>案B：もう少しクール寄り</h3>
+<div class="prompt">
+以下の仕様でSNSアイコン画像を1枚生成してください。
+
+【サイズ】正方形（1:1）
+【用途】SNSプロフィールアイコン
+
+【デザイン指示】
+- 中央にピクセルアート風の2本の交差した剣（⚔️）
+- 背景はダークパープル（#2a2040）に金色（#ffd93d）の光が差し込むイメージ
+- 剣は金色で発光しているような表現
+- ミニマルだが印象的なデザイン
+- ゲームのアイテムアイコンのような雰囲気
+- テキストなし
+- 丸トリミング前提で中央寄せ
+</div>
+
+<p class="note">💡 どちらか1つ生成して、気に入ったほうを使ってください。迷ったら案Aが無難（パステル＝アプリの世界観と統一）。</p>
+</div>
+
+<!-- ==================== HEADER ==================== -->
+<h2>2. Xヘッダー画像</h2>
+
+<div class="card">
+<span class="tag t-size">1500×500px</span><span class="tag t-use">X(Twitter)ヘッダー</span>
+
+<h3>メインデザイン：パステルRPG風</h3>
+<div class="prompt">
+以下の仕様でTwitter(X)のヘッダー画像を1枚生成してください。
+
+【サイズ】横長（3:1の比率、1500×500pxを想定）
+【用途】X(Twitter)のプロフィールヘッダー画像
+
+【デザイン指示】
+- 背景は淡いラベンダー〜パステルパープルのグラデーション（左から #f5f0ff → #e8ddf5 → #d0c0ee → #f5f0ff）
+- 画像上端に虹色の細いライン（3pxくらい）を配置（オレンジ→ピンク→紫→ミントグリーンのグラデーション）
+- 中央に大きく以下のテキスト：
+  「⚔️ AI人生ステータス診断」（ドット絵風のフォント、ダークパープル色）
+- その下に小さく：
+  「名前を入れるだけ。あなたの人生がRPGになる。」（紫色、#7c5ce7）
+- さらにその下に薄い灰色で小さく：
+  「布団の守護神 / カフェイン魔術師 / 推し活の聖女 / 散財の錬金術師 / カフェ巡りの魔女」
+- 背景の各所に薄く（透明度20%くらいで）ゲーム風の絵文字アイコンを散りばめる：
+  💪 🧠 💰 😎 🔥 🍀 ⚔️ 🛡️
+- 全体のテイストは「かわいいRPG」「パステルゲーム」の雰囲気
+- 左下はアイコン画像で隠れるので、重要な要素は中央〜右寄りに配置
+
+【NG】
+- リアルな写真風にしない
+- 暗い・重い雰囲気にしない
+- テキストのスペルミスに注意（日本語テキスト）
+</div>
+
+<p class="note">⚠️ DALL-Eは日本語テキストが苦手です。テキストが崩れた場合は以下の対処法で：</p>
+
+<h3>日本語が崩れた場合の対処法</h3>
+<div class="prompt">
+上記と同じデザインで、テキストを全て削除してください。
+テキストなしの背景画像だけを生成してください。
+後からCanvaでテキストを重ねます。
+
+背景のみの指示：
+- パステルパープルのグラデーション背景（#f5f0ff → #e8ddf5 → #d0c0ee）
+- 上端に虹色の細いライン
+- 背景にうっすらとRPG風のアイコン（剣、盾、星、ハート等）をドット絵風に散りばめる
+- 中央は空けておく（後でテキストを載せる）
+- 横長（3:1比率）
+</div>
+
+<p class="note">💡 背景だけ生成 → Canvaにアップロード → テキストを手動で重ねる。これが一番確実。Canvaでフォントを「DotGothic16」にすればアプリと統一感が出る。</p>
+</div>
+
+<!-- ==================== OGP ==================== -->
+<h2>3. OGP画像（URLシェア時のプレビュー）</h2>
+
+<div class="card">
+<span class="tag t-size">1200×630px</span><span class="tag t-use">X / LINE / Slack等でURLシェア時に表示</span>
+
+<div class="prompt">
+以下の仕様でOGP（リンクプレビュー）画像を1枚生成してください。
+
+【サイズ】横長（約1.9:1の比率、1200×630pxを想定）
+【用途】WebサイトのURLをSNSでシェアしたときに表示されるプレビュー画像
+
+【デザイン指示】
+- 背景は淡いパステルパープルのグラデーション
+- 中央にドット絵風の剣のアイコン（大きめ）
+- その下に「AI人生ステータス診断」のテキスト（ドット絵風フォント）
+- さらに下に「名前を入れるだけ。人生がRPGになる。」の小さいテキスト
+- 6つのステータスアイコン（💪🧠💰😎🔥🍀）を横一列に並べる
+- 全体はゲームのタイトル画面のような雰囲気
+- パステルで明るく、かわいらしいテイスト
+
+【NG】
+- 暗い色調にしない
+- リアルにしない
+</div>
+
+<p class="note">💡 OGP画像は後からHTMLのmetaタグで設定します。Claudeに頼めばmetaタグの追加は一瞬。</p>
+</div>
+
+<!-- ==================== TikTok THUMB ==================== -->
+<h2>4. TikTokサムネイル（動画カバー）</h2>
+
+<div class="card">
+<span class="tag t-size">1080×1920px</span><span class="tag t-use">TikTok動画のカバー画像</span>
+
+<div class="prompt">
+以下の仕様でTikTok動画のカバー画像を1枚生成してください。
+
+【サイズ】縦長（9:16の比率）
+【用途】TikTok動画のサムネイル
+
+【デザイン指示】
+- 背景はパステルパープルのグラデーション
+- 中央上部に大きく「⚔️」のドット絵風アイコン
+- その下にドット絵風テキストで：
+  「大谷翔平に」
+  「挑んでみた結果」
+- 下部に「0勝6敗 完敗」のテキスト（赤色で強調）
+- 全体はゲームのバトル画面のような雰囲気
+- テキストは大きく太く読みやすく
+- パステルだが目を引くデザイン
+
+【NG】
+- 暗い雰囲気にしない
+- テキストが読みにくくならないように
+</div>
+
+<p class="note">💡 TikTokのサムネは動画ごとに変えるので、これはテンプレ。実際は動画の内容に合わせて「○○やってみた結果」の部分を変える。</p>
+</div>
+
+<!-- ==================== TIPS ==================== -->
+<h2>5. ChatGPTで生成する際のコツ</h2>
+
+<div class="card">
+<p><strong>① まず1枚生成して方向性を確認</strong></p>
+<p>→ 気に入らなければ「もう少し明るくして」「剣をもっと大きくして」等で修正指示。</p>
+
+<p><strong>② 日本語テキストが崩れたら</strong></p>
+<p>→ 「テキストを全部削除して背景だけ生成して」→ Canvaで後からテキストを載せる。これが最も確実。</p>
+
+<p><strong>③ 気に入った画像ができたら</strong></p>
+<p>→ 「この画像と同じテイストで、○○を生成して」と言えば統一感のあるシリーズが作れる。</p>
+
+<p><strong>④ サイズ指定について</strong></p>
+<p>→ DALL-Eは正確なピクセル指定ができないので、比率（1:1、3:1、9:16等）で指示。生成後にCanvaやプレビュー等でリサイズ・トリミングする。</p>
+</div>
+
+<div class="card" style="text-align:center;margin-top:16px;font-size:.8em;color:#8a7aaa">
+作成日: 2026年3月12日 ｜ AI人生ステータス診断 画像生成プロンプト集
+</div>
+
+</div>
+</body>
+</html>

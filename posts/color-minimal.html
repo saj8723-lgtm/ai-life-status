@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>カラー絞りサンプル</title>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif;background:#f0ebfa;padding:16px}
+.dot{font-family:'DotGothic16',monospace}
+.label{text-align:center;font-size:.75em;font-weight:700;margin-bottom:10px;color:#666;padding:8px;background:#e0d8f0;border-radius:6px}
+.row{display:flex;flex-direction:column;gap:32px;max-width:360px;margin:0 auto}
+.head-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+
+/* ===== A: 紫1色 ===== */
+.card-a{
+  background:#fff;border-radius:14px;padding:16px;
+  border:1.5px solid #d8cff0;position:relative;overflow:hidden;
+}
+.card-a::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#7c5ce7}
+.a-lv{font-size:.75em;color:#7c5ce7}
+.a-rank{font-size:.65em;color:#7c5ce7;background:rgba(124,92,231,.1);padding:2px 6px;border-radius:4px}
+.a-name{font-size:1.25em;font-weight:900;text-align:center;color:#2a2040;margin:4px 0}
+.a-job-deco{font-size:.58em;color:#7c5ce7;letter-spacing:.1em;opacity:.6;text-align:center}
+.a-job{font-size:1.2em;font-weight:900;color:#7c5ce7;text-align:center;margin:2px 0}
+.a-jd{text-align:center;font-size:.62em;color:#8a7aaa;margin:3px 0 8px}
+.a-move{background:rgba(124,92,231,.07);border-radius:6px;padding:6px;text-align:center}
+.a-move-l{font-size:.62em;color:#7c5ce7}
+.a-move-n{font-size:.85em;font-weight:900;color:#7c5ce7}
+.a-wk{text-align:center;font-size:.67em;color:#8a7aaa;margin-top:6px}
+
+/* ===== B: 紫＋オレンジCTAのみ ===== */
+.card-b{
+  background:#fff;border-radius:14px;padding:16px;
+  border:1.5px solid #d8cff0;position:relative;overflow:hidden;
+}
+.card-b::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#7c5ce7,#a78bfa)}
+.b-lv{font-size:.75em;color:#7c5ce7}
+.b-rank{font-size:.65em;color:#7c5ce7;background:rgba(124,92,231,.1);padding:2px 6px;border-radius:4px}
+.b-name{font-size:1.25em;font-weight:900;text-align:center;color:#2a2040;margin:4px 0}
+.b-job-deco{font-size:.58em;color:#7c5ce7;letter-spacing:.1em;opacity:.6;text-align:center}
+.b-job{font-size:1.2em;font-weight:900;color:#7c5ce7;text-align:center;margin:2px 0}
+.b-jd{text-align:center;font-size:.62em;color:#8a7aaa;margin:3px 0 8px}
+.b-move{background:rgba(124,92,231,.07);border-radius:6px;padding:6px;text-align:center}
+.b-move-l{font-size:.62em;color:#7c5ce7}
+.b-move-n{font-size:.85em;font-weight:900;color:#7c5ce7}
+.b-wk{text-align:center;font-size:.67em;color:#8a7aaa;margin-top:6px}
+
+/* ===== 入力エリアサンプル ===== */
+.input-area-a{background:#f0ebfa;padding:16px;border-radius:14px;margin-bottom:8px}
+.input-area-a input{width:100%;padding:14px;border-radius:10px;border:1.5px solid #d8cff0;background:#fff;color:#2a2040;font-size:16px;font-family:inherit;margin-bottom:8px;display:block}
+.input-area-a .go-a{width:100%;padding:15px;border:none;border-radius:10px;background:#ff8c42;color:#fff;font-weight:900;font-size:1em;font-family:'DotGothic16',monospace;display:block}
+.input-area-a .logo{font-size:1.4em;color:#7c5ce7;text-align:center;margin-bottom:4px}
+.input-area-a .sub{font-size:.76em;color:#8a7aaa;text-align:center;margin-bottom:16px}
+.input-area-a .tabs{text-align:center;margin-bottom:16px}
+.input-area-a .tab{display:inline-block;padding:10px 20px;border-radius:8px;border:1.5px solid #d8cff0;background:#fff;color:#8a7aaa;font-size:.8em;margin:0 3px}
+.input-area-a .tab.on{border-color:#7c5ce7;color:#7c5ce7}
+</style>
+</head>
+<body>
+
+<div class="row">
+
+  <!-- 入力エリア -->
+  <div>
+    <div class="label">入力エリア（紫UI ＋ オレンジCTAボタンのみ）</div>
+    <div class="input-area-a">
+      <div class="logo dot">⚔️ AI人生ステータス診断</div>
+      <div class="sub">冒険者ギルドに登録して、あなたのステータスを解放しよう</div>
+      <div class="tabs">
+        <span class="tab on dot">👤 ソロ登録</span>
+        <span class="tab dot">👥 パーティ編成</span>
+      </div>
+      <input type="text" placeholder="冒険者名を入力">
+      <button class="go-a dot">登録⚔️</button>
+    </div>
+  </div>
+
+  <!-- A: 紫1色カード -->
+  <div>
+    <div class="label">A — 紫1色のみ（全要素を紫で統一）</div>
+    <div class="card-a">
+      <div class="head-row">
+        <span class="a-lv dot">Lv.42</span>
+        <span class="a-rank dot">達人級冒険者</span>
+      </div>
+      <div class="a-name">さじ</div>
+      <div class="a-job-deco dot">✦ ───── 職業 ───── ✦</div>
+      <div class="a-job dot">【ストーリーズの女神】</div>
+      <div class="a-jd">映える構図を0.1秒で見抜く</div>
+      <div class="a-move">
+        <div class="a-move-l dot">⚡必殺技</div>
+        <div class="a-move-n">映えショット</div>
+      </div>
+      <div class="a-wk"><b>弱点:</b> 布団引力への耐性ゼロ</div>
+    </div>
+  </div>
+
+  <!-- B: 紫グラデーション -->
+  <div>
+    <div class="label">B — 紫グラデーション（濃→薄）</div>
+    <div class="card-b">
+      <div class="head-row">
+        <span class="b-lv dot">Lv.42</span>
+        <span class="b-rank dot">達人級冒険者</span>
+      </div>
+      <div class="b-name">さじ</div>
+      <div class="b-job-deco dot">✦ ───── 職業 ───── ✦</div>
+      <div class="b-job dot">【ストーリーズの女神】</div>
+      <div class="b-jd">映える構図を0.1秒で見抜く</div>
+      <div class="b-move">
+        <div class="b-move-l dot">⚡必殺技</div>
+        <div class="b-move-n">映えショット</div>
+      </div>
+      <div class="b-wk"><b>弱点:</b> 布団引力への耐性ゼロ</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

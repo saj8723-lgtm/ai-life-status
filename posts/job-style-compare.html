@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ジョブ表示スタイル比較</title>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#faf5ff;color:#2a2040;font-family:'Noto Sans JP',sans-serif;padding:20px}
+.dot{font-family:'DotGothic16',monospace}
+h1{text-align:center;font-size:1em;color:#8a7aaa;margin-bottom:24px}
+.compare{display:flex;flex-direction:column;gap:32px;max-width:400px;margin:0 auto}
+.style-label{font-size:.75em;font-weight:700;color:#8a7aaa;margin-bottom:8px;text-align:center}
+.card{background:#fff;border-radius:14px;padding:16px;border:1.5px solid #e8ddf5;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ff8c42,#e84393,#7c5ce7,#00b894)}
+.sc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.sc-lv{font-size:.75em;color:#ff8c42}
+.sc-rank{font-size:.65em;color:#7c5ce7;background:rgba(124,92,231,.08);padding:2px 6px;border-radius:4px}
+.sc-name{font-size:1.25em;font-weight:900;text-align:center;margin-bottom:6px}
+
+/* ===== スタイルA: 称号プレート ===== */
+.job-a-wrap{margin:6px 0;border-radius:10px;padding:10px 14px;border:1.5px solid}
+.job-a-label{font-size:.58em;font-weight:700;letter-spacing:.08em;opacity:.7;margin-bottom:3px}
+.job-a-name{font-size:1.25em;font-weight:900;letter-spacing:.02em}
+
+/* ===== スタイルB: ドット装飾 ===== */
+.job-b-wrap{margin:8px 0;text-align:center;padding:6px 0}
+.job-b-deco{font-size:.6em;color:#8a7aaa;letter-spacing:.2em;margin-bottom:2px}
+.job-b-name{font-size:1.2em;font-weight:900;letter-spacing:.05em}
+.job-b-deco2{font-size:.6em;color:#8a7aaa;letter-spacing:.2em;margin-top:2px}
+
+/* ===== スタイルC: カラーバッジ ===== */
+.job-c-wrap{margin:8px 0;text-align:center}
+.job-c-badge{display:inline-block;padding:10px 24px;border-radius:50px;font-size:1.1em;font-weight:900;letter-spacing:.03em}
+.job-c-sub{font-size:.62em;color:#8a7aaa;margin-top:4px}
+
+.sc-jd{text-align:center;font-size:.62em;color:#8a7aaa;margin-top:4px}
+</style>
+</head>
+<body>
+<h1>ジョブ表示スタイル比較</h1>
+<div class="compare">
+
+  <!-- スタイルA -->
+  <div>
+    <div class="style-label">A — 称号プレート風</div>
+    <div class="card">
+      <div class="sc-head">
+        <div class="sc-lv dot">Lv.42</div>
+        <div class="sc-rank dot">達人級冒険者</div>
+      </div>
+      <div class="sc-name">さじ</div>
+      <div class="job-a-wrap" style="background:rgba(232,67,147,.08);border-color:rgba(232,67,147,.3)">
+        <div class="job-a-label dot" style="color:#e84393">⚔️ JOB CLASS</div>
+        <div class="job-a-name" style="color:#e84393">ストーリーズの女神</div>
+      </div>
+      <div class="sc-jd">映える構図を0.1秒で見抜く</div>
+    </div>
+  </div>
+
+  <!-- スタイルB -->
+  <div>
+    <div class="style-label">B — ドット装飾・RPGセリフ風</div>
+    <div class="card">
+      <div class="sc-head">
+        <div class="sc-lv dot">Lv.42</div>
+        <div class="sc-rank dot">達人級冒険者</div>
+      </div>
+      <div class="sc-name">さじ</div>
+      <div class="job-b-wrap">
+        <div class="job-b-deco dot">══════════════</div>
+        <div class="job-b-name dot" style="color:#e84393">ストーリーズの女神</div>
+        <div class="job-b-deco2 dot">══════════════</div>
+      </div>
+      <div class="sc-jd">映える構図を0.1秒で見抜く</div>
+    </div>
+  </div>
+
+  <!-- スタイルC -->
+  <div>
+    <div class="style-label">C — カラーバッジ型</div>
+    <div class="card">
+      <div class="sc-head">
+        <div class="sc-lv dot">Lv.42</div>
+        <div class="sc-rank dot">達人級冒険者</div>
+      </div>
+      <div class="sc-name">さじ</div>
+      <div class="job-c-wrap">
+        <span class="job-c-badge" style="background:#e84393;color:#fff">⚔️ ストーリーズの女神</span>
+        <div class="job-c-sub">映える構図を0.1秒で見抜く</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

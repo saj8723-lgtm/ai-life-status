@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>パステル比較</title>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans JP',sans-serif}
+.dot{font-family:'DotGothic16',monospace}
+.divider{text-align:center;font-size:.78em;font-weight:700;padding:14px;background:#eee;color:#666}
+.screen{max-width:400px;margin:0 auto;padding:20px 16px}
+
+/* ===== 現在（ビビッド） ===== */
+.now{background:#faf5ff}
+.now .card{background:#fff;border-radius:14px;padding:16px;border:1.5px solid #e8ddf5;position:relative;overflow:hidden}
+.now .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ff8c42,#e84393,#7c5ce7,#00b894)}
+.now .lv{font-size:.75em;color:#ff8c42}
+.now .rank{font-size:.65em;color:#7c5ce7;background:rgba(124,92,231,.08);padding:2px 6px;border-radius:4px}
+.now .name{font-size:1.25em;font-weight:900;text-align:center;color:#2a2040;margin:4px 0}
+.now .job-deco{font-size:.58em;color:#e84393;letter-spacing:.1em;opacity:.7;text-align:center}
+.now .job{font-size:1.2em;font-weight:900;color:#e84393;text-align:center}
+.now .jd{text-align:center;font-size:.62em;color:#8a7aaa;margin:3px 0 8px}
+.now .move{background:rgba(253,121,168,.08);border-radius:6px;padding:6px;text-align:center}
+.now .move-l{font-size:.62em;color:#fd79a8}
+.now .move-n{font-size:.85em;font-weight:900;color:#fd79a8}
+.now .wk{text-align:center;font-size:.67em;color:#8a7aaa;margin-top:6px}
+.now .wk b{color:#e84393}
+.now .logo{font-size:1.4em;color:#ff8c42;text-align:center;margin-bottom:4px}
+.now .sub{font-size:.76em;color:#8a7aaa;text-align:center;margin-bottom:20px}
+.now .tab{display:inline-block;padding:10px 20px;border-radius:8px;border:1.5px solid #e8ddf5;background:#fff;color:#8a7aaa;font-size:.8em;margin:0 3px}
+.now .tab.on{border-color:#ff8c42;color:#ff8c42}
+.now input{width:100%;padding:14px;border-radius:10px;border:1.5px solid #e8ddf5;background:#fff;color:#2a2040;font-size:16px;font-family:inherit;margin-bottom:8px;display:block}
+.now .go{width:100%;padding:15px;border:none;border-radius:10px;background:#ff8c42;color:#fff;font-weight:900;font-size:1em;font-family:'DotGothic16',monospace;margin-bottom:16px;display:block}
+
+/* ===== ソフトパステル ===== */
+.soft{background:#f5f2fa}
+.soft .card{background:#fff;border-radius:14px;padding:16px;border:1.5px solid #ddd6f0;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(100,80,160,.06)}
+.soft .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9956a,#c47aa0,#8b72d8)}
+.soft .lv{font-size:.75em;color:#c9956a}
+.soft .rank{font-size:.65em;color:#8b72d8;background:rgba(139,114,216,.08);padding:2px 6px;border-radius:4px}
+.soft .name{font-size:1.25em;font-weight:900;text-align:center;color:#2a2040;margin:4px 0}
+.soft .job-deco{font-size:.58em;color:#c47aa0;letter-spacing:.1em;opacity:.8;text-align:center}
+.soft .job{font-size:1.2em;font-weight:900;color:#c47aa0;text-align:center}
+.soft .jd{text-align:center;font-size:.62em;color:#9488b0;margin:3px 0 8px}
+.soft .move{background:rgba(196,122,160,.07);border-radius:6px;padding:6px;text-align:center}
+.soft .move-l{font-size:.62em;color:#c47aa0}
+.soft .move-n{font-size:.85em;font-weight:900;color:#c47aa0}
+.soft .wk{text-align:center;font-size:.67em;color:#9488b0;margin-top:6px}
+.soft .wk b{color:#c47aa0}
+.soft .logo{font-size:1.4em;color:#c9956a;text-align:center;margin-bottom:4px}
+.soft .sub{font-size:.76em;color:#9488b0;text-align:center;margin-bottom:20px}
+.soft .tab{display:inline-block;padding:10px 20px;border-radius:8px;border:1.5px solid #ddd6f0;background:#fff;color:#9488b0;font-size:.8em;margin:0 3px}
+.soft .tab.on{border-color:#c9956a;color:#c9956a}
+.soft input{width:100%;padding:14px;border-radius:10px;border:1.5px solid #ddd6f0;background:#fff;color:#2a2040;font-size:16px;font-family:inherit;margin-bottom:8px;display:block}
+.soft .go{width:100%;padding:15px;border:none;border-radius:10px;background:#c9956a;color:#fff;font-weight:900;font-size:1em;font-family:'DotGothic16',monospace;margin-bottom:16px;display:block}
+
+.tabs{text-align:center;margin-bottom:16px}
+.head-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+</style>
+</head>
+<body>
+
+<!-- 現在 -->
+<div class="divider">現在（ビビッド・ちかちかする）</div>
+<div class="screen now">
+  <div class="logo dot">⚔️ AI人生ステータス診断</div>
+  <div class="sub">冒険者ギルドに登録して、あなたのステータスを解放しよう</div>
+  <div class="tabs">
+    <span class="tab on dot">👤 ソロ登録</span>
+    <span class="tab dot">👥 パーティ編成</span>
+  </div>
+  <input type="text" placeholder="冒険者名を入力">
+  <button class="go">登録⚔️</button>
+  <div class="card">
+    <div class="head-row">
+      <span class="lv dot">Lv.42</span>
+      <span class="rank dot">達人級冒険者</span>
+    </div>
+    <div class="name">さじ</div>
+    <div class="job-deco dot">✦ ───── 職業 ───── ✦</div>
+    <div class="job dot">【ストーリーズの女神】</div>
+    <div class="jd">映える構図を0.1秒で見抜く</div>
+    <div class="move">
+      <div class="move-l dot">⚡必殺技</div>
+      <div class="move-n">映えショット</div>
+    </div>
+    <div class="wk"><b>弱点:</b> 布団引力への耐性ゼロ</div>
+  </div>
+</div>
+
+<!-- ソフト -->
+<div class="divider">ソフトパステル（彩度を落とした版）</div>
+<div class="screen soft">
+  <div class="logo dot">⚔️ AI人生ステータス診断</div>
+  <div class="sub">冒険者ギルドに登録して、あなたのステータスを解放しよう</div>
+  <div class="tabs">
+    <span class="tab on dot">👤 ソロ登録</span>
+    <span class="tab dot">👥 パーティ編成</span>
+  </div>
+  <input type="text" placeholder="冒険者名を入力">
+  <button class="go">登録⚔️</button>
+  <div class="card">
+    <div class="head-row">
+      <span class="lv dot">Lv.42</span>
+      <span class="rank dot">達人級冒険者</span>
+    </div>
+    <div class="name">さじ</div>
+    <div class="job-deco dot">✦ ───── 職業 ───── ✦</div>
+    <div class="job dot">【ストーリーズの女神】</div>
+    <div class="jd">映える構図を0.1秒で見抜く</div>
+    <div class="move">
+      <div class="move-l dot">⚡必殺技</div>
+      <div class="move-n">映えショット</div>
+    </div>
+    <div class="wk"><b>弱点:</b> 布団引力への耐性ゼロ</div>
+  </div>
+</div>
+
+</body>
+</html>

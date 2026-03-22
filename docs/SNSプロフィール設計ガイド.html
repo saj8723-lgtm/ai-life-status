@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNSプロフィール設計ガイド</title>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#faf5ff;color:#2a2040;font-family:'Noto Sans JP',sans-serif;line-height:1.7;font-size:15px}
+.w{max-width:720px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.5em;border-bottom:3px solid #7c5ce7;padding-bottom:8px;margin-bottom:20px}
+h2{font-size:1.1em;color:#7c5ce7;margin:24px 0 10px;padding:5px 12px;background:rgba(124,92,231,.06);border-left:4px solid #7c5ce7;border-radius:0 6px 6px 0}
+h3{font-size:.95em;color:#e84393;margin:14px 0 6px}
+p{margin-bottom:8px}
+.card{background:#fff;border-radius:10px;padding:14px;margin-bottom:12px;border:1px solid #e8ddf5;box-shadow:0 1px 6px rgba(0,0,0,.03)}
+.important{border-left:4px solid #ff8c42}
+.sm{font-size:.82em;color:#8a7aaa}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.86em}
+th,td{padding:7px 10px;border:1px solid #e8ddf5;text-align:left}
+th{background:#7c5ce711;color:#7c5ce7;font-weight:700}
+code{background:#f0eaff;padding:1px 4px;border-radius:3px;font-size:.86em}
+.bio{background:#f5f0ff;border:1px dashed #d0c0ee;border-radius:8px;padding:10px;margin:6px 0;font-size:.86em;white-space:pre-wrap;line-height:1.5}
+
+/* ===== HEADER PREVIEWS ===== */
+.preview-section{margin:14px 0}
+
+/* X Header Preview (1500x500 → 3:1 ratio) */
+.x-header-preview{width:100%;aspect-ratio:3/1;border-radius:0 0 10px 10px;overflow:hidden;position:relative;margin-bottom:10px}
+.x-header-1{background:linear-gradient(135deg,#f5f0ff 0%,#e8ddf5 30%,#d0c0ee 60%,#f5f0ff 100%);display:flex;align-items:center;justify-content:center;height:100%;position:relative}
+.x-header-1::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ff8c42,#e84393,#7c5ce7,#00b894)}
+.x-h-content{text-align:center;z-index:1}
+.x-h-title{font-family:'DotGothic16',monospace;font-size:clamp(1em,3.5vw,1.6em);color:#2a2040}
+.x-h-sub{font-size:clamp(.55em,1.8vw,.78em);color:#7c5ce7;margin-top:2px}
+.x-h-jobs{font-size:clamp(.45em,1.4vw,.6em);color:#8a7aaa;margin-top:6px;max-width:90%;margin-left:auto;margin-right:auto}
+/* Floating pixel elements */
+.px{position:absolute;font-size:clamp(.8em,2.5vw,1.4em);opacity:.25}
+.px-1{top:12%;left:8%}.px-2{top:20%;right:12%}.px-3{bottom:18%;left:15%}.px-4{bottom:15%;right:8%}.px-5{top:40%;left:4%}.px-6{top:35%;right:5%}
+
+/* X Profile card mock */
+.x-profile-mock{background:#fff;border:1px solid #e8ddf5;border-radius:12px;overflow:hidden;margin:10px 0}
+.x-pm-header{height:100px;position:relative}
+.x-pm-header-bg{width:100%;height:100%;object-fit:cover}
+.x-pm-avatar{width:56px;height:56px;border-radius:50%;border:3px solid #fff;position:absolute;bottom:-28px;left:14px;display:flex;align-items:center;justify-content:center;font-size:1.6em}
+.x-pm-body{padding:36px 14px 14px}
+.x-pm-name{font-weight:900;font-size:.9em}
+.x-pm-handle{font-size:.75em;color:#8a7aaa}
+.x-pm-bio{font-size:.78em;margin-top:4px;line-height:1.5}
+.x-pm-link{font-size:.72em;color:#7c5ce7;margin-top:2px}
+
+/* TikTok Preview */
+.tt-profile-mock{background:#111;color:#fff;border-radius:12px;padding:16px;margin:10px 0;text-align:center}
+.tt-avatar{width:60px;height:60px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:1.8em;border:2px solid #fe2c55}
+.tt-name{font-weight:900;font-size:.88em}
+.tt-handle{font-size:.72em;color:#888;margin-bottom:6px}
+.tt-bio{font-size:.75em;color:#ccc;margin-bottom:6px;line-height:1.4}
+.tt-link{font-size:.72em;color:#fe2c55}
+.tt-stats{display:flex;justify-content:center;gap:20px;margin-top:8px;font-size:.72em}
+.tt-stats span{text-align:center}
+.tt-stats b{display:block;font-size:1.1em;color:#fff}
+
+/* IG Preview */
+.ig-profile-mock{background:#fff;border:1px solid #e8ddf5;border-radius:12px;padding:16px;margin:10px 0}
+.ig-top{display:flex;align-items:center;gap:14px}
+.ig-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6em;border:2px solid #e84393;flex-shrink:0}
+.ig-info{flex:1}
+.ig-name{font-weight:900;font-size:.85em}
+.ig-handle{font-size:.72em;color:#8a7aaa}
+.ig-stats{display:flex;gap:14px;margin-top:4px;font-size:.68em}
+.ig-stats b{display:block;font-size:1.05em}
+.ig-bio{font-size:.75em;margin-top:8px;line-height:1.4}
+.ig-link{font-size:.72em;color:#7c5ce7;margin-top:2px}
+
+/* Icon options */
+.icon-options{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.icon-opt{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6em;border:2px solid #e8ddf5;position:relative}
+.icon-opt::after{content:attr(data-label);position:absolute;bottom:-16px;font-size:.5em;color:#8a7aaa;white-space:nowrap}
+.icon-a{background:linear-gradient(135deg,#f5f0ff,#e8ddf5)}
+.icon-b{background:linear-gradient(135deg,#2a2040,#3a2060);color:#ffd93d}
+.icon-c{background:linear-gradient(135deg,#ff8c42,#e84393);color:#fff}
+</style>
+</head>
+<body>
+<div class="w">
+
+<h1>🎨 SNSプロフィール設計ガイド</h1>
+
+<div class="card important">
+<p><strong>大原則：</strong>プロフィールは「3秒で何のアカウントかわかる」が全て。名前・アイコン・ヘッダー・bio、すべてが「診断アプリを作ってる人（or アプリの公式）」と伝わること。</p>
+</div>
+
+<div class="card">
+<h3>アカウント構成の結論</h3>
+<table>
+<tr><th>プラットフォーム</th><th>アカウント名</th><th>運用方針</th></tr>
+<tr><td>X（メイン）</td><td><code>@ai_life_status</code></td><td>公式アカウント。診断結果・アプデ・有名人対戦。毎日投稿。</td></tr>
+<tr><td>TikTok</td><td><code>@ai_life_status</code></td><td>画面録画メイン。週2〜3回。</td></tr>
+<tr><td>Instagram</td><td><code>@ai_life_status</code></td><td>ストーリーズ中心。Xでバズった投稿の転載。週1〜2回。</td></tr>
+<tr><td>既存のXアカウント</td><td>（既存のまま）</td><td>ローンチ時に1回だけ紹介投稿。以降は分離。</td></tr>
+</table>
+<p class="sm">※全プラットフォームで同じIDを取る。統一感が大事。先に全部押さえておく。</p>
+</div>
+
+<!-- ==================== X ==================== -->
+<h2>X（Twitter）プロフィール設計</h2>
+
+<h3>🖼️ ヘッダー画像（1500×500px）</h3>
+<p>ライトパステル＋ドット絵風。アプリの世界観と統一。</p>
+
+<div class="x-header-preview">
+<div class="x-header-1">
+<div class="px px-1">⚔️</div><div class="px px-2">🧠</div><div class="px px-3">🔥</div><div class="px px-4">🍀</div><div class="px px-5">💪</div><div class="px px-6">💰</div>
+<div class="x-h-content">
+<div class="x-h-title">⚔️ AI人生ステータス診断</div>
+<div class="x-h-sub">名前を入れるだけ。あなたの人生がRPGになる。</div>
+<div class="x-h-jobs">布団の守護神 / カフェイン魔術師 / 推し活の聖女 / 散財の錬金術師 / …</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<p><strong>ヘッダーに入れる要素：</strong></p>
+<p>① サービス名「AI人生ステータス診断」（大きく中央）</p>
+<p>② キャッチコピー「名前を入れるだけ。あなたの人生がRPGになる。」</p>
+<p>③ ジョブ名をいくつか散りばめる（「布団の守護神」「カフェ巡りの魔女」etc.）</p>
+<p>④ ステータスのアイコン（💪🧠💰😎🔥🍀）を装飾として配置</p>
+<p class="sm">背景はアプリと同じパステル紫系グラデーション。Canvaで10分で作れる。</p>
+</div>
+
+<h3>🎭 アイコン（400×400px）</h3>
+
+<div class="icon-options">
+<div class="icon-opt icon-a" data-label="案A: パステル">⚔️</div>
+<div class="icon-opt icon-b" data-label="案B: ダーク">⚔️</div>
+<div class="icon-opt icon-c" data-label="案C: グラデ">⚔️</div>
+</div>
+
+<div class="card">
+<p><strong>推奨：案A（パステル背景に⚔️）。</strong>アプリのライトモードと統一。タイムラインで目立つ。</p>
+<p>Canvaで「円形背景 + ⚔️の絵文字 or ドット絵の剣」を配置するだけ。凝りすぎない。</p>
+<p class="sm">※顔出しアイコンは不要。アプリの公式アカウントなのでロゴ的なもので統一。</p>
+</div>
+
+<h3>📝 名前 & bio</h3>
+
+<div class="x-profile-mock">
+<div class="x-pm-header" style="background:linear-gradient(135deg,#f5f0ff,#e8ddf5,#d0c0ee,#f5f0ff);position:relative">
+<div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ff8c42,#e84393,#7c5ce7,#00b894)"></div>
+<div style="text-align:center;padding-top:20px;font-family:'DotGothic16';color:#2a2040;font-size:.9em">⚔️ AI人生ステータス診断</div>
+<div style="text-align:center;font-size:.6em;color:#7c5ce7">名前を入れるだけ。人生がRPGになる。</div>
+<div class="x-pm-avatar icon-a">⚔️</div>
+</div>
+<div class="x-pm-body">
+<div class="x-pm-name">AI人生ステータス診断 ⚔️</div>
+<div class="x-pm-handle">@ai_life_status</div>
+<div class="x-pm-bio">名前を入れるだけで人生がRPG化される無料診断⚔️
+ジョブ・必殺技・弱点をAIが査定 / 有名人と対戦可能
+友達との相性診断もできる👥
+▼ 今すぐ診断する</div>
+<div class="x-pm-link">🔗 ai-life-status.vercel.app</div>
+</div>
+</div>
+
+<div class="card">
+<h3>bio設計のポイント</h3>
+<p><strong>1行目：</strong>何ができるか（＝価値提案）</p>
+<p><strong>2行目：</strong>具体的な機能（ジョブ・必殺技・対戦）</p>
+<p><strong>3行目：</strong>もう一つの機能（相性診断→友達を巻き込む導線）</p>
+<p><strong>4行目：</strong>CTA（行動を促す一言）</p>
+<p><strong>リンク：</strong>診断ページのURL</p>
+</div>
+
+<div class="card">
+<p><strong>bio候補テキスト（コピペ用）：</strong></p>
+<div class="bio">名前を入れるだけで人生がRPG化される無料診断⚔️
+ジョブ・必殺技・弱点をAIが査定 / 有名人と対戦可能
+友達との相性診断もできる👥
+▼ 今すぐ診断する</div>
+<p class="sm">160文字制限にぴったり収まる。</p>
+</div>
+
+<!-- ==================== TIKTOK ==================== -->
+<h2>TikTok プロフィール設計</h2>
+
+<div class="tt-profile-mock">
+<div class="tt-avatar">⚔️</div>
+<div class="tt-name">AI人生ステータス診断</div>
+<div class="tt-handle">@ai_life_status</div>
+<div class="tt-bio">名前を入れるだけ⚔️人生がRPGになる
+有名人と対戦したら大谷翔平に0勝6敗😱
+▼ プロフのリンクから診断</div>
+<div class="tt-link">🔗 ai-life-status.vercel.app</div>
+<div class="tt-stats">
+<span><b>0</b>フォロー中</span>
+<span><b>—</b>フォロワー</span>
+<span><b>—</b>いいね</span>
+</div>
+</div>
+
+<div class="card">
+<h3>TikTok bio設計のポイント</h3>
+<p><strong>Xとの違い：</strong>TikTokはbioが80文字制限。さらに短く。</p>
+<p><strong>最重要：</strong>「プロフのリンクから」を必ず入れる。TikTokは投稿にURLを貼れない。プロフのリンクが唯一の導線。</p>
+<p><strong>フック：</strong>「大谷翔平に0勝6敗」みたいな具体的な数字を入れて興味を引く。</p>
+</div>
+
+<div class="card">
+<p><strong>bio候補テキスト（80文字以内）：</strong></p>
+<div class="bio">名前入れるだけ⚔️人生RPG化診断
+大谷翔平に0勝6敗でした😱
+↓ ここから診断できます</div>
+</div>
+
+<div class="card">
+<h3>TikTokアイコン</h3>
+<p>Xと同じアイコンを使う。全プラットフォームで統一。認知が分散しない。</p>
+<h3>TikTokヘッダー（不要）</h3>
+<p>TikTokにはヘッダー画像の概念がないので不要。</p>
+</div>
+
+<!-- ==================== INSTAGRAM ==================== -->
+<h2>Instagram プロフィール設計</h2>
+
+<div class="ig-profile-mock">
+<div class="ig-top">
+<div class="ig-avatar">⚔️</div>
+<div class="ig-info">
+<div class="ig-name">AI人生ステータス診断 ⚔️</div>
+<div class="ig-handle">@ai_life_status</div>
+<div class="ig-stats">
+<span><b>0</b> 投稿</span>
+<span><b>—</b> フォロワー</span>
+<span><b>0</b> フォロー中</span>
+</div>
+</div>
+</div>
+<div class="ig-bio">⚔️ 名前を入れるだけで人生がRPGになる無料診断
+🎮 ジョブ・必殺技・弱点を査定
+👥 友達との相性診断もできる
+↓ 今すぐ診断する</div>
+<div class="ig-link">🔗 ai-life-status.vercel.app</div>
+</div>
+
+<div class="card">
+<h3>Instagram bio設計のポイント</h3>
+<p><strong>150文字制限。</strong>絵文字で行頭を揃えるとスッキリ見える。</p>
+<p><strong>リンクは1つ。</strong>診断ページ直リンクでOK。Linktree等は不要（まだ複数サービスがないため）。</p>
+</div>
+
+<div class="card">
+<p><strong>bio候補テキスト：</strong></p>
+<div class="bio">⚔️ 名前を入れるだけで人生がRPGになる無料診断
+🎮 ジョブ・必殺技・弱点を査定
+👥 友達との相性診断もできる
+↓ 今すぐ診断する</div>
+</div>
+
+<div class="card">
+<h3>Instagram固有の施策</h3>
+<p><strong>ハイライト（ストーリーズの保存）：</strong></p>
+<p>・「⚔️ 診断する」→ URLスタンプ付きストーリーを固定</p>
+<p>・「😂 おもしろ結果」→ 面白い結果のスクショ集</p>
+<p>・「👥 相性」→ 相性診断の結果集</p>
+<p class="sm">※ストーリーズハイライトのカバー画像もパステル系で統一</p>
+</div>
+
+<!-- ==================== VISUAL IDENTITY ==================== -->
+<h2>ビジュアルアイデンティティ（全プラットフォーム共通）</h2>
+
+<div class="card">
+<table>
+<tr><th>要素</th><th>仕様</th></tr>
+<tr><td>メインカラー</td><td><span style="display:inline-block;width:14px;height:14px;background:#7c5ce7;border-radius:3px;vertical-align:middle"></span> <code>#7c5ce7</code>（紫）</td></tr>
+<tr><td>アクセントカラー</td><td><span style="display:inline-block;width:14px;height:14px;background:#ff8c42;border-radius:3px;vertical-align:middle"></span> <code>#ff8c42</code>（オレンジ）</td></tr>
+<tr><td>背景</td><td><span style="display:inline-block;width:14px;height:14px;background:#faf5ff;border-radius:3px;vertical-align:middle;border:1px solid #e8ddf5"></span> <code>#faf5ff</code>（パステル紫）</td></tr>
+<tr><td>フォント</td><td><code>DotGothic16</code>（ドット絵風のかわいさ）</td></tr>
+<tr><td>シンボル</td><td>⚔️（剣のEmoji）を統一的に使用</td></tr>
+<tr><td>トーン</td><td>ゆるい・かわいい・ちょっと笑える。ガチRPG感は出さない</td></tr>
+</table>
+</div>
+
+<div class="card important">
+<h3>Canvaで作る手順（ヘッダー＆アイコン）</h3>
+<p><strong>ヘッダー（10分）：</strong></p>
+<p>1. Canva → 「Twitterヘッダー」テンプレを選択（1500×500）</p>
+<p>2. 背景を <code>#faf5ff</code> → <code>#e8ddf5</code> のグラデーションに</p>
+<p>3. 上端にレインボーのライン（3px）を配置</p>
+<p>4. 中央に「⚔️ AI人生ステータス診断」とDotGothic16風のテキスト</p>
+<p>5. サブテキスト「名前を入れるだけ。人生がRPGになる。」</p>
+<p>6. 背景に薄くステータスEmoji（💪🧠💰😎🔥🍀）を散りばめる</p>
+
+<p style="margin-top:10px"><strong>アイコン（5分）：</strong></p>
+<p>1. Canva → 「ロゴ」テンプレを選択（500×500）</p>
+<p>2. 円形背景 <code>#f5f0ff</code></p>
+<p>3. 中央に ⚔️ Emoji（大きく）</p>
+<p>4. PNGで書き出し</p>
+</div>
+
+<!-- ==================== LAUNCH CHECKLIST ==================== -->
+<h2>アカウント開設チェックリスト</h2>
+
+<div class="card" style="background:linear-gradient(135deg,rgba(0,184,148,.04),#fff);border-left:4px solid #00b894">
+<p><strong>X（最優先・今日やる）</strong></p>
+<p>☐ <code>@ai_life_status</code> でアカウント作成</p>
+<p>☐ アイコン設定（Canvaで⚔️アイコン作成）</p>
+<p>☐ ヘッダー設定（Canvaでヘッダー作成）</p>
+<p>☐ bio設定（上記テンプレをコピペ）</p>
+<p>☐ URLリンク設定</p>
+<p>☐ ローンチ投稿</p>
+<p>☐ 既存アカウントから1回だけ紹介投稿</p>
+
+<p style="margin-top:12px"><strong>TikTok（今週中）</strong></p>
+<p>☐ <code>@ai_life_status</code> でアカウント作成</p>
+<p>☐ アイコン設定（Xと同じ）</p>
+<p>☐ bio設定（上記テンプレ）</p>
+<p>☐ URLリンク設定</p>
+<p>☐ 最初の動画投稿（画面録画15秒）</p>
+
+<p style="margin-top:12px"><strong>Instagram（来週でOK）</strong></p>
+<p>☐ <code>@ai_life_status</code> でアカウント作成</p>
+<p>☐ アイコン設定（Xと同じ）</p>
+<p>☐ bio設定（上記テンプレ）</p>
+<p>☐ URLリンク設定</p>
+<p>☐ 最初の投稿（診断結果のスクショ3枚カルーセル）</p>
+</div>
+
+<div class="card">
+<h3>既存アカウントからの紹介投稿テンプレ</h3>
+<div class="bio">名前入れるだけで人生がRPG化される診断を作りました⚔️
+
+ちなみに僕は「布団の守護神」で必殺技は「二度寝の覇道」でした。
+
+→ [URL]
+
+公式アカウントはこちら→ @ai_life_status
+#AI人生ステータス</div>
+<p class="sm">これ1回だけ。以降は公式アカウントに集中。</p>
+</div>
+
+<div class="card" style="text-align:center;margin-top:16px">
+<p class="sm">作成日: 2026年3月12日 ｜ AI人生ステータス診断 SNS設計ガイド</p>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@AILifeStatus 投稿案 - 2026-03-18b</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#faf5ff;color:#2a2040;font-family:'Noto Sans JP',-apple-system,sans-serif;line-height:1.7;font-size:15px}
+.w{max-width:720px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.4em;border-bottom:3px solid #7c5ce7;padding-bottom:8px;margin-bottom:20px}
+h2{font-size:1.0em;color:#7c5ce7;margin:24px 0 8px;padding:5px 12px;background:rgba(124,92,231,.06);border-left:4px solid #7c5ce7;border-radius:0 6px 6px 0}
+h2.hot{color:#e84393;border-left-color:#e84393;background:rgba(232,67,147,.06)}
+.card{background:#fff;border-radius:10px;padding:14px;margin-bottom:20px;border:1px solid #e8ddf5}
+.post-box{background:#000;color:#e0e0e0;border-radius:10px;padding:16px;margin:8px 0;font-size:.88em;line-height:1.85;white-space:pre-wrap;cursor:pointer;position:relative;transition:outline .1s}
+.post-box:hover{outline:2px solid #7c5ce7}
+.post-box::before{content:attr(data-label);position:absolute;top:-10px;left:10px;background:#7c5ce7;color:#fff;font-size:.6em;padding:1px 8px;border-radius:3px;white-space:nowrap}
+.tag{color:#1d9bf0}
+.char-count{font-size:.72em;color:#00b894;font-weight:700;margin-top:4px}
+.char-count.over{color:#e84393}
+.note{font-size:.75em;color:#8a7aaa;margin-top:6px}
+.btns{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.btn{padding:7px 16px;border:none;border-radius:6px;font-size:.74em;font-weight:700;cursor:pointer;font-family:inherit;min-height:36px}
+.btn-edit{background:#7c5ce7;color:#fff}
+.btn-copy{background:#e8ddf5;color:#2a2040}
+.btn-x{background:#000;color:#fff}
+.source-tag{display:inline-block;background:#ff8c42;color:#fff;font-size:.62em;padding:1px 7px;border-radius:3px;margin-bottom:6px}
+#groups-container{display:flex;flex-direction:column}
+.post-group{display:flex;flex-direction:column}
+.card-wrap{}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-bg.on{display:flex}
+.modal{background:#fff;border-radius:12px;padding:20px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
+.modal h3{font-size:1em;margin-bottom:10px;color:#7c5ce7}
+.modal textarea{width:100%;height:240px;padding:12px;border:1.5px solid #e8ddf5;border-radius:8px;font-size:.88em;line-height:1.85;font-family:inherit;resize:vertical;background:#000;color:#e0e0e0}
+.modal textarea:focus{outline:none;border-color:#7c5ce7}
+.modal-count{font-size:.74em;font-weight:700;margin:6px 0;color:#00b894}
+.modal-count.over{color:#e84393}
+.modal-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.modal-btns .btn{flex:1}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>⚔️ @AILifeStatus 投稿案 <span style="font-size:.6em;color:#8a7aaa">2026-03-18b 有名人診断</span></h1>
+
+<div id="groups-container">
+
+<!-- ==================== りくりゅう ==================== -->
+<div class="post-group" data-person="りくりゅう">
+
+<div class="card-wrap" data-person="りくりゅう" data-orig-order="0">
+<h2>りくりゅう 案A 結論先出し</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p0" data-label="りくりゅう 案A 結論先出し" onclick="openEdit('p0')">ペアスケーターなのにジョブが「孤高のソロキャンパー」だった
+
+三浦璃来 Lv.76 神話級
+ジョブ:【孤高のソロキャンパー】😂
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #りくりゅう</div>
+<p class="char-count" id="c0"></p>
+<p class="note">💡 ペアなのに「ソロ」キャンパーというギャップ</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p0')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p0')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p0')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-person="りくりゅう" data-orig-order="1">
+<h2>りくりゅう 案B 発見型</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p1" data-label="りくりゅう 案B 発見型" onclick="openEdit('p1')">りくりゅうをAI診断してみた⚔️
+
+三浦璃来→【孤高のソロキャンパー】Lv.76
+木原龍一→【カフェ巡りの魔女】Lv.38
+
+ペアなのに方向性バラバラで草😂
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #りくりゅう</div>
+<p class="char-count" id="c1"></p>
+<p class="note">💡 2人のジョブの落差がネタ</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p1')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p1')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p1')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-person="りくりゅう" data-orig-order="2">
+<h2>りくりゅう 案C リスト型</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p2" data-label="りくりゅう 案C リスト型" onclick="openEdit('p2')">りくりゅうの人生ステータスを確認した
+
+三浦璃来
+ジョブ：孤高のソロキャンパー
+Lv.76 神話級
+
+木原龍一
+ジョブ：カフェ巡りの魔女
+必殺技「限界突破トレーニング」
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #りくりゅう</div>
+<p class="char-count" id="c2"></p>
+<p class="note">💡 木原龍一の必殺技「限界突破トレーニング」はリアル感あり</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p2')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p2')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p2')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+</div><!-- /りくりゅう -->
+
+<!-- ==================== 前田敦子 ==================== -->
+<div class="post-group" data-person="前田敦子">
+
+<div class="card-wrap" data-person="前田敦子" data-orig-order="0">
+<h2>前田敦子 案A 結論先出し</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p3" data-label="前田敦子 案A 結論先出し" onclick="openEdit('p3')">前田敦子のジョブと弱点が完全一致してた
+
+ジョブ:【深夜ラーメン背徳者】
+弱点:深夜の飯テロ・解呪不能😂
+
+💪体力：1,779でこれは強すぎる
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #前田敦子</div>
+<p class="char-count" id="c3"></p>
+<p class="note">💡 ジョブ・必殺技・弱点が全部ラーメン夜食系で一致</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p3')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p3')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p3')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-person="前田敦子" data-orig-order="1">
+<h2>前田敦子 案B 発見型</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p4" data-label="前田敦子 案B 発見型" onclick="openEdit('p4')">前田敦子をAI診断してみた⚔️
+
+ジョブ:【深夜ラーメン背徳者】Lv.70
+必殺技「Amazonワンクリック」
+弱点:深夜の飯テロ・解呪不能
+
+この一体感、作ったでしょ😂
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #前田敦子</div>
+<p class="char-count" id="c4"></p>
+<p class="note">💡 「作ったでしょ」のツッコミが笑いどころ</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p4')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p4')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p4')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-person="前田敦子" data-orig-order="2">
+<h2>前田敦子 案C リスト型</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p5" data-label="前田敦子 案C リスト型" onclick="openEdit('p5')">前田敦子の人生ステータスを確認した
+
+ジョブ：深夜ラーメン背徳者
+💪体力：1,779
+必殺技「Amazonワンクリック」
+弱点：深夜の飯テロ・解呪不能
+
+💪体力1,779でこの弱点、強すぎる
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #前田敦子</div>
+<p class="char-count" id="c5"></p>
+<p class="note">💡 体力が高いのに深夜飯テロが弱点という矛盾感</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p5')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p5')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p5')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+</div><!-- /前田敦子 -->
+
+<!-- ==================== 高市早苗 ==================== -->
+<div class="post-group" data-person="高市早苗">
+
+<div class="card-wrap" data-person="高市早苗" data-orig-order="0">
+<h2>高市早苗 案A 結論先出し</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p6" data-label="高市早苗 案A 結論先出し" onclick="openEdit('p6')">高市早苗のジョブ、「ミーティング生存者」だった
+
+必殺技「深夜のひらめき」
+😎孤独耐性：1,537
+
+全部リアルすぎる😂
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #高市早苗</div>
+<p class="char-count" id="c6"></p>
+<p class="note">💡 政治家なのにジョブ・必殺技・孤独耐性が全部リアル</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p6')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p6')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p6')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-person="高市早苗" data-orig-order="1">
+<h2>高市早苗 案B 発見型</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p7" data-label="高市早苗 案B 発見型" onclick="openEdit('p7')">高市早苗をAI診断してみた⚔️
+
+ジョブ:【ミーティング生存者】Lv.99
+必殺技「深夜のひらめき」
+😎孤独耐性：1,537
+
+全部リアルすぎて笑えない😂
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #高市早苗</div>
+<p class="char-count" id="c7"></p>
+<p class="note">💡 「笑えない」のツッコミが好み分かれる→案Aが無難</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p7')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p7')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p7')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-person="高市早苗" data-orig-order="2">
+<h2>高市早苗 案C 一言ボケ</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p8" data-label="高市早苗 案C 一言ボケ" onclick="openEdit('p8')">高市早苗のジョブが「ミーティング生存者」だった
+
+😎孤独耐性：1,537
+必殺技「深夜のひらめき」
+
+これで成立してるの、すごい
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #高市早苗</div>
+<p class="char-count" id="c8"></p>
+<p class="note">💡 「これで成立してるの、すごい」はシンプルに笑える</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p8')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p8')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p8')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+</div><!-- /高市早苗 -->
+
+<!-- ==================== 大谷翔平 ==================== -->
+<div class="post-group" data-person="大谷翔平">
+
+<div class="card-wrap" data-person="大谷翔平" data-orig-order="0">
+<h2>大谷翔平 案A 結論先出し</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p9" data-label="大谷翔平 案A 結論先出し" onclick="openEdit('p9')">大谷翔平のジョブが「カフェ巡りの魔女」だった
+
+😎孤独耐性：3,162⚡（異常値）
+必殺技「朝5時宣言」←これはガチ
+
+ジョブだけ謎すぎる😂
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #大谷翔平</div>
+<p class="char-count" id="c9"></p>
+<p class="note">💡 孤独耐性3162の異常値と「カフェ巡りの魔女」のギャップ</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p9')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p9')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p9')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-person="大谷翔平" data-orig-order="1">
+<h2>大谷翔平 案B 発見型</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p10" data-label="大谷翔平 案B 発見型" onclick="openEdit('p10')">大谷翔平をAI診断してみた⚔️
+
+ジョブ:【カフェ巡りの魔女】Lv.99
+必殺技「朝5時宣言」←リアル
+😎孤独耐性：3,162⚡←異常値
+
+必殺技とジョブの落差がすごい
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #大谷翔平</div>
+<p class="char-count" id="c10"></p>
+<p class="note">💡 「朝5時宣言」はリアルで刺さる / ジョブのギャップで笑い</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p10')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p10')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p10')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-person="大谷翔平" data-orig-order="2">
+<h2>大谷翔平 案C リスト型</h2>
+<div class="card">
+<span class="source-tag">👤 有名人診断</span>
+<div class="post-box" id="p11" data-label="大谷翔平 案C リスト型" onclick="openEdit('p11')">大谷翔平の人生ステータスを確認した
+
+ジョブ：カフェ巡りの魔女
+😎孤独耐性：3,162⚡
+必殺技「朝5時宣言」
+弱点「月曜朝: 全ステ-50%（呪いは日曜夜23時から始まる）」
+
+孤独耐性だけガチ異常値で草
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #大谷翔平</div>
+<p class="char-count" id="c11"></p>
+<p class="note">💡 弱点の「月曜朝」は大谷に対して笑えるネタ</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p11')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p11')">コピー</button>
+  <button class="btn btn-x" onclick="postDirect('p11')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+</div><!-- /大谷翔平 -->
+
+</div><!-- /groups-container -->
+</div><!-- /w -->
+
+<!-- モーダル -->
+<div class="modal-bg" id="modalBg">
+<div class="modal">
+  <h3>✏️ 投稿を編集</h3>
+  <textarea id="editArea" oninput="updateCount()"></textarea>
+  <p class="modal-count" id="modalCount">0 / 140文字</p>
+  <div class="modal-btns">
+    <button class="btn btn-copy" onclick="applyCopy()">コピー</button>
+    <button class="btn btn-x" onclick="postToX()">𝕏 Xで投稿</button>
+    <button class="btn btn-edit" style="background:#8a7aaa" onclick="closeModal()">閉じる</button>
+  </div>
+</div>
+</div>
+
+<script>
+function xCount(text) {
+  const siteUrl = 'ai-life-status.vercel.app';
+  const urlRe = /https?:\/\/\S+/g;
+  let urls = text.match(urlRe) || [];
+  let t = text.replace(urlRe, '');
+  let cnt = urls.length * 23;
+  for (let ch of t) cnt += ch.charCodeAt(0) <= 0xFF ? 1 : 2;
+  let n = (text.split(siteUrl).length - 1);
+  let raw = 0; for (let c of siteUrl) raw += c.charCodeAt(0) <= 0xFF ? 1 : 2;
+  cnt = cnt - n * raw + n * 23;
+  return cnt;
+}
+function charDisplay(text) { return Math.ceil(xCount(text) / 2); }
+
+let currentId = null;
+function openEdit(id) {
+  currentId = id;
+  const el = document.getElementById(id);
+  let text = '';
+  el.childNodes.forEach(n => text += n.textContent);
+  document.getElementById('editArea').value = text.trim();
+  updateCount();
+  document.getElementById('modalBg').classList.add('on');
+}
+function closeModal() { document.getElementById('modalBg').classList.remove('on'); }
+function updateCount() {
+  const text = document.getElementById('editArea').value;
+  const d = charDisplay(text);
+  const el = document.getElementById('modalCount');
+  el.textContent = d + ' / 140文字';
+  el.className = 'modal-count' + (d > 140 ? ' over' : '');
+}
+function applyCopy() {
+  const text = document.getElementById('editArea').value.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    if (currentId) { const box = document.getElementById(currentId); if (box) box.textContent = text; }
+    alert('コピーしました！');
+    closeModal();
+  });
+}
+function postToX() {
+  const text = document.getElementById('editArea').value.trim();
+  window.open('https://x.com/intent/tweet?text=' + encodeURIComponent(text), '_blank');
+}
+function copyOnly(id) {
+  const el = document.getElementById(id);
+  let text = '';
+  el.childNodes.forEach(n => text += n.textContent);
+  navigator.clipboard.writeText(text.trim()).then(() => alert('コピーしました！'));
+}
+function postDirect(id) {
+  const el = document.getElementById(id);
+  let text = '';
+  el.childNodes.forEach(n => text += n.textContent);
+  window.open('https://x.com/intent/tweet?text=' + encodeURIComponent(text.trim()), '_blank');
+}
+document.getElementById('modalBg').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// 文字数カウント初期表示
+document.querySelectorAll('.post-box').forEach(el => {
+  const idx = el.id.replace('p','');
+  const cc = document.getElementById('c' + idx);
+  if (!cc) return;
+  let text = '';
+  el.childNodes.forEach(n => text += n.textContent);
+  text = text.trim();
+  const n = charDisplay(text);
+  cc.textContent = n + ' / 140文字 ' + (n <= 140 ? '✅' : '❌');
+  if (n > 140) cc.classList.add('over');
+});
+</script>
+</body>
+</html>

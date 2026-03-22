@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@AILifeStatus 投稿案 - 2026-03-18 23:26</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#faf5ff;color:#2a2040;font-family:'Noto Sans JP',-apple-system,sans-serif;line-height:1.7;font-size:15px}
+.w{max-width:720px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.4em;border-bottom:3px solid #7c5ce7;padding-bottom:8px;margin-bottom:20px}
+h2{font-size:1.0em;color:#7c5ce7;margin:24px 0 8px;padding:5px 12px;background:rgba(124,92,231,.06);border-left:4px solid #7c5ce7;border-radius:0 6px 6px 0}
+h2.hot{color:#e84393;border-left-color:#e84393;background:rgba(232,67,147,.06)}
+.card{background:#fff;border-radius:10px;padding:14px;margin-bottom:20px;border:1px solid #e8ddf5}
+.post-box{background:#000;color:#e0e0e0;border-radius:10px;padding:16px;margin:8px 0;font-size:.88em;line-height:1.85;white-space:pre-wrap;cursor:pointer;position:relative;transition:outline .1s}
+.post-box:hover{outline:2px solid #7c5ce7}
+.post-box::before{content:attr(data-label);position:absolute;top:-10px;left:10px;background:#7c5ce7;color:#fff;font-size:.6em;padding:1px 8px;border-radius:3px;white-space:nowrap}
+.tag{color:#1d9bf0}
+.char-count{font-size:.72em;color:#00b894;font-weight:700;margin-top:4px}
+.char-count.over{color:#e84393}
+.note{font-size:.75em;color:#8a7aaa;margin-top:6px}
+.btns{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.btn{padding:7px 16px;border:none;border-radius:6px;font-size:.74em;font-weight:700;cursor:pointer;font-family:inherit;min-height:36px}
+.btn-edit{background:#7c5ce7;color:#fff}
+.btn-copy{background:#e8ddf5;color:#2a2040}
+.btn-x{background:#000;color:#fff}
+.source-tag{display:inline-block;background:#ff8c42;color:#fff;font-size:.62em;padding:1px 7px;border-radius:3px;margin-bottom:6px}
+.google-tag{background:#0984e3}
+.score-bar{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0;align-items:center}
+.sc{display:inline-flex;align-items:center;gap:2px;font-size:.66em;padding:2px 8px;border-radius:12px;font-weight:600;cursor:default}
+.sc b{font-size:1.15em;margin-left:1px}
+.sc-high{background:#00b894;color:#fff}
+.sc-mid{background:#f9a825;color:#fff}
+.sc-low{background:#b2bec3;color:#fff}
+.sc-avg{display:inline-flex;align-items:center;gap:2px;font-size:.72em;font-weight:800;padding:2px 10px;border-radius:12px;background:#7c5ce7;color:#fff}
+
+/* ソートバー */
+.sort-bar{display:flex;gap:6px;margin-bottom:20px;align-items:center;flex-wrap:wrap}
+.sort-bar span{font-size:.78em;color:#8a7aaa;font-weight:700;white-space:nowrap}
+.btn-sort{padding:5px 12px;border:2px solid #7c5ce7;border-radius:20px;background:#fff;color:#7c5ce7;font-size:.72em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+.btn-sort.active,.btn-sort:hover{background:#7c5ce7;color:#fff}
+
+/* グループコンテナ・ラッパー */
+#groups-container{display:flex;flex-direction:column}
+.post-group{display:flex;flex-direction:column;transition:order .3s}
+.card-wrap{transition:order .3s}
+
+/* 編集モーダル */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:center;justify-content:center;padding:16px}
+.modal-bg.on{display:flex}
+.modal{background:#fff;border-radius:12px;padding:20px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
+.modal h3{font-size:1em;margin-bottom:10px;color:#7c5ce7}
+.modal textarea{width:100%;height:240px;padding:12px;border:1.5px solid #e8ddf5;border-radius:8px;font-size:.88em;line-height:1.85;font-family:inherit;resize:vertical;background:#000;color:#e0e0e0}
+.modal textarea:focus{outline:none;border-color:#7c5ce7}
+.modal-count{font-size:.74em;font-weight:700;margin:6px 0;color:#00b894}
+.modal-count.over{color:#e84393}
+.modal-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.modal-btns .btn{flex:1}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>⚔️ @AILifeStatus 投稿案 <span style="font-size:.6em;color:#8a7aaa">2026-03-18 23:26</span></h1>
+
+<div class="sort-bar">
+  <span>並び替え:</span>
+  <button class="btn-sort active" id="sort-az"  onclick="sortGroups('az')">50音順</button>
+  <button class="btn-sort"        id="sort-avg" onclick="sortGroups('avg')">avg ▼</button>
+  <button class="btn-sort"        id="sort-ic"  onclick="sortGroups('ic')">不一致</button>
+  <button class="btn-sort"        id="sort-ar"  onclick="sortGroups('ar')">覚醒</button>
+  <button class="btn-sort"        id="sort-sr"  onclick="sortGroups('sr')">自己参照</button>
+  <button class="btn-sort"        id="sort-ig"  onclick="sortGroups('ig')">情報G</button>
+  <button class="btn-sort"        id="sort-sc"  onclick="sortGroups('sc')">拡散</button>
+</div>
+
+<div id="groups-container">
+<div class="post-group" data-person="大谷翔平" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5">
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="大谷翔平" data-orig-order="0">
+<h2 class="">大谷翔平 案A 結論先出し</h2>
+<div class="card">
+<span class="source-tag ">📰 ドジャース 圧倒的Z世代人気</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p0" data-label="大谷翔平 案A 結論先出し" onclick="openEdit('p0')">弱点が「エナドリ切れ: 知力半減（補充まで人権なし）」なのに
+🧠知力2,015で戦ってる大谷翔平、
+ジョブ「カフェ巡りの魔女」で全部納得した
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #大谷翔平</div>
+<p class="char-count ">104 / 140文字 ✅</p>
+<p class="note">💡 💪体力1,000の異常値 / 🧠知力2,015の異常値 / 💰金運1,165の異常値</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p0')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p0')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p0')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="大谷翔平" data-orig-order="1">
+<h2 class="">大谷翔平 案B 発見型</h2>
+<div class="card">
+<span class="source-tag ">📰 ドジャース 圧倒的Z世代人気</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p1" data-label="大谷翔平 案B 発見型" onclick="openEdit('p1')">大谷翔平の弱点、「エナドリ切れ: 知力半減（補充まで人権なし）」だった
+
+🧠知力：2,015あるのにここが限界
+ジョブ「カフェ巡りの魔女」の正体はこれか
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #大谷翔平</div>
+<p class="char-count ">109 / 140文字 ✅</p>
+<p class="note">💡 💪体力1,000の異常値 / 🧠知力2,015の異常値 / 💰金運1,165の異常値</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p1')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p1')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p1')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="大谷翔平" data-orig-order="2">
+<h2 class="">大谷翔平 案C リスト型</h2>
+<div class="card">
+<span class="source-tag ">📰 ドジャース 圧倒的Z世代人気</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p2" data-label="大谷翔平 案C リスト型" onclick="openEdit('p2')">大谷翔平の人生ステータスを確認した
+
+ジョブ：カフェ巡りの魔女
+🧠知力：2,015
+弱点：エナドリ切れ: 知力半減（補充まで人権なし）
+
+🧠知力：2,015でこの弱点、強すぎる
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #大谷翔平</div>
+<p class="char-count ">117 / 140文字 ✅</p>
+<p class="note">💡 💪体力1,000の異常値 / 🧠知力2,015の異常値 / 💰金運1,165の異常値</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p2')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p2')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p2')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="大谷翔平" data-orig-order="3">
+<h2 class="">大谷翔平 案D 一言ボケ</h2>
+<div class="card">
+<span class="source-tag ">📰 ドジャース 圧倒的Z世代人気</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p3" data-label="大谷翔平 案D 一言ボケ" onclick="openEdit('p3')">大谷翔平のジョブが「カフェ巡りの魔女」だった
+
+🧠知力：2,015
+弱点「エナドリ切れ: 知力半減（補充まで人権なし）」
+
+これで成立してるの、すごい
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #大谷翔平</div>
+<p class="char-count ">107 / 140文字 ✅</p>
+<p class="note">💡 💪体力1,000の異常値 / 🧠知力2,015の異常値 / 💰金運1,165の異常値</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p3')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p3')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p3')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="大谷翔平" data-orig-order="4">
+<h2 class="">大谷翔平 案E ニュースフック</h2>
+<div class="card">
+<span class="source-tag ">📰 ドジャース 圧倒的Z世代人気</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p4" data-label="大谷翔平 案E ニュースフック" onclick="openEdit('p4')">ドジャース 圧倒的Z世代人気の今日、大谷翔平の人生ステータスを測ってみた
+
+ジョブ「カフェ巡りの魔女」
+🧠知力：2,015
+弱点「エナドリ切れ: 知力半減（補充まで人権なし）」
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #大谷翔平</div>
+<p class="char-count ">120 / 140文字 ✅</p>
+<p class="note">💡 💪体力1,000の異常値 / 🧠知力2,015の異常値 / 💰金運1,165の異常値</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p4')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p4')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p4')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+</div>
+<div class="post-group" data-person="鈴木誠也" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5">
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="鈴木誠也" data-orig-order="0">
+<h2 class="">鈴木誠也 案A 結論先出し</h2>
+<div class="card">
+<span class="source-tag ">📰 カブス 日本人MLB</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p5" data-label="鈴木誠也 案A 結論先出し" onclick="openEdit('p5')">鈴木誠也のジョブが「Google検索の勇者」だった
+
+弱点「「もう寝る」宣言後2時間はスマホをやめられない」なのに🔥やる気：???
+このギャップが全てを物語ってる
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #鈴木誠也</div>
+<p class="char-count ">113 / 140文字 ✅</p>
+<p class="note">💡 🔥やる気が???（超レア3%演出） / 😎孤独耐性8の超低値がギャップになる / 🔥やる気-1の超低値がギャップになる / 🍀運30の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p5')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p5')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p5')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="鈴木誠也" data-orig-order="1">
+<h2 class="">鈴木誠也 案B 発見型</h2>
+<div class="card">
+<span class="source-tag ">📰 カブス 日本人MLB</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p6" data-label="鈴木誠也 案B 発見型" onclick="openEdit('p6')">鈴木誠也の弱点、「「もう寝る」宣言後2時間はスマホをやめられない」だった
+
+🔥やる気：???あるのにここが限界
+ジョブ「Google検索の勇者」の正体はこれか
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #鈴木誠也</div>
+<p class="char-count ">111 / 140文字 ✅</p>
+<p class="note">💡 🔥やる気が???（超レア3%演出） / 😎孤独耐性8の超低値がギャップになる / 🔥やる気-1の超低値がギャップになる / 🍀運30の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p6')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p6')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p6')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="鈴木誠也" data-orig-order="2">
+<h2 class="">鈴木誠也 案C リスト型</h2>
+<div class="card">
+<span class="source-tag ">📰 カブス 日本人MLB</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p7" data-label="鈴木誠也 案C リスト型" onclick="openEdit('p7')">鈴木誠也の人生ステータスを確認した
+
+ジョブ：Google検索の勇者
+🔥やる気：???
+弱点：「もう寝る」宣言後2時間はスマホをやめられない
+
+🔥やる気：???でこの弱点、強すぎる
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #鈴木誠也</div>
+<p class="char-count ">119 / 140文字 ✅</p>
+<p class="note">💡 🔥やる気が???（超レア3%演出） / 😎孤独耐性8の超低値がギャップになる / 🔥やる気-1の超低値がギャップになる / 🍀運30の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p7')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p7')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p7')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="鈴木誠也" data-orig-order="3">
+<h2 class="">鈴木誠也 案D 一言ボケ</h2>
+<div class="card">
+<span class="source-tag ">📰 カブス 日本人MLB</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p8" data-label="鈴木誠也 案D 一言ボケ" onclick="openEdit('p8')">鈴木誠也のジョブが「Google検索の勇者」だった
+
+🔥やる気：???
+弱点「「もう寝る」宣言後2時間はスマホをやめられない」
+
+これで成立してるの、すごい
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #鈴木誠也</div>
+<p class="char-count ">109 / 140文字 ✅</p>
+<p class="note">💡 🔥やる気が???（超レア3%演出） / 😎孤独耐性8の超低値がギャップになる / 🔥やる気-1の超低値がギャップになる / 🍀運30の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p8')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p8')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p8')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="鈴木誠也" data-orig-order="4">
+<h2 class="">鈴木誠也 案E ニュースフック</h2>
+<div class="card">
+<span class="source-tag ">📰 カブス 日本人MLB</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p9" data-label="鈴木誠也 案E ニュースフック" onclick="openEdit('p9')">カブス 日本人MLBの今日、鈴木誠也の人生ステータスを測ってみた
+
+ジョブ「Google検索の勇者」
+🔥やる気：???
+弱点「「もう寝る」宣言後2時間はスマホをやめられない」
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #鈴木誠也</div>
+<p class="char-count ">116 / 140文字 ✅</p>
+<p class="note">💡 🔥やる気が???（超レア3%演出） / 😎孤独耐性8の超低値がギャップになる / 🔥やる気-1の超低値がギャップになる / 🍀運30の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p9')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p9')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p9')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+</div>
+<div class="post-group" data-person="Aぇヤンタン" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5">
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="Aぇヤンタン" data-orig-order="0">
+<h2 class="">Aぇヤンタン 案A 結論先出し</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 1位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p10" data-label="Aぇヤンタン 案A 結論先出し" onclick="openEdit('p10')">Aぇヤンタンのジョブが「週末旅人の吟遊詩人」だった
+
+弱点「エナドリ切れ: 知力半減（補充まで人権なし）」なのに💪体力：12
+このギャップが全てを物語ってる
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #Aぇヤンタン</div>
+<p class="char-count ">114 / 140文字 ✅</p>
+<p class="note">💡 💪体力12の超低値がギャップになる / 💰金運13の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p10')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p10')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p10')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="Aぇヤンタン" data-orig-order="1">
+<h2 class="">Aぇヤンタン 案B 発見型</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 1位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p11" data-label="Aぇヤンタン 案B 発見型" onclick="openEdit('p11')">Aぇヤンタンの弱点、「エナドリ切れ: 知力半減（補充まで人権なし）」だった
+
+💪体力：12あるのにここが限界
+ジョブ「週末旅人の吟遊詩人」の正体はこれか
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #Aぇヤンタン</div>
+<p class="char-count ">112 / 140文字 ✅</p>
+<p class="note">💡 💪体力12の超低値がギャップになる / 💰金運13の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p11')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p11')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p11')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="Aぇヤンタン" data-orig-order="2">
+<h2 class="">Aぇヤンタン 案C リスト型</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 1位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p12" data-label="Aぇヤンタン 案C リスト型" onclick="openEdit('p12')">Aぇヤンタンの人生ステータスを確認した
+
+ジョブ：週末旅人の吟遊詩人
+💪体力：12
+弱点：エナドリ切れ: 知力半減（補充まで人権なし）
+
+💪体力：12でこの弱点、強すぎる
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #Aぇヤンタン</div>
+<p class="char-count ">118 / 140文字 ✅</p>
+<p class="note">💡 💪体力12の超低値がギャップになる / 💰金運13の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p12')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p12')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p12')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="Aぇヤンタン" data-orig-order="3">
+<h2 class="">Aぇヤンタン 案D 一言ボケ</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 1位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p13" data-label="Aぇヤンタン 案D 一言ボケ" onclick="openEdit('p13')">Aぇヤンタンのジョブが「週末旅人の吟遊詩人」だった
+
+💪体力：12
+弱点「エナドリ切れ: 知力半減（補充まで人権なし）」
+
+これで成立してるの、すごい
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #Aぇヤンタン</div>
+<p class="char-count ">110 / 140文字 ✅</p>
+<p class="note">💡 💪体力12の超低値がギャップになる / 💰金運13の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p13')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p13')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p13')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="Aぇヤンタン" data-orig-order="4">
+<h2 class="">Aぇヤンタン 案E ニュースフック</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 1位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p14" data-label="Aぇヤンタン 案E ニュースフック" onclick="openEdit('p14')">Xトレンド 1位の今日、Aぇヤンタンの人生ステータスを測ってみた
+
+ジョブ「週末旅人の吟遊詩人」
+💪体力：12
+弱点「エナドリ切れ: 知力半減（補充まで人権なし）」
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #Aぇヤンタン</div>
+<p class="char-count ">116 / 140文字 ✅</p>
+<p class="note">💡 💪体力12の超低値がギャップになる / 💰金運13の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p14')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p14')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p14')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+</div>
+<div class="post-group" data-person="スパイダーマン" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5">
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="スパイダーマン" data-orig-order="0">
+<h2 class="">スパイダーマン 案A 結論先出し</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 2位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p15" data-label="スパイダーマン 案A 結論先出し" onclick="openEdit('p15')">弱点が「充電5%警告: 焦りで全ステ-40%（充電中は回復）」なのに
+💰金運1,020で戦ってるスパイダーマン、
+ジョブ「推し活破産者」で全部納得した
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #スパイダーマン</div>
+<p class="char-count ">109 / 140文字 ✅</p>
+<p class="note">💡 💰金運1,020の異常値</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p15')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p15')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p15')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="スパイダーマン" data-orig-order="1">
+<h2 class="">スパイダーマン 案B 発見型</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 2位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p16" data-label="スパイダーマン 案B 発見型" onclick="openEdit('p16')">スパイダーマンの弱点、「充電5%警告: 焦りで全ステ-40%（充電中は回復）」だった
+
+💰金運：1,020あるのにここが限界
+ジョブ「推し活破産者」の正体はこれか
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #スパイダーマン</div>
+<p class="char-count ">114 / 140文字 ✅</p>
+<p class="note">💡 💰金運1,020の異常値</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p16')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p16')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p16')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="スパイダーマン" data-orig-order="2">
+<h2 class="">スパイダーマン 案C リスト型</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 2位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p17" data-label="スパイダーマン 案C リスト型" onclick="openEdit('p17')">スパイダーマンの人生ステータスを確認した
+
+ジョブ：推し活破産者
+💰金運：1,020
+弱点：充電5%警告: 焦りで全ステ-40%（充電中は回復）
+
+💰金運：1,020でこの弱点、強すぎる
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #スパイダーマン</div>
+<p class="char-count ">122 / 140文字 ✅</p>
+<p class="note">💡 💰金運1,020の異常値</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p17')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p17')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p17')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="スパイダーマン" data-orig-order="3">
+<h2 class="">スパイダーマン 案D 一言ボケ</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 2位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p18" data-label="スパイダーマン 案D 一言ボケ" onclick="openEdit('p18')">スパイダーマンのジョブが「推し活破産者」だった
+
+💰金運：1,020
+弱点「充電5%警告: 焦りで全ステ-40%（充電中は回復）」
+
+これで成立してるの、すごい
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #スパイダーマン</div>
+<p class="char-count ">112 / 140文字 ✅</p>
+<p class="note">💡 💰金運1,020の異常値</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p18')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p18')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p18')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="スパイダーマン" data-orig-order="4">
+<h2 class="">スパイダーマン 案E ニュースフック</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 2位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p19" data-label="スパイダーマン 案E ニュースフック" onclick="openEdit('p19')">Xトレンド 2位の今日、スパイダーマンの人生ステータスを測ってみた
+
+ジョブ「推し活破産者」
+💰金運：1,020
+弱点「充電5%警告: 焦りで全ステ-40%（充電中は回復）」
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #スパイダーマン</div>
+<p class="char-count ">118 / 140文字 ✅</p>
+<p class="note">💡 💰金運1,020の異常値</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p19')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p19')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p19')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+</div>
+<div class="post-group" data-person="冬のさ春のね" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5">
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="冬のさ春のね" data-orig-order="0">
+<h2 class="">冬のさ春のね 案A 結論先出し</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 3位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p20" data-label="冬のさ春のね 案A 結論先出し" onclick="openEdit('p20')">弱点が「セール通知: 理性が5分だけ消える（5分で十分）」なのに
+🔥やる気1,107で戦ってる冬のさ春のね、
+ジョブ「名言コレクターの賢者」で全部納得した
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #冬のさ春のね</div>
+<p class="char-count ">112 / 140文字 ✅</p>
+<p class="note">💡 🔥やる気1,107の異常値 / 💪体力27の超低値がギャップになる / 😎孤独耐性9の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p20')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p20')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p20')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="冬のさ春のね" data-orig-order="1">
+<h2 class="">冬のさ春のね 案B 発見型</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 3位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p21" data-label="冬のさ春のね 案B 発見型" onclick="openEdit('p21')">冬のさ春のねの弱点、「セール通知: 理性が5分だけ消える（5分で十分）」だった
+
+🔥やる気：1,107あるのにここが限界
+ジョブ「名言コレクターの賢者」の正体はこれか
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #冬のさ春のね</div>
+<p class="char-count ">117 / 140文字 ✅</p>
+<p class="note">💡 🔥やる気1,107の異常値 / 💪体力27の超低値がギャップになる / 😎孤独耐性9の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p21')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p21')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p21')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="冬のさ春のね" data-orig-order="2">
+<h2 class="">冬のさ春のね 案C リスト型</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 3位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p22" data-label="冬のさ春のね 案C リスト型" onclick="openEdit('p22')">冬のさ春のねの人生ステータスを確認した
+
+ジョブ：名言コレクターの賢者
+🔥やる気：1,107
+弱点：セール通知: 理性が5分だけ消える（5分で十分）
+
+🔥やる気：1,107でこの弱点、強すぎる
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #冬のさ春のね</div>
+<p class="char-count ">126 / 140文字 ✅</p>
+<p class="note">💡 🔥やる気1,107の異常値 / 💪体力27の超低値がギャップになる / 😎孤独耐性9の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p22')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p22')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p22')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="冬のさ春のね" data-orig-order="3">
+<h2 class="">冬のさ春のね 案D 一言ボケ</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 3位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p23" data-label="冬のさ春のね 案D 一言ボケ" onclick="openEdit('p23')">冬のさ春のねのジョブが「名言コレクターの賢者」だった
+
+🔥やる気：1,107
+弱点「セール通知: 理性が5分だけ消える（5分で十分）」
+
+これで成立してるの、すごい
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #冬のさ春のね</div>
+<p class="char-count ">115 / 140文字 ✅</p>
+<p class="note">💡 🔥やる気1,107の異常値 / 💪体力27の超低値がギャップになる / 😎孤独耐性9の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p23')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p23')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p23')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="冬のさ春のね" data-orig-order="4">
+<h2 class="">冬のさ春のね 案E ニュースフック</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 3位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p24" data-label="冬のさ春のね 案E ニュースフック" onclick="openEdit('p24')">Xトレンド 3位の今日、冬のさ春のねの人生ステータスを測ってみた
+
+ジョブ「名言コレクターの賢者」
+🔥やる気：1,107
+弱点「セール通知: 理性が5分だけ消える（5分で十分）」
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #冬のさ春のね</div>
+<p class="char-count ">121 / 140文字 ✅</p>
+<p class="note">💡 🔥やる気1,107の異常値 / 💪体力27の超低値がギャップになる / 😎孤独耐性9の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p24')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p24')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p24')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+</div>
+<div class="post-group" data-person="ニノなのに" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5">
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="ニノなのに" data-orig-order="0">
+<h2 class="">ニノなのに 案A 結論先出し</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 4位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p25" data-label="ニノなのに 案A 結論先出し" onclick="openEdit('p25')">弱点が「セール通知: 理性が5分だけ消える（5分で十分）」なのに
+🧠知力1,152で戦ってるニノなのに、
+ジョブ「自炊失敗の料理見習い」で全部納得した
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #ニノなのに</div>
+<p class="char-count ">109 / 140文字 ✅</p>
+<p class="note">💡 🧠知力1,152の異常値 / 🔥やる気11の超低値がギャップになる / 🍀運17の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p25')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p25')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p25')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="ニノなのに" data-orig-order="1">
+<h2 class="">ニノなのに 案B 発見型</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 4位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p26" data-label="ニノなのに 案B 発見型" onclick="openEdit('p26')">ニノなのにの弱点、「セール通知: 理性が5分だけ消える（5分で十分）」だった
+
+🧠知力：1,152あるのにここが限界
+ジョブ「自炊失敗の料理見習い」の正体はこれか
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #ニノなのに</div>
+<p class="char-count ">114 / 140文字 ✅</p>
+<p class="note">💡 🧠知力1,152の異常値 / 🔥やる気11の超低値がギャップになる / 🍀運17の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p26')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p26')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p26')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="ニノなのに" data-orig-order="2">
+<h2 class="">ニノなのに 案C リスト型</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 4位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p27" data-label="ニノなのに 案C リスト型" onclick="openEdit('p27')">ニノなのにの人生ステータスを確認した
+
+ジョブ：自炊失敗の料理見習い
+🧠知力：1,152
+弱点：セール通知: 理性が5分だけ消える（5分で十分）
+
+🧠知力：1,152でこの弱点、強すぎる
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #ニノなのに</div>
+<p class="char-count ">122 / 140文字 ✅</p>
+<p class="note">💡 🧠知力1,152の異常値 / 🔥やる気11の超低値がギャップになる / 🍀運17の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p27')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p27')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p27')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="ニノなのに" data-orig-order="3">
+<h2 class="">ニノなのに 案D 一言ボケ</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 4位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p28" data-label="ニノなのに 案D 一言ボケ" onclick="openEdit('p28')">ニノなのにのジョブが「自炊失敗の料理見習い」だった
+
+🧠知力：1,152
+弱点「セール通知: 理性が5分だけ消える（5分で十分）」
+
+これで成立してるの、すごい
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #ニノなのに</div>
+<p class="char-count ">112 / 140文字 ✅</p>
+<p class="note">💡 🧠知力1,152の異常値 / 🔥やる気11の超低値がギャップになる / 🍀運17の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p28')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p28')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p28')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+
+<div class="card-wrap" data-avg="5.0" data-ic="5" data-ar="5" data-sr="5" data-ig="5" data-sc="5" data-person="ニノなのに" data-orig-order="4">
+<h2 class="">ニノなのに 案E ニュースフック</h2>
+<div class="card">
+<span class="source-tag ">📰 Xトレンド 4位</span>
+<div class="score-bar"><span class="sc sc-low" title="不一致">不一致<b>5</b></span><span class="sc sc-low" title="覚醒">覚醒<b>5</b></span><span class="sc sc-low" title="自己参照">自己参照<b>5</b></span><span class="sc sc-low" title="情報G">情報G<b>5</b></span><span class="sc sc-low" title="拡散">拡散<b>5</b></span><span class="sc-avg">avg<b>5.0</b></span></div>
+<div class="post-box" id="p29" data-label="ニノなのに 案E ニュースフック" onclick="openEdit('p29')">Xトレンド 4位の今日、ニノなのにの人生ステータスを測ってみた
+
+ジョブ「自炊失敗の料理見習い」
+🧠知力：1,152
+弱点「セール通知: 理性が5分だけ消える（5分で十分）」
+
+あなたのジョブは何？↓
+ai-life-status.vercel.app
+#AI人生ステータス #ニノなのに</div>
+<p class="char-count ">118 / 140文字 ✅</p>
+<p class="note">💡 🧠知力1,152の異常値 / 🔥やる気11の超低値がギャップになる / 🍀運17の超低値がギャップになる</p>
+<div class="btns">
+  <button class="btn btn-edit" onclick="openEdit('p29')">✏️ 編集</button>
+  <button class="btn btn-copy" onclick="copyOnly('p29')">コピー</button>
+  <button class="btn btn-x"   onclick="postDirect('p29')">𝕏 Xで投稿</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- 編集モーダル -->
+<div class="modal-bg" id="modalBg">
+<div class="modal">
+  <h3>✏️ 投稿を編集</h3>
+  <textarea id="editArea" oninput="updateCount()"></textarea>
+  <p class="modal-count" id="modalCount">0 / 140文字</p>
+  <div class="modal-btns">
+    <button class="btn btn-copy" onclick="applyCopy()">コピー</button>
+    <button class="btn btn-x"    onclick="postToX()">𝕏 Xで投稿</button>
+    <button class="btn btn-edit" style="background:#8a7aaa" onclick="closeModal()">閉じる</button>
+  </div>
+</div>
+</div>
+
+<script>
+// ---- 文字数カウント（X方式） ----
+function xCount(text) {
+  const siteUrl = 'ai-life-status.vercel.app';
+  const urlRe = /https?:\/\/\S+/g;
+  let urls = text.match(urlRe) || [];
+  let t = text.replace(urlRe, '');
+  let cnt = urls.length * 23;
+  for (let ch of t) cnt += ch.charCodeAt(0) <= 0xFF ? 1 : 2;
+  // bare URL (https://なし)
+  let n = (text.split(siteUrl).length - 1);
+  let raw = 0; for (let c of siteUrl) raw += c.charCodeAt(0) <= 0xFF ? 1 : 2;
+  cnt = cnt - n * raw + n * 23;
+  return cnt;
+}
+function charDisplay(text) { return Math.ceil(xCount(text) / 2); }
+
+// ---- モーダル ----
+let currentId = null;
+
+function openEdit(id) {
+  currentId = id;
+  const el = document.getElementById(id);
+  let text = '';
+  el.childNodes.forEach(n => text += n.textContent);
+  document.getElementById('editArea').value = text.trim();
+  updateCount();
+  document.getElementById('modalBg').classList.add('on');
+}
+
+function closeModal() {
+  document.getElementById('modalBg').classList.remove('on');
+}
+
+function updateCount() {
+  const text = document.getElementById('editArea').value;
+  const d = charDisplay(text);
+  const el = document.getElementById('modalCount');
+  el.textContent = d + ' / 140文字';
+  el.className = 'modal-count' + (d > 140 ? ' over' : '');
+}
+
+function applyCopy() {
+  const text = document.getElementById('editArea').value.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    // 元の投稿ボックスも更新
+    if (currentId) {
+      const box = document.getElementById(currentId);
+      if (box) box.textContent = text;
+    }
+    alert('コピーしました！');
+    closeModal();
+  });
+}
+
+function postToX() {
+  const text = document.getElementById('editArea').value.trim();
+  const encoded = encodeURIComponent(text);
+  window.open('https://x.com/intent/tweet?text=' + encoded, '_blank');
+}
+
+function copyOnly(id) {
+  const el = document.getElementById(id);
+  let text = '';
+  el.childNodes.forEach(n => text += n.textContent);
+  navigator.clipboard.writeText(text.trim()).then(() => {
+    alert('コピーしました！');
+  });
+}
+
+function postDirect(id) {
+  const el = document.getElementById(id);
+  let text = '';
+  el.childNodes.forEach(n => text += n.textContent);
+  window.open('https://x.com/intent/tweet?text=' + encodeURIComponent(text.trim()), '_blank');
+}
+
+// モーダル背景クリックで閉じる
+document.getElementById('modalBg').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ---- ソート ----
+let currentSort = 'az';
+function sortGroups(mode) {
+  currentSort = mode;
+  document.querySelectorAll('.btn-sort').forEach(b => b.classList.remove('active'));
+  document.getElementById('sort-' + mode).classList.add('active');
+  const container = document.getElementById('groups-container');
+  const groups = [...container.querySelectorAll('.post-group')];
+  const allCards = [...document.querySelectorAll('.card-wrap')];
+
+  if (mode === 'az') {
+    // カードを各グループに戻す
+    allCards.forEach(c => {
+      const g = container.querySelector('.post-group[data-person="' + c.dataset.person + '"]');
+      if (g) g.appendChild(c);
+    });
+    // グループ内を元の順序に
+    groups.forEach(g => {
+      const cards = [...g.querySelectorAll('.card-wrap')];
+      cards.sort((a, b) => parseInt(a.dataset.origOrder) - parseInt(b.dataset.origOrder));
+      cards.forEach(c => g.appendChild(c));
+    });
+    // グループを50音順に
+    groups.sort((a, b) => a.dataset.person.localeCompare(b.dataset.person, 'ja'));
+    groups.forEach(g => container.appendChild(g));
+    groups.forEach(g => { g.style.display = ''; });
+  } else {
+    // 全カードをスコア順にフラット並び替え
+    allCards.sort((a, b) => parseFloat(b.dataset[mode]) - parseFloat(a.dataset[mode]));
+    allCards.forEach(c => container.appendChild(c));
+    // 空になったグループを非表示
+    groups.forEach(g => { g.style.display = 'none'; });
+  }
+}
+</script>
+</body>
+</html>
